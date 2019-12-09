@@ -123,3 +123,5 @@ try:
     from kvs.local_settings import *
 except ImportError:
     pass
+
+print('ss')
