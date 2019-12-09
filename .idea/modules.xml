@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../IOM-Backend-Django/.idea/IOM-Backend-Django.iml" filepath="$PROJECT_DIR$/../IOM-Backend-Django/.idea/IOM-Backend-Django.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/KVS-Django.iml" filepath="$PROJECT_DIR$/.idea/KVS-Django.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../naxa_maps/.idea/naxamaps.iml" filepath="$PROJECT_DIR$/../naxa_maps/.idea/naxamaps.iml" />
+    </modules>
+  </component>
+</project>
