@@ -4,8 +4,8 @@ __pycache__/
 *$py.class
 local_settings.py
 # Docker
-docker-compose.yml
-docker-entrypoint.local.sh
+#docker-compose.yml
+#docker-entrypoint.local.sh
 postgres-data/
 
 # C extensions
@@ -87,7 +87,7 @@ celerybeat-schedule
 *.sage.py
 
 # Environments
-.env
+#.env
 .venv
 env/
 venv/
