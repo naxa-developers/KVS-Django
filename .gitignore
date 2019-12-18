@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-#local_settings.py
+local_settings.py
 # Docker
 docker-compose.yml
 docker-entrypoint.local.sh
