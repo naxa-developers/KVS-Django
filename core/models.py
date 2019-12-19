@@ -1,6 +1,7 @@
 
 from django.db import models
 from django.contrib.gis.db.models import PointField, MultiPolygonField
+from django.contrib.auth.models import Group, User
 
 # Create your models here.
 
@@ -36,6 +37,21 @@ class Municipality(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class UserRole(models.Model):
+    user = models.ForeignKey(User, related_name='role', on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, related_name='role',
+                              on_delete=models.CASCADE)
+    province = models.ForeignKey('Province', related_name='role',
+                                 on_delete=models.CASCADE)
+    district = models.ForeignKey('District', related_name='role',
+                                 on_delete=models.CASCADE)
+    municipality = models.ForeignKey('Municipality', related_name='role',
+                                     on_delete=models.CASCADE)
+
+
+
 
 
 # class Question(models.Model):
