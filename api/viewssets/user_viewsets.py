@@ -64,9 +64,11 @@ class UserLogIn(APIView):
         if user is not None:
             if user.is_active:
                 login(request, user)
+                token, created = Token.objects.get_or_create(user=user)
                 return Response({
                     'message': 'Successfully logged in',
-                    'status': status.HTTP_200_OK
+                    'status': status.HTTP_200_OK,
+                    'token': token.key
                 })
             else:
                 return Response({
@@ -76,6 +78,15 @@ class UserLogIn(APIView):
             return Response({
                 'status': status.HTTP_401_UNAUTHORIZED
             })
+
+
+class UserLogOut(APIView):
+    def get(self, request):
+        request.user.auth_token.delete()
+        return Response({
+            'message': 'User logged out successfully',
+            'status': status.HTTP_200_OK
+        })
 
 
 class UserViewSet(viewsets.ModelViewSet):

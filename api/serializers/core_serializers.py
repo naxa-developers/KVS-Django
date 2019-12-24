@@ -1,4 +1,4 @@
-from core.models import Province, District, Municipality, Survey, FamilyMembers, AnimalDetail
+from core.models import Province, District, Municipality
 from rest_framework import serializers
 
 
@@ -20,20 +20,4 @@ class MunicipalitySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class SurveySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Survey
-        fields = '__all__'
-
-
-class FamilyMembersSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = FamilyMembers
-        fields = '__all__'
-
-
-class AnimalDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AnimalDetail
-        fields = '__all__'
 
