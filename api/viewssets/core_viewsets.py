@@ -1,12 +1,10 @@
 from rest_framework import viewsets
 from rest_framework.views import APIView
-from core.models import Province, District, Municipality, Survey, AnimalDetail, FamilyMembers
-from api.serializers.core_serializers import ProvinceSerializer, DistrictSerializer, MunicipalitySerializer, \
-    SurveySerializer, AnimalDetailSerializer, FamilyMembersSerializer
+from core.models import Province, District, Municipality
+from api.serializers.core_serializers import ProvinceSerializer, DistrictSerializer, MunicipalitySerializer
 from django.core.serializers import serialize
 from rest_framework.response import Response
 import json
-
 
 
 class ProvinceGeojsonViewSet(APIView):
@@ -64,19 +62,19 @@ class MunicipalityGeojsonViewSet(APIView):
         return Response(municipality_geo_json)
 
 
-class SurveyViewSet(viewsets.ModelViewSet):
-    serializer_class = SurveySerializer
-    queryset = Survey.objects.all()
-    permission_classes = []
-
-
-class AnimalViewSet(viewsets.ModelViewSet):
-    serializer_class = AnimalDetailSerializer
-    queryset = AnimalDetail.objects.all()
-    permission_classes = []
-
-
-class FamilyMemberViewSet(viewsets.ModelViewSet):
-    serializer_class = FamilyMembersSerializer
-    queryset = FamilyMembers.objects.all()
-    permission_classes = []
+# class SurveyViewSet(viewsets.ModelViewSet):
+#     serializer_class = SurveySerializer
+#     queryset = Survey.objects.all()
+#     permission_classes = []
+#
+#
+# class AnimalViewSet(viewsets.ModelViewSet):
+#     serializer_class = AnimalDetailSerializer
+#     queryset = AnimalDetail.objects.all()
+#     permission_classes = []
+#
+#
+# class FamilyMemberViewSet(viewsets.ModelViewSet):
+#     serializer_class = FamilyMembersSerializer
+#     queryset = FamilyMembers.objects.all()
+#     permission_classes = []
