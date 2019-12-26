@@ -25,7 +25,7 @@ SECRET_KEY = 'nyc$9ks4c3$hczs+$5g647!mw@u7bm7x+l@6###g+*mzwxxqmr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
