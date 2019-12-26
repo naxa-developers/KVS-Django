@@ -7,6 +7,9 @@ router = DefaultRouter()
 # router.register(r'family_members', core_viewsets.FamilyMemberViewSet)
 # router.register(r'animal_detail', core_viewsets.AnimalViewSet)
 router.register(r'users', user_viewsets.UserViewSet)
+router.register(r'house_hold', core_viewsets.HouseHoldViewSet)
+router.register(r'animal_detail', core_viewsets.AnimalDetailViewSet)
+router.register(r'owner_family', core_viewsets.FamilyDetailViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -19,4 +22,6 @@ urlpatterns = [
     path('register', user_viewsets.Register.as_view(), name='register'),
     path('login', user_viewsets.UserLogIn.as_view(), name='login'),
     path('logout', user_viewsets.UserLogOut.as_view(), name='logout'),
+
+    # core urls
 ]

@@ -406,7 +406,7 @@ class GuideLine(models.Model):
     know_about_guideline = models.BooleanField(default=False)
     involved_in_development_process = models.BooleanField(default=False)
     house_hold = models.ForeignKey('HouseHold', on_delete=models.CASCADE,
-                                   related_name='guideLine', blank=True, null=True)
+                                   related_name='guide_line', blank=True, null=True)
 
 
 class WardFallingProneArea(models.Model):
@@ -433,9 +433,9 @@ class WhoseOwnershipList(models.Model):
 
 
 class WhoseOwnershipData(models.Model):
-    ownership = models.ForeignKey('WhoseOwnershipList', on_delete=models.CASCADE, related_name='WhoseOwnershipData')
+    ownership = models.ForeignKey('WhoseOwnershipList', on_delete=models.CASCADE, related_name='whose_ownership')
     have_ownership = models.BooleanField(default=False)
-    house_hold = models.ForeignKey('HouseHold', on_delete=models.CASCADE, related_name='WhoseOwnershipData')
+    house_hold = models.ForeignKey('HouseHold', on_delete=models.CASCADE, related_name='whose_ownership')
 
 
 class HouseTypeList(models.Model):
