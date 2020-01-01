@@ -21,7 +21,6 @@ class Register(APIView):
         # self.roles_id = userParams.pop('roles_id', None)
 
         # try:
-        print('abc')
         # g = Group.objects.get(id=1)
         # except:
         # Response({
