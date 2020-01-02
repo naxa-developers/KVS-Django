@@ -1,8 +1,11 @@
 from rest_framework import viewsets
 from rest_framework.views import APIView
-from core.models import Province, District, Municipality
+from core.models import Province, District, Municipality, HouseHoldData, AnimalDetailData, OwnerFamilyData
+from api.serializers.core_serializers import HouseHoldDataSerializer, OwnerFamilyDataSerializer, \
+    AnimalDetailDataSerializer
 from django.core.serializers import serialize
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 import json
 
 
@@ -61,21 +64,26 @@ class MunicipalityGeojsonViewSet(APIView):
         return Response(municipality_geo_json)
 
 
-# class HouseHoldViewSet(viewsets.ModelViewSet):
-#     serializer_class = HouseHoldSerializer
-#     queryset = HouseHold.objects.all()
-#     permission_classes = []
-#
-#
-# class AnimalDetailViewSet(viewsets.ModelViewSet):
-#     serializer_class = AnimalDetailSerializer
-#     queryset = AnimalDetails.objects.all()
-#     permission_classes = []
-#
-#
-# class FamilyDetailViewSet(viewsets.ModelViewSet):
-#     serializer_class = OwnerFamilySerializer
-#     queryset = OwnerFamily.objects.all()
-#     permission_classes = []
+class HouseHoldViewSet(viewsets.ModelViewSet):
+    serializer_class = HouseHoldDataSerializer
+    queryset = HouseHoldData.objects.all()
+    permission_classes = []
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['index', 'id','ward_num','owner_age', 'education_owner_en',
+                        'mother_tounge_en']
+
+
+class AnimalDetailViewSet(viewsets.ModelViewSet):
+    serializer_class = AnimalDetailDataSerializer
+    queryset = AnimalDetailData.objects.all()
+    permission_classes = []
+
+
+class FamilyDetailViewSet(viewsets.ModelViewSet):
+    serializer_class = OwnerFamilyDataSerializer
+    queryset = OwnerFamilyData.objects.all()
+    permission_classes = []
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'received_social_security']
 
 

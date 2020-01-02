@@ -3,9 +3,9 @@ from api.viewssets import core_viewsets, user_viewsets
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-# router.register(r'survey', core_viewsets.SurveyViewSet)
-# router.register(r'family_members', core_viewsets.FamilyMemberViewSet)
-# router.register(r'animal_detail', core_viewsets.AnimalViewSet)
+router.register(r'house_hold', core_viewsets.HouseHoldViewSet)
+router.register(r'family_members', core_viewsets.FamilyDetailViewSet)
+router.register(r'animal_detail', core_viewsets.AnimalDetailViewSet)
 router.register(r'users', user_viewsets.UserViewSet)
 # router.register(r'house_hold', core_viewsets.HouseHoldViewSet)
 # router.register(r'animal_detail', core_viewsets.AnimalDetailViewSet)
@@ -24,4 +24,5 @@ urlpatterns = [
     path('logout', user_viewsets.UserLogOut.as_view(), name='logout'),
 
     # core urls
+
 ]
