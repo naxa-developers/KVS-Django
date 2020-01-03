@@ -118,6 +118,41 @@ class OverviewViewSet(APIView):
         return Response({'data':data})
 
 
+class UniqueValuesViewSet(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request):
+        data = []
+        ward_list = []
+        education_list =[]
+        age_group_list = []
+        number_of_family_members_list = []
+
+        house_hold = HouseHoldData.objects.all()
+        owner_family = OwnerFamilyData.objects.all()
+        wards_list = house_hold.values('ward').distinct('ward')
+        print(wards_list)
+        education_list = owner_family.values('education_level').distinct('education_level')
+        print(education_list)
+        age_group_list = owner_family.values('age_group').distinct('age_group')
+        print(age_group_list)
+
+        data.append({
+            "ward_list": wards_list,
+            "education_list": education_list,
+            "age_group_list": age_group_list,
+        })
+
+        return Response({'data':data})
+
+
+
+# class FrontViewSet(APIView):
+#     authentication_classes = []
+#     permission_classes = []
+#
+#     def get(self, request):
 
 
 
