@@ -25,5 +25,6 @@ urlpatterns = [
 
     # core_urls
     path('overview', core_viewsets.OverviewViewSet.as_view(), name='overview'),
+    path('unique', core_viewsets.UniqueValuesViewSet.as_view(), name='unique'),
 
 ]
