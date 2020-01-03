@@ -124,24 +124,28 @@ class UniqueValuesViewSet(APIView):
 
     def get(self, request):
         data = []
-        ward_list = []
-        education_list =[]
-        age_group_list = []
-        number_of_family_members_list = []
-
         house_hold = HouseHoldData.objects.all()
         owner_family = OwnerFamilyData.objects.all()
         wards_list = house_hold.values('ward').distinct('ward')
-        print(wards_list)
         education_list = owner_family.values('education_level').distinct('education_level')
-        print(education_list)
         age_group_list = owner_family.values('age_group').distinct('age_group')
-        print(age_group_list)
+        parent_indexes = owner_family.values('parent_index').distinct('parent_index')
+        num_of_family = []
+
+        for parent in parent_indexes:
+            num = OwnerFamilyData.objects.filter(parent_index=parent['parent_index']).count()
+            if num in num_of_family:
+                pass
+            else:
+                num_of_family.append({
+                    "family_num":num
+                })
 
         data.append({
             "ward_list": wards_list,
             "education_list": education_list,
             "age_group_list": age_group_list,
+            "num_of_family": num_of_family
         })
 
         return Response({'data':data})
