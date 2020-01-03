@@ -23,6 +23,7 @@ urlpatterns = [
     path('login', user_viewsets.UserLogIn.as_view(), name='login'),
     path('logout', user_viewsets.UserLogOut.as_view(), name='logout'),
 
-    # core urls
+    # core_urls
+    path('overview', core_viewsets.OverviewViewSet.as_view(), name='overview'),
 
 ]

@@ -69,7 +69,7 @@ class HouseHoldViewSet(viewsets.ModelViewSet):
     queryset = HouseHoldData.objects.all()
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['index', 'id','owner_age',]
+    filterset_fields = ['index', 'id','owner_age', 'ward', 'owner_age']
 
 
 class AnimalDetailViewSet(viewsets.ModelViewSet):
@@ -83,6 +83,42 @@ class FamilyDetailViewSet(viewsets.ModelViewSet):
     queryset = OwnerFamilyData.objects.all()
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'received_social_security']
+    filterset_fields = ['id', 'social_security_received']
+
+
+class OverviewViewSet(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request):
+        data = []
+        owner_detail = OwnerFamilyData.objects.all()
+        house_hold = HouseHoldData.objects.all()
+        total_house = HouseHoldData.objects.all().count()
+        house_ownership_male = house_hold.filter(owner_sex='Male').count()
+        house_ownership_female = house_hold.filter(owner_sex='Female').count()
+        total_population = OwnerFamilyData.objects.all().count()
+        male_population = owner_detail.filter(gender='Male').count()
+        female_population = owner_detail.filter(gender='Female').count()
+        house_received_social_security = owner_detail.filter(social_security_received='Yes').distinct('parent_index').count()
+        house_not_received_social_security = total_house - house_received_social_security
+
+        data.append({
+            "total_house": total_house,
+            "social_security_received": house_received_social_security,
+            "social_security_not_received": house_not_received_social_security,
+            "total_population": total_population,
+            "male_population": male_population,
+            "female_population": female_population,
+            "house_ownership_male": house_ownership_male,
+            "house_ownership_female": house_ownership_female,
+
+        })
+
+        return Response({'data':data})
+
+
+
+
 
 
