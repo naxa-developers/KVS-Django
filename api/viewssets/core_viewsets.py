@@ -132,7 +132,7 @@ class UniqueValuesViewSet(APIView):
 
         ward_list = []
         edu_list = []
-        age_group = []
+        age_group = ['0-20','20-40','40-60','60-80','80-100']
         house_hold = HouseHoldData.objects.all()
         owner_family = OwnerFamilyData.objects.all()
         wards_list = house_hold.values('ward').distinct('ward')
@@ -156,12 +156,13 @@ class UniqueValuesViewSet(APIView):
         print(edu_list)
 
 
-        for house in owner_family:
-            edu = house.age_group
-            if edu not in age_group:
-                age_group.append(edu)
-        print(age_group)
+        # for house in owner_family:
+        #     edu = house.age_group
+        #     if edu not in age_group:
+        #         age_group.append(edu)
+        # print(age_group)
 
+        print(age_group)
 
 
         num_of_family = []
