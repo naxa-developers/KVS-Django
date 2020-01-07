@@ -129,12 +129,41 @@ class UniqueValuesViewSet(APIView):
 
     def get(self, request):
         data = []
+
+        ward_list = []
+        edu_list = []
+        age_group = []
         house_hold = HouseHoldData.objects.all()
         owner_family = OwnerFamilyData.objects.all()
         wards_list = house_hold.values('ward').distinct('ward')
         education_list = owner_family.values('education_level').distinct('education_level')
         age_group_list = owner_family.values('age_group').distinct('age_group')
         parent_indexes = owner_family.values('parent_index').distinct('parent_index')
+        # family_mem = HouseHoldData.objects.annotate(count=Count('house_hold_data')).distinct('count')
+        print(parent_indexes)
+
+        for house in house_hold:
+            ward = house.ward
+            if ward not in ward_list:
+                ward_list.append(ward)
+        print(ward_list)
+
+
+        for house in owner_family:
+            edu = house.education_level
+            if edu not in edu_list:
+                edu_list.append(edu)
+        print(edu_list)
+
+
+        for house in owner_family:
+            edu = house.age_group
+            if edu not in age_group:
+                age_group.append(edu)
+        print(age_group)
+
+
+
         num_of_family = []
 
         for parent in parent_indexes:
@@ -142,14 +171,12 @@ class UniqueValuesViewSet(APIView):
             if num in num_of_family:
                 pass
             else:
-                num_of_family.append({
-                    "family_num":num
-                })
+                num_of_family.append(num)
 
         data.append({
-            "ward_list": wards_list,
-            "education_list": education_list,
-            "age_group_list": age_group_list,
+            "ward_list": ward_list,
+            "education_list": edu_list,
+            "age_group_list": age_group,
             "num_of_family": num_of_family
         })
 
