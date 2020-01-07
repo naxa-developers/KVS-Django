@@ -398,12 +398,322 @@ class FrontViewSet(APIView):
 
 
 
+
+
         # data = HouseHoldDataSerializer(queryset, many=True).data
 
         # json = JSONRenderer().render(data)
 
 
         return Response({'data':app_data})
+
+
+class HDDViewSet(APIView):
+    def post(self, request):
+        wards = self.request.data.get('wards', None)
+        education_lists = self.request.data.get('education_lists', None)
+        age_group_list = self.request.data.get('age_group_list', None)
+        family_members_list = self.request.data.get('family_members_list', None)
+
+        if wards:
+            wards_list = ast.literal_eval(wards)
+            queryset = HouseHoldData.objects.filter(ward__in=wards_list)
+            app_data = HouseHoldDataSerializer(queryset, many=True).data
+
+        if education_lists:
+            edu_list = ast.literal_eval(education_lists)
+            queryset = HouseHoldData.objects.filter(owner_education__in=edu_list)
+            app_data = HouseHoldDataSerializer(queryset, many=True).data
+
+
+        if family_members_list:
+            f_list = ast.literal_eval(family_members_list)
+            print(f_list)
+            query = HouseHoldData.objects.all()
+            app_data = []
+            for house in query:
+                coun = house.house_hold_data.all().count()
+                print(coun)
+                print(f_list)
+
+                if coun in f_list:
+                    id = house.index
+                    queryset = HouseHoldData.objects.filter(index=id)
+                    data = HouseHoldDataSerializer(queryset, many=True).data
+                    for i in data:
+                        app_data.append(i)
+
+        if age_group_list:
+            age_list = ast.literal_eval(age_group_list)
+            # print(age_list)
+            age_m = []
+            for i in age_list:
+                age = i.split('-')
+                age_m.append(age)
+
+            # print(age_m[0][0])
+            app_data = []
+            for age_value in age_m:
+                # print (age_value[0])
+                queryset = HouseHoldData.objects.filter(Q(owner_age__range=[age_value[0], age_value[1]]))
+                data = HouseHoldDataSerializer(queryset, many=True).data
+                for i in data:
+                    app_data.append(i)
+
+
+        if wards and education_lists:
+            wards_list = ast.literal_eval(wards)
+            edu_list = ast.literal_eval(education_lists)
+            queryset = HouseHoldData.objects.filter(ward__in=wards_list, owner_education__in=edu_list)
+            app_data = HouseHoldDataSerializer(queryset, many=True).data
+
+
+        if wards and age_group_list:
+            wards_list = ast.literal_eval(wards)
+            age_list = ast.literal_eval(age_group_list)
+            query = HouseHoldData.objects.filter(ward__in=wards_list)
+            age_m = []
+            for i in age_list:
+                age = i.split('-')
+                age_m.append(age)
+
+            # print(age_m[0][0])
+            app_data = []
+            for age_value in age_m:
+                # print (age_value[0])
+                queryset = query.filter(Q(owner_age__range=[age_value[0], age_value[1]]))
+                data = HouseHoldDataSerializer(queryset, many=True).data
+                for i in data:
+                    app_data.append(i)
+
+
+        if wards and family_members_list:
+            wards_list = ast.literal_eval(wards)
+            f_list = ast.literal_eval(family_members_list)
+            query = HouseHoldData.objects.filter(ward__in=wards_list)
+            app_data = []
+            for house in query:
+                coun = house.house_hold_data.all().count()
+                print(coun)
+                print(f_list)
+
+                if coun in f_list:
+                    id = house.index
+                    queryset = HouseHoldData.objects.filter(index=id)
+                    data = HouseHoldDataSerializer(queryset, many=True).data
+                    for i in data:
+                        app_data.append(i)
+
+
+        if education_lists and age_group_list:
+            edu_list = ast.literal_eval(education_lists)
+            age_list = ast.literal_eval(age_group_list)
+            query = HouseHoldData.objects.filter(owner_education__in=edu_list)
+            age_m = []
+            for i in age_list:
+                age = i.split('-')
+                age_m.append(age)
+
+            # print(age_m[0][0])
+            app_data = []
+            for age_value in age_m:
+                # print (age_value[0])
+                queryset = query.filter(Q(owner_age__range=[age_value[0], age_value[1]]))
+                data = HouseHoldDataSerializer(queryset, many=True).data
+                for i in data:
+                    app_data.append(i)
+
+
+        if education_lists and family_members_list:
+            edu_list = ast.literal_eval(education_lists)
+            f_list = ast.literal_eval(family_members_list)
+            query = HouseHoldData.objects.filter(owner_education__in=edu_list)
+            app_data = []
+            for house in query:
+                coun = house.house_hold_data.all().count()
+                print(coun)
+                print(f_list)
+
+                if coun in f_list:
+                    id = house.index
+                    queryset = HouseHoldData.objects.filter(index=id)
+                    data = HouseHoldDataSerializer(queryset, many=True).data
+                    for i in data:
+                        app_data.append(i)
+
+
+        if age_group_list and family_members_list:
+            f_list = ast.literal_eval(family_members_list)
+            age_list = ast.literal_eval(age_group_list)
+
+            age_m = []
+            for i in age_list:
+                age = i.split('-')
+                age_m.append(age)
+
+            # print(age_m[0][0])
+            app_data = []
+
+            for age_value in age_m:
+                query = HouseHoldData.objects.filter(Q(owner_age__range=[age_value[0], age_value[1]]))
+
+                for house in query:
+                    coun = house.house_hold_data.all().count()
+                    print(coun)
+                    print(f_list)
+
+                    if coun in f_list:
+                        id = house.index
+                        queryset = HouseHoldData.objects.filter(index=id)
+                        data = HouseHoldDataSerializer(queryset, many=True).data
+                        for i in data:
+                            app_data.append(i)
+
+
+        if wards and education_lists and family_members_list:
+            print('abc')
+            wards_list = ast.literal_eval(wards)
+            edu_list = ast.literal_eval(education_lists)
+            f_list = ast.literal_eval(family_members_list)
+            query = HouseHoldData.objects.filter(ward__in=wards_list, owner_education__in=edu_list)
+            app_data = []
+            for house in query:
+                coun = house.house_hold_data.all().count()
+                print(coun)
+                print(f_list)
+
+                if coun in f_list:
+                    id = house.index
+                    queryset = HouseHoldData.objects.filter(index=id)
+                    data = HouseHoldDataSerializer(queryset, many=True).data
+                    for i in data:
+                        app_data.append(i)
+
+
+        if wards and education_lists and age_group_list:
+            wards_list = ast.literal_eval(wards)
+            edu_list = ast.literal_eval(education_lists)
+            age_list = ast.literal_eval(age_group_list)
+            query = HouseHoldData.objects.filter(ward__in=wards_list, owner_education__in=edu_list)
+            age_m = []
+            for i in age_list:
+                age = i.split('-')
+                age_m.append(age)
+
+            # print(age_m[0][0])
+            app_data = []
+            for age_value in age_m:
+                # print (age_value[0])
+                queryset = query.filter(Q(owner_age__range=[age_value[0], age_value[1]]))
+                data = HouseHoldDataSerializer(queryset, many=True).data
+                for i in data:
+                    app_data.append(i)
+
+
+        if wards and family_members_list and age_group_list:
+            wards_list = ast.literal_eval(wards)
+            f_list = ast.literal_eval(family_members_list)
+            age_list = ast.literal_eval(age_group_list)
+
+            age_m = []
+            for i in age_list:
+                age = i.split('-')
+                age_m.append(age)
+
+            # print(age_m[0][0])
+            app_data = []
+
+            for age_value in age_m:
+                query = HouseHoldData.objects.filter(Q(owner_age__range=[age_value[0], age_value[1]]) & Q(ward__in=wards_list))
+
+                for house in query:
+                    coun = house.house_hold_data.all().count()
+                    print(coun)
+                    print(f_list)
+
+                    if coun in f_list:
+                        id = house.index
+                        queryset = HouseHoldData.objects.filter(index=id)
+                        data = HouseHoldDataSerializer(queryset, many=True).data
+                        for i in data:
+                            app_data.append(i)
+
+
+        if education_lists and family_members_list and age_group_list:
+            edu_list = ast.literal_eval(education_lists)
+            f_list = ast.literal_eval(family_members_list)
+            age_list = ast.literal_eval(age_group_list)
+
+            age_m = []
+            for i in age_list:
+                age = i.split('-')
+                age_m.append(age)
+
+            # print(age_m[0][0])
+            app_data = []
+
+            for age_value in age_m:
+                query = HouseHoldData.objects.filter(Q(owner_age__range=[age_value[0], age_value[1]]) & Q(owner_education__in=edu_list))
+
+                for house in query:
+                    coun = house.house_hold_data.all().count()
+                    print(coun)
+                    print(f_list)
+
+                    if coun in f_list:
+                        id = house.index
+                        queryset = HouseHoldData.objects.filter(index=id)
+                        data = HouseHoldDataSerializer(queryset, many=True).data
+                        for i in data:
+                            app_data.append(i)
+
+
+        if wards and education_lists and family_members_list and age_group_list:
+            wards_list = ast.literal_eval(wards)
+            edu_list = ast.literal_eval(education_lists)
+            f_list = ast.literal_eval(family_members_list)
+            age_list = ast.literal_eval(age_group_list)
+            abc = HouseHoldData.objects.filter(ward__in=wards_list, owner_education__in=edu_list)
+
+            age_m = []
+            for i in age_list:
+                age = i.split('-')
+                age_m.append(age)
+
+            # print(age_m[0][0])
+            app_data = []
+
+            for age_value in age_m:
+                query = abc.filter(Q(owner_age__range=[age_value[0], age_value[1]]))
+
+                for house in query:
+                    coun = house.house_hold_data.all().count()
+                    print(coun)
+                    print(f_list)
+
+                    if coun in f_list:
+                        id = house.index
+                        queryset = HouseHoldData.objects.filter(index=id)
+                        data = HouseHoldDataSerializer(queryset, many=True).data
+                        for i in data:
+                            app_data.append(i)
+
+
+
+        # if coun in count:
+            #     pass
+            # else:
+            #     count.append(coun)
+            #
+            #
+            # house_hold = HouseHoldData.objects.annotate(count=HouseHoldData.house_hold_data.count())
+            # print(house_hold)
+
+            # print(count)
+
+
+        return Response({'data': app_data})
+
 
 
 

@@ -538,8 +538,8 @@ class OwnerFamilyData(models.Model):
     survey = models.ForeignKey('HouseHoldData', on_delete=models.CASCADE, related_name= 'house_hold_data')
 
     def save(self, *args, **kwargs):
-        self.survey_id = self.parent_index
-        super(OwnerFamilyData, self).save(*args, **kwargs)
+        self.survey__index = self.parent_index
+        super().save(*args, **kwargs)
 
 
 class AnimalDetailData(models.Model):
@@ -551,7 +551,7 @@ class AnimalDetailData(models.Model):
     survey = models.ForeignKey('HouseHoldData', on_delete=models.CASCADE, related_name= 'animal_detail_data')
 
     def save(self, *args, **kwargs):
-        self.survey_id = self.parent_index
+        self.survey__index = self.parent_index
         super(AnimalDetailData, self).save(*args, **kwargs)
 
 
@@ -579,7 +579,7 @@ class OtherFamilyMember(models.Model):
     survey = models.ForeignKey('HouseHoldData', on_delete=models.CASCADE, related_name='other_family_member')
 
     def save(self, *args, **kwargs):
-        self.survey_id = self.parent_index
+        self.survey__index = self.parent_index
         super(OtherFamilyMember, self).save(*args, **kwargs)
 
 
