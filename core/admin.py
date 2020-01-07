@@ -1,7 +1,8 @@
 from django.contrib import admin
-from core.models import Province, District, Municipality, HouseHoldData, AnimalDetailData, OwnerFamilyData
+from core.models import Province, District, Municipality, HouseHoldData, AnimalDetailData, OwnerFamilyData, \
+    OtherFamilyMember
 
-from core.resource import OwnerFamilyResource, AnimalDetailResource, HouseholdResource
+from core.resource import OwnerFamilyResource, AnimalDetailResource, HouseholdResource, OtherFamilyResource
 
 from import_export.admin import ImportExportModelAdmin
 
@@ -31,3 +32,10 @@ class AnimalDetailAdmin(ImportExportModelAdmin):
 
 
 admin.site.register(AnimalDetailData, AnimalDetailAdmin)
+
+
+class OtherFamilyAdmin(ImportExportModelAdmin):
+    resource_class = OtherFamilyResource
+
+
+admin.site.register(OtherFamilyMember, OtherFamilyAdmin)
