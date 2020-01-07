@@ -175,10 +175,10 @@ class UniqueValuesViewSet(APIView):
                 num_of_family.append(num)
 
         data.append({
-            "ward_list": ward_list,
-            "education_list": edu_list,
-            "age_group_list": age_group,
-            "num_of_family": num_of_family
+            "ward": ward_list,
+            "education": edu_list,
+            "age group": age_group,
+            "number of family": num_of_family
         })
 
         return Response({'data':data})
