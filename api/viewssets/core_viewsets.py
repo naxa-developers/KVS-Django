@@ -71,7 +71,7 @@ class HouseHoldViewSet(viewsets.ModelViewSet):
     queryset = HouseHoldData.objects.all()
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['index', 'id','owner_age', 'ward', 'owner_age']
+    filterset_fields = ['index','owner_age', 'ward', 'owner_age']
 
     # def filter_queryset(self, queryset):
 
