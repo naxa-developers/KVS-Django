@@ -52,7 +52,7 @@ class UserRole(models.Model):
 
 
 class HouseHoldData(models.Model):
-    index = models.CharField(max_length=1000, primary_key=True)
+    index = models.CharField(max_length=1000, blank=True, null=True)
     deviceid = models.CharField(max_length=1000, blank=True, null=True)
     date = models.CharField(max_length=1000, blank=True, null=True)
     surveyor_name = models.CharField(max_length=1000, blank=True, null=True)
@@ -284,10 +284,6 @@ class OwnerFamilyData(models.Model):
     chronic_illness_other =models.CharField(max_length=200, blank=True, null=True)
     survey = models.ForeignKey('HouseHoldData', on_delete=models.CASCADE, related_name= 'house_hold_data')
 
-    def save(self, *args, **kwargs):
-        self.survey__index = self.parent_index
-        super().save(*args, **kwargs)
-
 
 class AnimalDetailData(models.Model):
     index = models.CharField(max_length=500, blank=True, null=True)
@@ -296,11 +292,6 @@ class AnimalDetailData(models.Model):
     animal_number = models.CharField(max_length=500, blank=True, null=True)
     is_it_for_commercial_purpose = models.CharField(max_length=500, blank=True, null=True)
     survey = models.ForeignKey('HouseHoldData', on_delete=models.CASCADE, related_name= 'animal_detail_data')
-
-    def save(self, *args, **kwargs):
-        self.survey__index = self.parent_index
-        super(AnimalDetailData, self).save(*args, **kwargs)
-
 
 
 
@@ -324,11 +315,6 @@ class OtherFamilyMember(models.Model):
     disablility_type = models.CharField(max_length=500, blank=True, null=True)
     disablility_type_other = models.CharField(max_length=500, blank=True, null=True)
     survey = models.ForeignKey('HouseHoldData', on_delete=models.CASCADE, related_name='other_family_member')
-
-    def save(self, *args, **kwargs):
-        self.survey__index = self.parent_index
-        super(OtherFamilyMember, self).save(*args, **kwargs)
-
 
 
 
