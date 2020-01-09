@@ -123,6 +123,282 @@ class OverviewViewSet(APIView):
         return Response({'data':data})
 
 
+class FddViewSet(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def post(self, request):
+        ward = self.request.data.get('ward')
+        social_security_received = self.request.data.get('security')
+        citizen = self.request.data.get('senior_citizen')
+        education_list = self.request.data.get('education_list')
+        flood = self.request.data.get('flood')
+        query = HouseHoldData.objects.all()
+
+        if ward:
+            wards_list = ast.literal_eval(ward)
+            queryset = query.filter(ward__in=wards_list)
+
+
+        if flood:
+            queryset = query.filter(flood_prone__icontains=flood)
+
+
+        if social_security_received:
+            index = []
+            family = OwnerFamilyData.objects.filter(social_security_received__icontains=social_security_received)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(index__in=index)
+
+
+        if citizen:
+            index = []
+            family = OwnerFamilyData.objects.filter(falling_under_social_security_criteria__icontains=citizen)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(index__in=index)
+
+
+        if education_list:
+            edu_list = ast.literal_eval(education_list)
+            queryset = query.filter(owner_education__in=edu_list)
+
+
+        if ward and flood:
+            wards_list = ast.literal_eval(ward)
+            queryset = query.filter(flood_prone__icontains=flood, ward__in=wards_list)
+
+        if ward and social_security_received:
+            wards_list = ast.literal_eval(ward)
+            index = []
+            family = OwnerFamilyData.objects.filter(social_security_received__icontains=social_security_received)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(index__in=index, ward__in=wards_list)
+
+        if ward and citizen:
+            wards_list = ast.literal_eval(ward)
+            index = []
+            family = OwnerFamilyData.objects.filter(falling_under_social_security_criteria__icontains=citizen)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(index__in=index, ward__in=wards_list)
+
+        if ward and education_list:
+            edu_list = ast.literal_eval(education_list)
+            wards_list = ast.literal_eval(ward)
+            queryset = query.filter(owner_education__in=edu_list, ward__in=wards_list)
+
+        if flood and social_security_received:
+            index = []
+            family = OwnerFamilyData.objects.filter(social_security_received__icontains=social_security_received)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(index__in=index, flood_prone__icontains=flood)
+
+        if flood and citizen:
+            index = []
+            family = OwnerFamilyData.objects.filter(falling_under_social_security_criteria__icontains=citizen)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(index__in=index, flood_prone__icontains=flood)
+
+        if flood and education_list:
+            edu_list = ast.literal_eval(education_list)
+            queryset = query.filter(owner_education__in=edu_list, flood_prone__icontains=flood)
+
+
+        if social_security_received and citizen:
+            index = []
+            family = OwnerFamilyData.objects.filter(falling_under_social_security_criteria__icontains=citizen, social_security_received__icontains=social_security_received)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(index__in=index)
+
+        if social_security_received and education_list:
+            edu_list = ast.literal_eval(education_list)
+            index = []
+            family = OwnerFamilyData.objects.filter(social_security_received__icontains=social_security_received)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(index__in=index, owner_education__in=edu_list)
+
+        if citizen and education_list:
+            edu_list = ast.literal_eval(education_list)
+            index = []
+            family = OwnerFamilyData.objects.filter(falling_under_social_security_criteria__icontains=citizen)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(index__in=index, owner_education__in=edu_list)
+
+        if ward and flood and social_security_received:
+            index = []
+            wards_list = ast.literal_eval(ward)
+            family = OwnerFamilyData.objects.filter(social_security_received__icontains=social_security_received)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(flood_prone__icontains=flood, ward__in=wards_list, index__in=index)
+
+        if ward and flood and citizen:
+            index = []
+            wards_list = ast.literal_eval(ward)
+            family = OwnerFamilyData.objects.filter(falling_under_social_security_criteria__icontains=citizen)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(index__in=index, flood_prone__icontains=flood, ward__in=wards_list)
+
+        if ward and flood and education_list:
+            wards_list = ast.literal_eval(ward)
+            edu_list = ast.literal_eval(education_list)
+
+            queryset = query.filter(ward__in=wards_list,owner_education__in=edu_list, flood_prone__icontains=flood)
+
+        if flood and social_security_received and citizen:
+            index = []
+            family = OwnerFamilyData.objects.filter(falling_under_social_security_criteria__icontains=citizen,
+                                                    social_security_received__icontains=social_security_received)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(index__in=index, flood_prone__icontains=flood)
+
+        if flood and citizen and education_list:
+            edu_list = ast.literal_eval(education_list)
+            index = []
+            family = OwnerFamilyData.objects.filter(falling_under_social_security_criteria__icontains=citizen)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(index__in=index, flood_prone__icontains=flood, owner_education__in=edu_list)
+
+        if social_security_received and citizen and education_list:
+            edu_list = ast.literal_eval(education_list)
+            index = []
+            family = OwnerFamilyData.objects.filter(falling_under_social_security_criteria__icontains=citizen,
+                                                    social_security_received__icontains=social_security_received)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(index__in=index, owner_education__in=edu_list)
+
+        if ward and flood and social_security_received and citizen:
+            index = []
+            wards_list = ast.literal_eval(ward)
+            family = OwnerFamilyData.objects.filter(falling_under_social_security_criteria__icontains=citizen,
+                                                    social_security_received__icontains=social_security_received)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(flood_prone__icontains=flood, ward__in=wards_list, index__in=index)
+
+
+        if ward and flood and social_security_received and education_list:
+            edu_list = ast.literal_eval(education_list)
+            index = []
+            wards_list = ast.literal_eval(ward)
+            family = OwnerFamilyData.objects.filter(social_security_received__icontains=social_security_received)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(flood_prone__icontains=flood, ward__in=wards_list, index__in=index, owner_education__in=edu_list)
+
+        if ward and flood and citizen and education_list:
+            edu_list = ast.literal_eval(education_list)
+            index = []
+            wards_list = ast.literal_eval(ward)
+            family = OwnerFamilyData.objects.filter(falling_under_social_security_criteria__icontains=citizen)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(flood_prone__icontains=flood, ward__in=wards_list, index__in=index,
+                                    owner_education__in=edu_list)
+
+        if ward and flood and social_security_received and citizen and education_list:
+            edu_list = ast.literal_eval(education_list)
+            index = []
+            wards_list = ast.literal_eval(ward)
+            family = OwnerFamilyData.objects.filter(falling_under_social_security_criteria__icontains=citizen,
+                                                    social_security_received__icontains=social_security_received)
+            for i in family:
+                parent_index = i.parent_index
+                if parent_index in index:
+                    pass
+                else:
+                    index.append(parent_index)
+            queryset = query.filter(flood_prone__icontains=flood, ward__in=wards_list, index__in=index, owner_education__in=edu_list)
+
+
+
+        data = HouseHoldDataSerializer(queryset, many=True).data
+
+        return Response({'data':data})
+
+
+
+
 class UniqueValuesViewSet(APIView):
     authentication_classes = []
     permission_classes = []
@@ -721,6 +997,8 @@ class MoreViewSet(APIView):
 
     def post(self, request):
         pass
+
+
 
 
 
