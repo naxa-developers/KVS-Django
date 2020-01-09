@@ -28,6 +28,7 @@ urlpatterns = [
     path('unique', core_viewsets.UniqueValuesViewSet.as_view(), name='unique'),
     path('front', core_viewsets.FrontViewSet.as_view(), name='front'),
     path('hdd', core_viewsets.HDDViewSet.as_view(), name='hdd'),
+    path('more', core_viewsets.MoreViewSet.as_view(), name='more'),
 
 
 ]

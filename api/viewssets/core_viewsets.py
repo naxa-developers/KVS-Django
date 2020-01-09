@@ -715,6 +715,15 @@ class HDDViewSet(APIView):
         return Response({'data': app_data})
 
 
+class MoreViewSet(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def post(self, request):
+        pass
+
+
+
 
 
 
