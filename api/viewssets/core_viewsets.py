@@ -122,6 +122,7 @@ class OverviewViewSet(APIView):
 
         return Response({'data':data})
 
+#front filter api
 
 class FddViewSet(APIView):
     authentication_classes = []
@@ -406,55 +407,51 @@ class UniqueValuesViewSet(APIView):
     def get(self, request):
         data = []
 
-        ward_list = []
+        flood = ['Yes','No']
+        social_security_received = ['Yes', 'No']
+        senior_citizen = ['Yes', 'No']
         edu_list = []
-        age_group = ['0-20','20-40','40-60','60-80','80-100']
-        house_hold = HouseHoldData.objects.all()
-        owner_family = OwnerFamilyData.objects.all()
-        wards_list = house_hold.values('ward').distinct('ward')
-        education_list = owner_family.values('education_level').distinct('education_level')
-        age_group_list = owner_family.values('age_group').distinct('age_group')
-        parent_indexes = owner_family.values('parent_index').distinct('parent_index')
-        # family_mem = HouseHoldData.objects.annotate(count=Count('house_hold_data')).distinct('count')
-        print(parent_indexes)
+        education_list = OwnerFamilyData.objects.values('education_level').distinct()
+        ward = HouseHoldData.objects.values('ward').distinct()
+        ward_list = []
 
-        for house in house_hold:
-            ward = house.ward
-            if ward not in ward_list:
-                ward_list.append(ward)
-        print(ward_list)
+        ward_count = ward.count()
+        print(ward_count)
+        for i in range(0, ward_count):
+            ward_list.append(ward[i]['ward'])
 
 
-        for house in owner_family:
-            edu = house.education_level
-            if edu not in edu_list:
-                edu_list.append(edu)
-        print(edu_list)
+        count= education_list.count()
+
+        for i in range(0,count):
+            if education_list[i]['education_level'] != 'nan':
+                edu_list.append(education_list[i]['education_level'])
+
+        # print(education_list[0]['education_level'])
 
 
-        # for house in owner_family:
-        #     edu = house.age_group
-        #     if edu not in age_group:
-        #         age_group.append(edu)
-        # print(age_group)
-
-        print(age_group)
 
 
-        num_of_family = []
+        # for i in education_list:
+        #     education_choice = education_list[i]['education_level']
+        #     print(education_choice)
+        #     # edu_list.append(education_choice)
 
-        for parent in parent_indexes:
-            num = OwnerFamilyData.objects.filter(parent_index=parent['parent_index']).count()
-            if num in num_of_family:
-                pass
-            else:
-                num_of_family.append(num)
+        # print(edu_list)
 
+        # for parent in parent_indexes:
+        #     num = OwnerFamilyData.objects.filter(parent_index=parent['parent_index']).count()
+        #     if num in num_of_family:
+        #         pass
+        #     else:
+        #         num_of_family.append(num)
+        #
         data.append({
             "ward": ward_list,
             "education": edu_list,
-            "age group": age_group,
-            "number of family": num_of_family
+            "senior_citizen": senior_citizen,
+            "social_security_received": social_security_received,
+            "flood": flood,
         })
 
         return Response({'data':data})
