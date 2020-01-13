@@ -114,11 +114,11 @@ class OverviewViewSet(APIView):
         house_received_social_security = owner_detail.filter(social_security_received='Yes').distinct('parent_index').count()
         house_not_received_social_security = total_house - house_received_social_security
 
-
-        edu_level_illiterate = HouseHoldData.objects.filter(owner_education__icontains='Illiterate').count()
-        edu_level_literate = HouseHoldData.objects.filter(owner_education__icontains='Literate / ordinary').count()
-        edu_level_seconday = HouseHoldData.objects.filter(owner_education__icontains='Secondary level').count()
-        edu_level_basic_level_1 = HouseHoldData.objects.filter(owner_education__icontains='Basic Level 1').count()
+        #
+        # edu_level_illiterate = HouseHoldData.objects.filter(owner_education__icontains='Illiterate').count()
+        # edu_level_literate = HouseHoldData.objects.filter(owner_education__icontains='Literate / ordinary').count()
+        # edu_level_seconday = HouseHoldData.objects.filter(owner_education__icontains='Secondary level').count()
+        # edu_level_basic_level_1 = HouseHoldData.objects.filter(owner_education__icontains='Basic Level 1').count()
 
         #mother tongue
         mother_tongue_tharu = HouseHoldData.objects.filter(mother_tongue__icontains='Tharu').count()
@@ -137,15 +137,19 @@ class OverviewViewSet(APIView):
         occupation_government_service = HouseHoldData.objects.filter(main_occupation__icontains='Government service').count()
         occupation_non_government_service = HouseHoldData.objects.filter(main_occupation__icontains='Non-government service').count()
         occupation_foreign_employment = HouseHoldData.objects.filter(main_occupation__icontains='Foreign employment').count()
-        occupation_foreign_entrepreneur = HouseHoldData.objects.filter(main_occupation__icontains='Entrepreneur').count()
-        occupation_foreign_business = HouseHoldData.objects.filter(main_occupation__icontains='Business').count()
-        occupation_foreign_labour_india = HouseHoldData.objects.filter(main_occupation__icontains='Seasonal labor, India').count()
-        occupation_foreign_labour_nepal = HouseHoldData.objects.filter(main_occupation__icontains='Seasonal labor, Nepal').count()
-        occupation_foreign_student = HouseHoldData.objects.filter(main_occupation__icontains='Student').count()
-        occupation_foreign_other = HouseHoldData.objects.filter(main_occupation__icontains='Other').count()
+        occupation_entrepreneur = HouseHoldData.objects.filter(main_occupation__icontains='Entrepreneur').count()
+        occupation_business = HouseHoldData.objects.filter(main_occupation__icontains='Business').count()
+        occupation_labour_india = HouseHoldData.objects.filter(main_occupation__icontains='Seasonal labor, India').count()
+        occupation_labour_nepal = HouseHoldData.objects.filter(main_occupation__icontains='Seasonal labor, Nepal').count()
+        occupation_student = HouseHoldData.objects.filter(main_occupation__icontains='Student').count()
+        occupation_other = HouseHoldData.objects.filter(main_occupation__icontains='Other').count()
 
         #num of family_member
-        # member_2_to_4 =
+        member_2_to_4 = HouseHoldData.objects.annotate(count=Count('house_hold_data')).filter(count__gte=2, count__lte=3).count()
+        member_4_to_6 = HouseHoldData.objects.annotate(count=Count('house_hold_data')).filter(count__gte=4, count__lte=5).count()
+        member_6_to_8 = HouseHoldData.objects.annotate(count=Count('house_hold_data')).filter(count__gte=6, count__lte=7).count()
+        member_8_to_10 = HouseHoldData.objects.annotate(count=Count('house_hold_data')).filter(count__gte=8, count__lte=10).count()
+        member_above_10 = HouseHoldData.objects.annotate(count=Count('house_hold_data')).filter(count__gte=11).count()
 
 
         data.append({
@@ -157,6 +161,30 @@ class OverviewViewSet(APIView):
             "female_population": female_population,
             "house_ownership_male": house_ownership_male,
             "house_ownership_female": house_ownership_female,
+            "mother_tongue_tharu": mother_tongue_tharu,
+            "mother_tongue_tamang":mother_tongue_tamang,
+            "mother_tongue_other": mother_tongue_other,
+            "mother_tongue_newari": mother_tongue_newari,
+            "mother_tongue_limbu": mother_tongue_limbu,
+            "mother_tongue_rajbanshi": mother_tongue_rajbanshi,
+            "mother_tongue_maithi": mother_tongue_maithi,
+            "occupation_agriculture": occupation_agriculture,
+            "occupation_agriculture_wages": occupation_agriculture_wages,
+            "occupation_daily_wages": occupation_daily_wages,
+            "occupation_government_service": occupation_government_service,
+            "occupation_non_government_service": occupation_non_government_service,
+            "occupation_foreign_employment": occupation_foreign_employment,
+            "occupation_entrepreneur": occupation_entrepreneur,
+            "occupation_business": occupation_business,
+            "occupation_labour_india": occupation_labour_india,
+            "occupation_foreign_labour_nepal": occupation_labour_nepal,
+            "occupation_student": occupation_student,
+            "occupation_other": occupation_other,
+            "member_2_to_4": member_2_to_4,
+            "member_4_to_6": member_4_to_6,
+            "member_6_to_8": member_6_to_8,
+            "member_8_to_10": member_8_to_10,
+            "member_above_10": member_above_10,
 
         })
 
