@@ -42,9 +42,10 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'import_export',
     'django_filters',
-    'user',
+    'corsheaders',
     'core',
     'api',
+    'dashboard',
 ]
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
@@ -80,7 +81,7 @@ ROOT_URLCONF = 'kvs.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

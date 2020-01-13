@@ -49,6 +49,7 @@ class UserRole(models.Model):
                                  on_delete=models.CASCADE)
     municipality = models.ForeignKey('Municipality', related_name='role',
                                      on_delete=models.CASCADE)
+    ward = models.CharField(max_length=10, blank=True, null=True)
 
 
 class HouseHoldData(models.Model):
@@ -318,9 +319,6 @@ class OtherFamilyMember(models.Model):
 
 
 
-
-
-0
 
 
 

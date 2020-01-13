@@ -74,6 +74,11 @@ class HouseHoldViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['index','owner_age', 'ward', 'owner_age']
 
+
+    # def get_queryset(self, request):
+    #     user = self.request.user
+    #     return super(self).get_queryset()
+
     # def filter_queryset(self, queryset):
 
 
@@ -109,6 +114,40 @@ class OverviewViewSet(APIView):
         house_received_social_security = owner_detail.filter(social_security_received='Yes').distinct('parent_index').count()
         house_not_received_social_security = total_house - house_received_social_security
 
+
+        edu_level_illiterate = HouseHoldData.objects.filter(owner_education__icontains='Illiterate').count()
+        edu_level_literate = HouseHoldData.objects.filter(owner_education__icontains='Literate / ordinary').count()
+        edu_level_seconday = HouseHoldData.objects.filter(owner_education__icontains='Secondary level').count()
+        edu_level_basic_level_1 = HouseHoldData.objects.filter(owner_education__icontains='Basic Level 1').count()
+
+        #mother tongue
+        mother_tongue_tharu = HouseHoldData.objects.filter(mother_tongue__icontains='Tharu').count()
+        mother_tongue_tamang = HouseHoldData.objects.filter(mother_tongue__icontains='Tamang').count()
+        mother_tongue_other = HouseHoldData.objects.filter(mother_tongue__icontains='Other').count()
+        mother_tongue_newari = HouseHoldData.objects.filter(mother_tongue__icontains='Newari').count()
+        mother_tongue_limbu = HouseHoldData.objects.filter(mother_tongue__icontains='Limbu').count()
+        mother_tongue_rajbanshi = HouseHoldData.objects.filter(mother_tongue__icontains='Rajbanshi').count()
+        mother_tongue_maithi = HouseHoldData.objects.filter(mother_tongue__icontains='Maithi').count()
+
+
+        #main occupation
+        occupation_agriculture = HouseHoldData.objects.filter(main_occupation__icontains='Agriculture').count()
+        occupation_agriculture_wages = HouseHoldData.objects.filter(main_occupation__icontains='(Agricultural wages').count()
+        occupation_daily_wages = HouseHoldData.objects.filter(main_occupation__icontains='Daily wages').count()
+        occupation_government_service = HouseHoldData.objects.filter(main_occupation__icontains='Government service').count()
+        occupation_non_government_service = HouseHoldData.objects.filter(main_occupation__icontains='Non-government service').count()
+        occupation_foreign_employment = HouseHoldData.objects.filter(main_occupation__icontains='Foreign employment').count()
+        occupation_foreign_entrepreneur = HouseHoldData.objects.filter(main_occupation__icontains='Entrepreneur').count()
+        occupation_foreign_business = HouseHoldData.objects.filter(main_occupation__icontains='Business').count()
+        occupation_foreign_labour_india = HouseHoldData.objects.filter(main_occupation__icontains='Seasonal labor, India').count()
+        occupation_foreign_labour_nepal = HouseHoldData.objects.filter(main_occupation__icontains='Seasonal labor, Nepal').count()
+        occupation_foreign_student = HouseHoldData.objects.filter(main_occupation__icontains='Student').count()
+        occupation_foreign_other = HouseHoldData.objects.filter(main_occupation__icontains='Other').count()
+
+        #num of family_member
+        # member_2_to_4 =
+
+
         data.append({
             "total_house": total_house,
             "social_security_received": house_received_social_security,
@@ -131,9 +170,9 @@ class FddViewSet(APIView):
 
     def post(self, request):
         ward = self.request.data.get('ward')
-        social_security_received = self.request.data.get('security')
+        social_security_received = self.request.data.get('social_security_received')
         citizen = self.request.data.get('senior_citizen')
-        education_list = self.request.data.get('education_list')
+        education_list = self.request.data.get('education')
         flood = self.request.data.get('flood')
         query = HouseHoldData.objects.all()
 
