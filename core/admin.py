@@ -1,6 +1,6 @@
 from django.contrib import admin
 from core.models import Province, District, Municipality, HouseHoldData, AnimalDetailData, OwnerFamilyData, \
-    OtherFamilyMember
+    OtherFamilyMember, UserRole
 
 from core.resource import OwnerFamilyResource, AnimalDetailResource, HouseholdResource, OtherFamilyResource
 
@@ -10,6 +10,7 @@ from import_export.admin import ImportExportModelAdmin
 admin.site.register(Province)
 admin.site.register(District)
 admin.site.register(Municipality)
+admin.site.register(UserRole)
 
 
 class HouseHoldAdmin(ImportExportModelAdmin):

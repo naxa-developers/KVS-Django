@@ -11,6 +11,9 @@ from django.db.models import Count, Q
 from rest_framework.renderers import JSONRenderer
 import ast
 from core.generals import edu_matching
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 
 class ProvinceGeojsonViewSet(APIView):
     permission_classes = []
@@ -193,8 +196,7 @@ class OverviewViewSet(APIView):
 #front filter api
 
 class FddViewSet(APIView):
-    authentication_classes = []
-    permission_classes = []
+    permission_classes = [IsAuthenticated,]
 
     def post(self, request):
         ward = self.request.data.get('ward')
@@ -202,6 +204,10 @@ class FddViewSet(APIView):
         citizen = self.request.data.get('senior_citizen')
         education_list = self.request.data.get('education')
         flood = self.request.data.get('flood')
+        #3
+        user = self.request.user
+        print(user)
+        print('abc')
         query = HouseHoldData.objects.all()
 
         if ward:
@@ -479,6 +485,9 @@ class FddViewSet(APIView):
         data = HouseHoldDataSerializer(queryset, many=True).data
 
         return Response({'data':data})
+
+
+
 
 
 
@@ -1076,7 +1085,125 @@ class MoreViewSet(APIView):
     permission_classes = []
 
     def post(self, request):
-        pass
+        data = self.request.data
+
+        # if field:
+        #     queryset = HouseHoldData.objects.filter(field__icontains='Agriculture')
+        #     data = HouseHoldDataSerializer(queryset, many=True).data
+        household = HouseHoldData.objects.all()
+
+        kwargs = {
+            '{0}__{1}'.format(data['field'], 'icontains'): data['value'],
+        }
+        household = household.filter(**kwargs)
+        data = HouseHoldDataSerializer(household, many=True).data
+
+        return Response({'data': data})
+
+
+
+class MoreDropDownViewSet(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request):
+        education_choice = []
+
+        hazard_choices = HouseHoldData.objects.values('hazard_type').distinct()
+        education_list = HouseHoldData.objects.values('owner_education').distinct()
+        ethnicity = HouseHoldData.objects.values('owner_caste').distinct()
+        mother_tongue_list = HouseHoldData.objects.values('mother_tongue').distinct()
+        religion_list = HouseHoldData.objects.values('religion').distinct()
+        main_occupation_list = HouseHoldData.objects.values('main_occupation').distinct()
+        land_ownership_list = HouseHoldData.objects.values('owned_land_area').distinct()
+        market_distance_list = HouseHoldData.objects.values('distance_to_nearest_market').distinct()
+        # house_type_list = HouseHoldData.objects.values('house_type').distinct()
+
+        distance_to_nearest_market_choice = []
+        ethnicity_choice = []
+        mother_tongue_choice = []
+        religion_choice = []
+        land_ownership_choice = []
+
+        # education_choice = ['Literate / ', 'Illiterate', ]
+
+        count = education_list.count()
+
+        for i in range(0, count):
+            if education_list[i]['owner_education'] != 'nan':
+                education_choice.append(education_list[i]['owner_education'])
+
+        e_count = ethnicity.count()
+        for i in range(0, e_count):
+            if ethnicity[i]['owner_caste'] != 'nan':
+                ethnicity_choice.append(ethnicity[i]['owner_caste'])
+
+
+        m_count = mother_tongue_list.count()
+        for i in range(0, m_count):
+            if mother_tongue_list[i]['mother_tongue'] != 'nan':
+                mother_tongue_choice.append(mother_tongue_list[i]['mother_tongue'])
+
+
+        r_count = religion_list.count()
+        for i in range(0, r_count):
+            if religion_list[i]['religion'] != 'nan':
+                religion_choice.append(religion_list[i]['religion'])
+
+        l_count = land_ownership_list.count()
+        for i in range(0, l_count):
+            if land_ownership_list[i]['owned_land_area'] != 'nan':
+                land_ownership_choice.append(land_ownership_list[i]['owned_land_area'])
+
+        m_count = market_distance_list.count()
+        for i in range(0, m_count):
+            if market_distance_list[i]['distance_to_nearest_market'] != 'nan':
+                distance_to_nearest_market_choice.append(market_distance_list[i]['distance_to_nearest_market'])
+
+
+        # h_count = house_type_list.count()
+        # for i in range(0, h_count):
+        #     if house_type_list[i]['house_type'] != 'nan':
+        #         house_type_choice.append(house_type_list[i]['house_type'])
+
+
+        
+        facility_choice = ['Radio', 'Television', 'Mobile/Telephone', 'Oven','Fridge', 'Washing Machine', 'Other']
+        house_map_registered_choice = ['Yes', 'No', 'Don\'t know']
+        water_source_choice = ['Public Tap-stand', 'Private Tap-stand', 'spring source', 'Tubewell', 'Well/Spout',
+                               'River/Rivulet', 'Others']
+        fuel_type_choice = ['Kerosene', 'Wood/Coal', 'LP Gas', 'Electrical', 'Bio-gas', 'Other']
+        owner_sex_choice = ['Male', 'Female', 'Both']
+        toilet_type_choice = ['Pit hole', 'Ring', 'Bio-gas attached', 'Septic tank', 'other']
+        house_type_choice = ['Permanent house with CGI roof', 'Permanent house with slate roof',
+                             'Permanent house with RCC structure', 'Semi-permanent house', 'Temporary house with CGI roof',
+                             'Temporary house with thatched/mud roof']
+        occupation_choice = ['Agriculture', 'Agricultural wages', 'Daily wages', 'Government service',
+                             'Non-government service', 'Foreign employment', 'Entrepreneur', 'Business',
+                             'Student', 'Other']
+        hazard_choice = ['Flood', 'Landslide', 'Fire', 'Road', 'Snake', 'Animal', 'Lightening', 'Black', 'Cold wind']
+        technical_choice = ['Doctor', 'Nurse', 'Engineer', 'carpenter', 'Knocker/carpenter', 'plumber', 'Sub-engineer',
+                            'HA/Lab Asst', 'electrician']
+        category = [{'hazard_type':hazard_choice ,'owner_education':education_choice, 'manpower_type':technical_choice,
+                     'owner_caste':ethnicity_choice, 'mother_tongue':mother_tongue_choice, 'religion':religion_choice,
+                     'main_occupation': occupation_choice, 'owner_sex': owner_sex_choice,
+                     'house_type':house_type_choice, 'water_sources': water_source_choice,
+                     'toilet_type':toilet_type_choice, 'fuel_type': fuel_type_choice,
+                     'house_map_registered': house_map_registered_choice,
+                     'owned_land_area': land_ownership_choice,
+                     'facilities_type': facility_choice,
+                    'distance_to_nearest_market': distance_to_nearest_market_choice
+                     }]
+
+
+
+
+        # all_fields = HouseHoldData._meta.get_fields()
+        # for i in all_fields:
+        #     print(i)
+
+        return Response({'data':category})
+
 
 
 
