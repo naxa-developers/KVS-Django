@@ -44,12 +44,15 @@ class UserRole(models.Model):
     group = models.ForeignKey(Group, related_name='role',
                               on_delete=models.CASCADE)
     province = models.ForeignKey('Province', related_name='role',
-                                 on_delete=models.CASCADE)
+                                 on_delete=models.CASCADE, null=True, blank=True)
     district = models.ForeignKey('District', related_name='role',
-                                 on_delete=models.CASCADE)
+                                 on_delete=models.CASCADE, null=True, blank=True)
     municipality = models.ForeignKey('Municipality', related_name='role',
-                                     on_delete=models.CASCADE)
+                                     on_delete=models.CASCADE, null=True, blank=True)
     ward = models.CharField(max_length=10, blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username
 
 
 class HouseHoldData(models.Model):
