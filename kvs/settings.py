@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'import_export',
     'django_filters',
     'corsheaders',
+    'debug_toolbar',
     'core',
     'api',
     'dashboard',
@@ -59,6 +60,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
+
+INTERNAL_IPS = [
+    # ...
+    '0.0.0.0:8002',
+    # ...
 ]
 
 CORS_ORIGIN_ALLOW_ALL=True
