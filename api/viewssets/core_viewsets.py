@@ -208,7 +208,7 @@ class FddViewSet(APIView):
         #3
         user = self.request.user
         roles = user.role.all()
-        user_ward = [7]
+        user_ward = []
         user_municipality = []
         user_district = []
         user_province = []
@@ -1232,6 +1232,7 @@ class MoreDropDownViewSet(APIView):
         disaster_information_medium_choice = ['Hoarding board', 'Local people', 'Radio/T.V', 'Newspaper', 'Related body',
                                               'Other', 'haven’t received any information'
                                               ]
+        insurance_choice = ['Yes', 'No']
         food_choice = ['Pulses', 'Rice', 'Roti', 'Vegetable', 'Fish', 'Meat', 'Greens', 'Milk', 'oil', 'sag']
         animals = ['Buffalo', 'Cow', 'Goat', 'Dog', 'Duck', 'Fish', 'Hen', 'Male Buffalo', 'Ox', 'Pigeon', 'Pig', 'Fish']
         facility_choice = ['Radio', 'Television', 'Mobile/Telephone', 'Oven','Fridge', 'Washing Machine', 'Other']
@@ -1261,6 +1262,7 @@ class MoreDropDownViewSet(APIView):
                     'distance_to_nearest_market': distance_to_nearest_market_choice,
                      'animals': animals, 'food_type':food_choice,
                      'disaster_information_medium':disaster_information_medium_choice,
+                     'insurance': insurance_choice,
                      }]
 
 
