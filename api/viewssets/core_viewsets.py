@@ -118,11 +118,12 @@ class OverviewViewSet(APIView):
         house_received_social_security = owner_detail.filter(social_security_received='Yes').distinct('parent_index').count()
         house_not_received_social_security = total_house - house_received_social_security
 
-        #
-        # edu_level_illiterate = HouseHoldData.objects.filter(owner_education__icontains='Illiterate').count()
-        # edu_level_literate = HouseHoldData.objects.filter(owner_education__icontains='Literate / ordinary').count()
-        # edu_level_seconday = HouseHoldData.objects.filter(owner_education__icontains='Secondary level').count()
-        # edu_level_basic_level_1 = HouseHoldData.objects.filter(owner_education__icontains='Basic Level 1').count()
+
+        edu_level_illiterate = HouseHoldData.objects.filter(owner_education__icontains='Illiterate').count()
+        edu_level_literate = HouseHoldData.objects.filter(owner_education__icontains='Literate / ordinary').count()
+        edu_level_seconday = HouseHoldData.objects.filter(owner_education__icontains='Secondary level').count()
+        edu_level_basic_level_1 = HouseHoldData.objects.filter(owner_education__icontains='Basic Level 1').count()
+        edu_level_graduate = HouseHoldData.objects.filter(owner_education__icontains='Graduate').count()
 
         #mother tongue
         mother_tongue_tharu = HouseHoldData.objects.filter(mother_tongue__icontains='Tharu').count()
@@ -189,6 +190,11 @@ class OverviewViewSet(APIView):
             "member_6_to_8": member_6_to_8,
             "member_8_to_10": member_8_to_10,
             "member_above_10": member_above_10,
+            "edu_level_illiterate": edu_level_illiterate,
+            "edu_level_literate": edu_level_literate,
+            "edu_level_seconday": edu_level_seconday,
+            "edu_level_basic_level_1": edu_level_basic_level_1,
+            "edu_level_graduate": edu_level_graduate,
 
         })
 
