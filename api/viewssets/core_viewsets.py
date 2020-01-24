@@ -251,7 +251,6 @@ class FddViewSet(APIView):
         query = HouseHoldData.objects.filter(q)
 
         if ward:
-            print('abc')
             wards_list = ast.literal_eval(ward)
             queryset = query.filter(ward__in=wards_list)
 
@@ -275,6 +274,7 @@ class FddViewSet(APIView):
         if citizen:
             index = []
             family = OwnerFamilyData.objects.filter(falling_under_social_security_criteria__icontains=citizen)
+
             for i in family:
                 parent_index = i.parent_index
                 if parent_index in index:
@@ -282,6 +282,7 @@ class FddViewSet(APIView):
                 else:
                     index.append(parent_index)
             queryset = query.filter(index__in=index)
+            print(queryset.count())
 
 
         if education_list:
@@ -394,6 +395,7 @@ class FddViewSet(APIView):
             queryset = query.filter(index__in=index)
 
         if ward and flood and social_security_received:
+            print('ff')
             index = []
             wards_list = ast.literal_eval(ward)
             family = OwnerFamilyData.objects.filter(social_security_received__icontains=social_security_received)
@@ -508,6 +510,7 @@ class FddViewSet(APIView):
             queryset = query.filter(flood_prone__icontains=flood, ward__in=wards_list, index__in=index)
 
         if ward and flood and social_security_received and citizen and education_list:
+            print('vvv')
             edu_list = ast.literal_eval(education_list)
             query = edu_matching(edu_list)
             index = []
