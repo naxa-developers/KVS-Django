@@ -41,5 +41,6 @@ urlpatterns = [
     path('more', core_viewsets.MoreViewSet.as_view(), name='more'),
     path('more_dropdown', core_viewsets.MoreDropDownViewSet.as_view(), name='drop'),
     path('fdd', core_viewsets.FddViewSet.as_view(), name='more'),
+    path('highlight', core_viewsets.HighlightDataViewSet.as_view(), name='highlight'),
 
 ]

@@ -1134,6 +1134,43 @@ class MoreDropDownViewSet(APIView):
         return Response({'data':category})
 
 
+class HighlightDataViewSet(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self,request):
+        data = []
+        query = OwnerFamilyData.objects.all()
+        house_hold_count = HouseHoldData.objects.all().count()
+        num_of_people = query.count()
+        q = Q()
+
+
+        q = Q(age_group__icontains='less than 5 years') | Q(age_group__icontains='5-15 years')
+
+        num_of_children = query.filter(q).count()
+
+        senior_citizen = query.filter(falling_under_social_security_criteria__icontains='senior citizen').count()
+
+        district = HouseHoldData.objects.values('district').distinct().count()
+
+        data.append({
+            'house_hold_count': house_hold_count,
+            'num_of_people': num_of_people,
+            'num_of_children': num_of_children,
+            'senior_citizen': senior_citizen,
+            'district': district
+        })
+
+        return Response({'data':data})
+
+
+
+
+
+
+
+
 
 
 
