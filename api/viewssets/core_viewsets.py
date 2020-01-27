@@ -97,8 +97,16 @@ class FamilyDetailViewSet(viewsets.ModelViewSet):
     serializer_class = OwnerFamilyDataSerializer
     queryset = OwnerFamilyData.objects.all()
     permission_classes = []
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'social_security_received']
+    # filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['id', 'social_security_received']
+
+
+    def get_queryset(self):
+        house_index = self.request.query_params.get('house_index')
+        queryset = OwnerFamilyData.objects.filter(parent_index=house_index)
+
+        return queryset
+
 
 
 class OverviewViewSet(APIView):
