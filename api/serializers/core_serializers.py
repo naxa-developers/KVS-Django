@@ -20,11 +20,12 @@ class MunicipalitySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class HouseHoldDataSerializer(serializers.ModelSerializer):
-    # num_of_family = serializers.SerializerMethodField()
+    family_size = serializers.SerializerMethodField()
+    social_security_received = serializers.SerializerMethodField()
 
     class Meta:
         model = HouseHoldData
-        fields = ('index', 'deviceid', 'date', 'surveyor_name', 'place_name', 'province', 'district', 'municipality',
+        fields = ('id', 'index', 'deviceid', 'date', 'surveyor_name', 'place_name', 'province', 'district', 'municipality',
                   'ward', 'house_number', 'latitude', 'longitude', 'altitude', 'gps_precision', 'household_number',
                   'owner_name', 'owner_age', 'owner_sex', 'owner_status', 'owner_status_other', 'owner_caste',
                   'owner_caste_other', 'religion', 'religion_other', 'mother_tongue', 'mother_tongue_other',
@@ -76,8 +77,24 @@ class HouseHoldDataSerializer(serializers.ModelSerializer):
                   'house_damage_type_during_earthquake', 'house_damage_type_during_earthquake_other', 'migrated_place_during_earthquake',
                   'damages_occurred_during_fire', 'other_damages_occured_during_fire', 'house_damage_type_during_fire',
                   'house_damage_type_during_fire_other', 'fire_extinguisher_in_house', 'migrated_place_during_fire',
-                  'migrated_place_during_fire_other', 'remarks'
+                  'migrated_place_during_fire_other', 'remarks', 'family_size' , 'social_security_received'
                   )
+
+    def get_family_size(self,obj):
+        size = obj.house_hold_data.all().count()
+        return size
+
+
+    def get_social_security_received(self, obj):
+        query = obj.house_hold_data.filter(social_security_received__icontains='Yes')
+        if not query:
+            return False
+        else:
+            return True
+
+
+
+
 
 
 
