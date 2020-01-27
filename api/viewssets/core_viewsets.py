@@ -93,6 +93,13 @@ class AnimalDetailViewSet(viewsets.ModelViewSet):
     permission_classes = []
 
 
+    def get_queryset(self):
+        house_index = self.request.query_params.get('house_index')
+        queryset = AnimalDetailData.objects.filter(parent_index=house_index)
+
+        return queryset
+
+
 class FamilyDetailViewSet(viewsets.ModelViewSet):
     serializer_class = OwnerFamilyDataSerializer
     queryset = OwnerFamilyData.objects.all()
