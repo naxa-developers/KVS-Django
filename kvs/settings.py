@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'core',
     'api',
     'dashboard',
+    'front',
 ]
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True

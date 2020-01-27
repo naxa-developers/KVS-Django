@@ -1,5 +1,5 @@
 from django.urls import path, include
-from api.viewssets import core_viewsets, user_viewsets
+from api.viewssets import core_viewsets, user_viewsets, front_viewsets
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -7,6 +7,16 @@ router.register(r'house_hold', core_viewsets.HouseHoldViewSet)
 router.register(r'family_members', core_viewsets.FamilyDetailViewSet)
 router.register(r'animal_detail', core_viewsets.AnimalDetailViewSet)
 router.register(r'users', user_viewsets.UserViewSet)
+
+
+# front page api urls
+router.register(r'header', front_viewsets.HeaderViewSet)
+router.register(r'contact', front_viewsets.ContactViewSet)
+router.register(r'mission', front_viewsets.OurMissionViewSet)
+router.register(r'about', front_viewsets.AboutProjectViewSet)
+router.register(r'system_features', front_viewsets.OverallSystemFeaturesViewSet)
+
+
 # router.register(r'house_hold', core_viewsets.HouseHoldViewSet)
 # router.register(r'animal_detail', core_viewsets.AnimalDetailViewSet)
 # router.register(r'owner_family', core_viewsets.FamilyDetailViewSet)
