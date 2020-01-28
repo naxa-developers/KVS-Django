@@ -77,7 +77,7 @@ class HouseHoldDataSerializer(serializers.ModelSerializer):
                   'house_damage_type_during_earthquake', 'house_damage_type_during_earthquake_other', 'migrated_place_during_earthquake',
                   'damages_occurred_during_fire', 'other_damages_occured_during_fire', 'house_damage_type_during_fire',
                   'house_damage_type_during_fire_other', 'fire_extinguisher_in_house', 'migrated_place_during_fire',
-                  'migrated_place_during_fire_other', 'remarks', 'family_size' , 'social_security_received'
+                  'migrated_place_during_fire_other', 'remarks', 'family_size' , 'social_security_received', 'owned_land_image_thumbnail'
                   )
 
     def get_family_size(self,obj):
