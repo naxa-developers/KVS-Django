@@ -258,8 +258,8 @@ class FddViewSet(APIView):
             q &= Q(district__in=user_district)
 
 
-        # if user_province:
-        #     q &= Q(province__in=user_province)
+        if user_province:
+            q &= Q(province__in=user_province)
 
 
 

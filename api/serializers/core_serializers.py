@@ -100,7 +100,8 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
     class Meta:
         model = HouseHoldData
         fields = ('id', 'index', 'province', 'district', 'municipality', 'owner_name', 'owner_age', 'owner_sex',
-                  'owner_citizenship_no', 'contact_no', 'ward', 'family_size', 'social_security_received')
+                  'owner_citizenship_no', 'contact_no', 'ward', 'family_size', 'social_security_received',
+                  'latitude', 'longitude')
 
 
     def get_family_size(self,obj):
