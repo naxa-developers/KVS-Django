@@ -94,8 +94,26 @@ class HouseHoldDataSerializer(serializers.ModelSerializer):
 
 
 
+class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
+    family_size = serializers.SerializerMethodField()
+    social_security_received = serializers.SerializerMethodField()
+    class Meta:
+        model = HouseHoldData
+        fields = ('id', 'index', 'province', 'district', 'municipality', 'owner_name', 'owner_age', 'owner_sex',
+                  'owner_citizenship_no', 'contact_no', 'ward', 'family_size', 'social_security_received')
 
 
+    def get_family_size(self,obj):
+        size = obj.house_hold_data.all().count()
+        return size
+
+
+    def get_social_security_received(self, obj):
+        query = obj.house_hold_data.filter(social_security_received__icontains='Yes')
+        if not query:
+            return False
+        else:
+            return True
 
 
 class AnimalDetailDataSerializer(serializers.ModelSerializer):

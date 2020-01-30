@@ -44,6 +44,16 @@ class Municipality(models.Model):
         return self.name
 
 
+class Ward(models.Model):
+    name = models.CharField(max_length=50)
+    province = models.ForeignKey('Province', related_name='ward',
+                                 on_delete=models.CASCADE, blank=True, null=True)
+    district = models.ForeignKey('District', related_name='ward',
+                                 on_delete=models.CASCADE)
+    municipality = models.ForeignKey('Municipality', related_name='ward',
+                                 on_delete=models.CASCADE)
+
+
 class UserRole(models.Model):
     user = models.ForeignKey(User, related_name='role', on_delete=models.CASCADE)
     group = models.ForeignKey(Group, related_name='role',

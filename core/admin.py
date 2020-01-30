@@ -1,15 +1,17 @@
 from django.contrib import admin
 from core.models import Province, District, Municipality, HouseHoldData, AnimalDetailData, OwnerFamilyData, \
-    OtherFamilyMember, UserRole
+    OtherFamilyMember, UserRole, Ward
 
 from core.resource import OwnerFamilyResource, AnimalDetailResource, HouseholdResource, OtherFamilyResource
 
 from import_export.admin import ImportExportModelAdmin
 
 
+
 admin.site.register(Province)
 admin.site.register(District)
 admin.site.register(Municipality)
+admin.site.register(Ward)
 admin.site.register(UserRole)
 
 
