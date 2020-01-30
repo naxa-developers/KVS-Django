@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from core.models import Province, District, Municipality, HouseHoldData, AnimalDetailData, OwnerFamilyData
 from api.serializers.core_serializers import HouseHoldDataSerializer, OwnerFamilyDataSerializer, \
-    AnimalDetailDataSerializer
+    AnimalDetailDataSerializer, HouseHoldAlternativeSerializer
 from django.core.serializers import serialize
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -258,8 +258,8 @@ class FddViewSet(APIView):
             q &= Q(district__in=user_district)
 
 
-        if user_province:
-            q &= Q(province__in=user_province)
+        # if user_province:
+        #     q &= Q(province__in=user_province)
 
 
 
@@ -684,7 +684,7 @@ class FddViewSet(APIView):
 
 
 
-        data = HouseHoldDataSerializer(queryset, many=True).data
+        data = HouseHoldAlternativeSerializer(queryset, many=True).data
 
         return Response({'data':data})
 
