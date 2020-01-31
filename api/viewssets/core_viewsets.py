@@ -264,6 +264,7 @@ class FddViewSet(APIView):
 
 
         query = HouseHoldData.objects.filter(q)
+        print(query.count())
 
         if ward and flood and social_security_received and citizen and education_list:
             print('vvv')
