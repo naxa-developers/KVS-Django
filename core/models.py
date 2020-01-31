@@ -16,6 +16,10 @@ class Province(models.Model):
     code = models.IntegerField(null=True, blank=True)
     boundary = MultiPolygonField(null=True, blank=True)
 
+    class Meta:
+        ordering = ['name']
+
+
     def __str__(self):
         return self.name
 
@@ -30,6 +34,10 @@ class District(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['name']
+
+
 
 class Municipality(models.Model):
     name = models.CharField(max_length=50)
@@ -39,6 +47,10 @@ class Municipality(models.Model):
                                  on_delete=models.CASCADE)
     hlcit_code = models.CharField(max_length=1000, blank=True, null=True)
     boundary = MultiPolygonField(null=True, blank=True)
+
+
+    class Meta:
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -153,6 +165,7 @@ class HouseHoldData(models.Model):
     owned_land_area = models.CharField(max_length=1000, blank=True, null=True)
     owned_land_near_river = models.CharField(max_length=1000, blank=True, null=True)
     owned_land_area_near_river = models.CharField(max_length=1000, blank=True, null=True)
+    owned_land_image_name = models.CharField(max_length=1000, blank=True, null=True)
     owned_land_image = models.ImageField(upload_to='house_hold', blank=True, null=True)
     technical_manpower_presence = models.CharField(max_length=1000, blank=True, null=True)
     manpower_type = models.CharField(max_length=1000, blank=True, null=True)
@@ -308,11 +321,13 @@ class HouseHoldData(models.Model):
         return True
 
     def save(self, *args, **kwargs):
+        if self.owned_land_image:
+            if not self.make_thumbnail():
+                # set to a default thumbnail
+                raise Exception('Could not create thumbnail - is the file type valid?')
 
-        if not self.make_thumbnail():
-            # set to a default thumbnail
-            raise Exception('Could not create thumbnail - is the file type valid?')
-
+        else:
+            pass
         super(HouseHoldData, self).save(*args, **kwargs)
 
     def __str__(self):

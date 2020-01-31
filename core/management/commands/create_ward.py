@@ -16,20 +16,21 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         df = pd.read_csv(sys.argv[3])
-        # for row in range(0, 6781):
-        #     print(row)
-        #     district=District.objects.get(name=(df['DISTRICT'][row]).upper())
-        #     print(district.name)
+        for row in range(0, 6781):
+            print(row)
+            # district=District.objects.get(name=(df['DISTRICT'][row]).upper())
+            municipality = Municipality.objects.get(name=df['GaPa_NaPa'][row])
+            print(municipality.name)
 
-        ward = [
-            Ward(
-                name=df['NEW_WARD_N'][row],
-                municipality=Municipality.objects.get(name=df['GaPa_NaPa'][row], district=District.objects.get(name=(df['DISTRICT'][row]).upper())),
-                district=District.objects.get(name=(df['DISTRICT'][row]).upper()),
-                province=Province.objects.get(code=df['STATE_CODE'][row])
-
-        ) for row in range(0, 6780)
-        ]
-        ward = Ward.objects.bulk_create(ward)
-        if ward:
-            self.stdout.write('Successfully loaded wards.."%s"' % ward)
+        # ward = [
+        #     Ward(
+        #         name=df['NEW_WARD_N'][row],
+        #         municipality=Municipality.objects.get(name=df['GaPa_NaPa'][row], district=District.objects.get(name=(df['DISTRICT'][row]).upper())),
+        #         district=District.objects.get(name=(df['DISTRICT'][row]).upper()),
+        #         province=Province.objects.get(code=df['STATE_CODE'][row])
+        #
+        # ) for row in range(0, 6780)
+        # ]
+        # ward = Ward.objects.bulk_create(ward)
+        # if ward:
+        #     self.stdout.write('Successfully loaded wards.."%s"' % ward)
