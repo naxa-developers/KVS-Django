@@ -7,13 +7,13 @@ from django.core.serializers import serialize
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 import json
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Sum
 from rest_framework.renderers import JSONRenderer
 import ast
 from core.generals import edu_matching
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from django.db.models import Q
+# from django.db.models import Q
 
 
 class ProvinceGeojsonViewSet(APIView):
@@ -117,59 +117,115 @@ class FamilyDetailViewSet(viewsets.ModelViewSet):
 
 
 class OverviewViewSet(APIView):
-    authentication_classes = []
-    permission_classes = []
+    permission_classes = [IsAuthenticated,]
 
     def get(self, request):
+        user = self.request.user
+        roles = user.role.all()
+        user_ward = []
+        user_municipality = []
+        user_district = []
+        user_province = []
+        for i in roles:
+            if i.ward:
+                user_ward.append(i.ward)
+            if i.province:
+                user_province.append(i.province.id)
+            if i.municipality:
+                user_municipality.append(i.municipality.id)
+            if i.district:
+                user_district.append(i.district.id)
+
+        # creating dynamic q objects to query based on user ward, district and municipality and province
+        q = Q()
+        if user_ward:
+            q &= Q(ward__in=user_ward)
+
+        if user_municipality:
+            q &= Q(municipality__in=user_municipality)
+
+        if user_district:
+            q &= Q(district__in=user_district)
+
+        if user_province:
+            q &= Q(province__in=user_province)
+
         data = []
-        owner_detail = OwnerFamilyData.objects.all()
-        house_hold = HouseHoldData.objects.all()
-        total_house = HouseHoldData.objects.all().count()
+        # owner_detail = OwnerFamilyData.objects.all()
+        house_hold = HouseHoldData.objects.filter(q)
+        # print(house_hold.count())
+        total_house = house_hold.count()
         house_ownership_male = house_hold.filter(owner_sex='Male').count()
         house_ownership_female = house_hold.filter(owner_sex='Female').count()
+
         total_population = OwnerFamilyData.objects.all().count()
-        male_population = owner_detail.filter(gender='Male').count()
-        female_population = owner_detail.filter(gender='Female').count()
-        house_received_social_security = owner_detail.filter(social_security_received='Yes').distinct('parent_index').count()
+
+        # owner_detail = []
+        # for i in house_hold:
+        #     house_id = i.id
+        #     owner_fam = OwnerFamilyData.objects.filter(survey__id=house_id)
+        #     for each in owner_fam:
+        #         owner_detail.append(each)
+        #
+        # print(owner_detail.count())
+        #
+        # male_population = owner_detail.filter(gender='Male').count()
+        # female_population = owner_detail.filter(gender='Female').count()
+        # house_received_social_security = owner_detail.filter(social_security_received='Yes').distinct('parent_index').count()
+
+        male = house_hold.annotate(male_count=Count('house_hold_data',filter=Q(house_hold_data__gender__icontains='male')),
+                                           female_count=Count('house_hold_data',filter=Q(house_hold_data__gender__icontains='Female')),
+                                           socail_count=Count('house_hold_data', filter=Q(house_hold_data__social_security_received='Yes')),
+                                           ).aggregate(total_male=Sum('male_count'),total_feamle=Sum('female_count'),total_social=Sum('socail_count'))
+
+
+        #
+        # female = house_hold.annotate(count=Count('house_hold_data',filter=Q(house_hold_data__gender__icontains='Female'))).aggregate(Sum('count'))
+        # house_received_social_security = house_hold.annotate(count=Count('house_hold_data',filter=Q(social_security_received='Yes'))).aggregate(Sum('count'))
+        # # house_received_social_security = owner_detail.filter(social_security_received='Yes').distinct('parent_index').count()
+        #
+        male_population = male.get('total_male')
+        female_population = male.get('total_feamle')
+        house_received_social_security = male.get('total_social')
         house_not_received_social_security = total_house - house_received_social_security
 
 
-        edu_level_illiterate = HouseHoldData.objects.filter(owner_education__icontains='Illiterate').count()
-        edu_level_literate = HouseHoldData.objects.filter(owner_education__icontains='Literate / ordinary').count()
-        edu_level_seconday = HouseHoldData.objects.filter(owner_education__icontains='Secondary level').count()
-        edu_level_basic_level_1 = HouseHoldData.objects.filter(owner_education__icontains='Basic Level 1').count()
-        edu_level_graduate = HouseHoldData.objects.filter(owner_education__icontains='Graduate').count()
+        edu_level_illiterate = house_hold.filter(owner_education__icontains='Illiterate').count()
+        edu_level_literate = house_hold.filter(owner_education__icontains='Literate / ordinary').count()
+        edu_level_seconday = house_hold.filter(owner_education__icontains='Secondary level').count()
+        edu_level_basic_level_1 = house_hold.filter(owner_education__icontains='Basic Level 1').count()
+        edu_level_graduate = house_hold.filter(owner_education__icontains='Graduate').count()
 
         #mother tongue
-        mother_tongue_tharu = HouseHoldData.objects.filter(mother_tongue__icontains='Tharu').count()
-        mother_tongue_tamang = HouseHoldData.objects.filter(mother_tongue__icontains='Tamang').count()
-        mother_tongue_other = HouseHoldData.objects.filter(mother_tongue__icontains='Other').count()
-        mother_tongue_newari = HouseHoldData.objects.filter(mother_tongue__icontains='Newari').count()
-        mother_tongue_limbu = HouseHoldData.objects.filter(mother_tongue__icontains='Limbu').count()
-        mother_tongue_rajbanshi = HouseHoldData.objects.filter(mother_tongue__icontains='Rajbanshi').count()
-        mother_tongue_maithi = HouseHoldData.objects.filter(mother_tongue__icontains='Maithi').count()
+        mother_tongue_tharu = house_hold.filter(mother_tongue__icontains='Tharu').count()
+        mother_tongue_tamang = house_hold.filter(mother_tongue__icontains='Tamang').count()
+        mother_tongue_other = house_hold.filter(mother_tongue__icontains='Other').count()
+        mother_tongue_newari = house_hold.filter(mother_tongue__icontains='Newari').count()
+        mother_tongue_limbu = house_hold.filter(mother_tongue__icontains='Limbu').count()
+        mother_tongue_rajbanshi = house_hold.filter(mother_tongue__icontains='Rajbanshi').count()
+        mother_tongue_maithi = house_hold.filter(mother_tongue__icontains='Maithi').count()
 
 
         #main occupation
-        occupation_agriculture = HouseHoldData.objects.filter(main_occupation__icontains='Agriculture').count()
-        occupation_agriculture_wages = HouseHoldData.objects.filter(main_occupation__icontains='(Agricultural wages').count()
-        occupation_daily_wages = HouseHoldData.objects.filter(main_occupation__icontains='Daily wages').count()
-        occupation_government_service = HouseHoldData.objects.filter(main_occupation__icontains='Government service').count()
-        occupation_non_government_service = HouseHoldData.objects.filter(main_occupation__icontains='Non-government service').count()
-        occupation_foreign_employment = HouseHoldData.objects.filter(main_occupation__icontains='Foreign employment').count()
-        occupation_entrepreneur = HouseHoldData.objects.filter(main_occupation__icontains='Entrepreneur').count()
-        occupation_business = HouseHoldData.objects.filter(main_occupation__icontains='Business').count()
-        occupation_labour_india = HouseHoldData.objects.filter(main_occupation__icontains='Seasonal labor, India').count()
-        occupation_labour_nepal = HouseHoldData.objects.filter(main_occupation__icontains='Seasonal labor, Nepal').count()
-        occupation_student = HouseHoldData.objects.filter(main_occupation__icontains='Student').count()
-        occupation_other = HouseHoldData.objects.filter(main_occupation__icontains='Other').count()
+        occupation_agriculture = house_hold.filter(main_occupation__icontains='Agriculture').count()
+        occupation_agriculture_wages = house_hold.filter(main_occupation__icontains='(Agricultural wages').count()
+        occupation_daily_wages = house_hold.filter(main_occupation__icontains='Daily wages').count()
+        occupation_government_service = house_hold.filter(main_occupation__icontains='Government service').count()
+        occupation_non_government_service = house_hold.filter(main_occupation__icontains='Non-government service').count()
+        occupation_foreign_employment = house_hold.filter(main_occupation__icontains='Foreign employment').count()
+        occupation_entrepreneur = house_hold.filter(main_occupation__icontains='Entrepreneur').count()
+        occupation_business = house_hold.filter(main_occupation__icontains='Business').count()
+        occupation_labour_india = house_hold.filter(main_occupation__icontains='Seasonal labor, India').count()
+        occupation_labour_nepal = house_hold.filter(main_occupation__icontains='Seasonal labor, Nepal').count()
+        occupation_student = house_hold.filter(main_occupation__icontains='Student').count()
+        occupation_other = house_hold.filter(main_occupation__icontains='Other').count()
 
         #num of family_member
-        member_2_to_4 = HouseHoldData.objects.annotate(count=Count('house_hold_data')).filter(count__gte=2, count__lte=3).count()
-        member_4_to_6 = HouseHoldData.objects.annotate(count=Count('house_hold_data')).filter(count__gte=4, count__lte=5).count()
-        member_6_to_8 = HouseHoldData.objects.annotate(count=Count('house_hold_data')).filter(count__gte=6, count__lte=7).count()
-        member_8_to_10 = HouseHoldData.objects.annotate(count=Count('house_hold_data')).filter(count__gte=8, count__lte=10).count()
-        member_above_10 = HouseHoldData.objects.annotate(count=Count('house_hold_data')).filter(count__gte=11).count()
+        member_2_to_4 = house_hold.annotate(count=Count('house_hold_data')).filter(count__gte=2, count__lte=3).count()
+        member_4_to_6 = house_hold.annotate(count=Count('house_hold_data')).filter(count__gte=4, count__lte=5).count()
+        member_6_to_8 = house_hold.annotate(count=Count('house_hold_data')).filter(count__gte=6, count__lte=7).count()
+        member_8_to_10 = house_hold.annotate(count=Count('house_hold_data')).filter(count__gte=8, count__lte=10).count()
+        member_above_10 = house_hold.annotate(count=Count('house_hold_data')).filter(count__gte=11).count()
 
 
         data.append({
@@ -264,7 +320,10 @@ class FddViewSet(APIView):
 
 
         query = HouseHoldData.objects.filter(q)
-        print(query.count())
+        # print('abc')
+        # print(query.count())
+        # print('abc')
+
 
         if ward and flood and social_security_received and citizen and education_list:
             print('vvv')
