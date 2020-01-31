@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 
 import pandas as pd
 
-from core.models import Province, District, HouseHoldData
+from core.models import Province, District, HouseHoldData, Municipality
 
 from django.contrib.gis.geos import GEOSGeometry
 
@@ -21,6 +21,10 @@ class Command(BaseCommand):
         print("Wait Data is being Loaded")
 
         for row in range(0, upper_range):
+            municipality = Municipality.objects.get(hlcit_code=df['hlcit_code_palika'][row])
+            district = municipality.district
+            province = district.province
+
             try:
                 house=HouseHoldData.objects.create(
                     # province=Province.objects.get(
@@ -39,12 +43,9 @@ class Command(BaseCommand):
                     date=df['date'][row],
                     surveyor_name=df['surveyor_name'][row],
                     place_name=df['place_name'][row],
-                    # province=df['province'][row],
-                    # district=df['province'][row],
-                    # municipality=df['municipality'][row],
-
-                    # boundary=GEOSGeometry(df['geom'][row]),
-                    # p_code=df['ADMIN2P_CODE'][row],
+                    province=province,
+                    district=district,
+                    municipality=municipality,
                     ward=df['ward'][row],
                     house_number=df['house_number'][row],
                     latitude=df['latitude'][row],
@@ -115,7 +116,7 @@ class Command(BaseCommand):
                     owned_land_area=df['owned_land_area'][row],
                     owned_land_near_river=df['owned_land_near_river'][row],
                     owned_land_area_near_river=df['owned_land_area_near_river'][row],
-                    # owned_land_image=df['owned_land_image'][row],
+                    owned_land_image_name=df['owned_land_image'][row],
                     technical_manpower_presence=df['technical_manpower_presence'][row],
                     manpower_type=df['manpower_type'][row],
                     doctor_sex=df['doctor_sex'][row],
