@@ -158,7 +158,7 @@ class OverviewViewSet(APIView):
         house_ownership_male = house_hold.filter(owner_sex='Male').count()
         house_ownership_female = house_hold.filter(owner_sex='Female').count()
 
-        total_population = OwnerFamilyData.objects.all().count()
+        # total_population = OwnerFamilyData.objects.all().count()
 
         # owner_detail = []
         # for i in house_hold:
@@ -186,6 +186,7 @@ class OverviewViewSet(APIView):
         #
         male_population = male.get('total_male')
         female_population = male.get('total_feamle')
+        total_population = male_population + female_population
         house_received_social_security = male.get('total_social')
         house_not_received_social_security = total_house - house_received_social_security
 
