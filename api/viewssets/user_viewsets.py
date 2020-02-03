@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from api.serializers.user_serializers import UserSerializer
 from rest_framework import viewsets
+from core.models import UserRole, Province, District, Municipality, Ward
 
 
 class Register(APIView):
@@ -18,25 +19,69 @@ class Register(APIView):
         self.password = userParams.get('password', None)
         self.first_name = userParams.get('first_name', None)
         self.last_name = userParams.get('last_name', None)
-        # self.roles_id = userParams.pop('roles_id', None)
 
-        # try:
-        # g = Group.objects.get(id=1)
-        # except:
-        # Response({
-        #     'error': 'selected role was not found'
-        # }, status.HTTP_403_FORBIDDEN)
-
+        print(self.username)
         user = User(username=self.username, email=self.email,
                     first_name=self.first_name, last_name=self.last_name)
         # user.groups.add(g)
         user.set_password(self.password)
         user.save()
 
+        group = userParams.get('group', None)
+        if group:
+            group = Group.objects.get(name=group)
+        else:
+            return Response('Please select the type of user')
+
+        if group.name == 'Province User':
+            province_id = userParams.get('province', None)
+            if province_id:
+                province = Province.objects.get(id=province_id)
+                user_role = UserRole.objects.create(user=user, province=province, group=group)
+            else:
+                return Response('Province must be selected')
+
+        if group.name == 'District User':
+            district_id = userParams.get('district', None)
+            if district_id:
+                district = District.objects.get(id=district_id)
+                province = district.province
+                user_role = UserRole.objects.create(user=user, district=district, province=province, group=group)
+            else:
+                return Response('District must be selected')
+
+        if group.name == 'Municipality User':
+            municipality_id = userParams.get('municipality', None)
+            if municipality_id:
+                municipality = Municipality.objects.get(id=municipality_id)
+                district = municipality.district
+                province = municipality.province
+                user_role = UserRole.objects.create(user=user, district=district, province=province,
+                                                    municipality=municipality, group=group)
+
+            else:
+                return Response('Municipality must be selected')
+
+        if group.name == 'Ward User':
+            ward_id = userParams.get('ward', None)
+            if ward_id:
+                ward = Ward.objects.get(id=ward_id)
+                municipality = ward.municipality
+                district = municipality.district
+                province = district.province
+
+                user_role = UserRole.objects.create(user=user, district=district, province=province,
+                                                    municipality=municipality, ward=ward, group=group)
+
+            else:
+                return Response('Ward must be selected')
+
+
         return Response({
             'message': 'User has been successfully registered',
             'user': user.username,
             'id': user.id,
+            'role': user_role.group.name
         })
 
 
