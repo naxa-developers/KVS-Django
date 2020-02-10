@@ -97,11 +97,14 @@ class HouseHoldDataSerializer(serializers.ModelSerializer):
 class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
     family_size = serializers.SerializerMethodField()
     social_security_received = serializers.SerializerMethodField()
+    male_number = serializers.SerializerMethodField()
+    female_number = serializers.SerializerMethodField()
     class Meta:
         model = HouseHoldData
         fields = ('id', 'index', 'province', 'district', 'municipality', 'owner_name', 'owner_age', 'owner_sex',
                   'owner_citizenship_no', 'contact_no', 'ward', 'family_size', 'social_security_received',
-                  'latitude', 'longitude')
+                  'latitude', 'longitude', 'main_occupation', 'owner_education', 'mother_tongue', 'male_number',
+                  'female_number')
 
 
     def get_family_size(self,obj):
@@ -115,6 +118,19 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
             return False
         else:
             return True
+
+    def get_male_number(self,obj):
+        total_count = obj.house_hold_data.all().count()
+        female_count = obj.house_hold_data.filter(gender__icontains='female').count()
+        male_count = total_count-female_count
+
+        return male_count
+
+
+    def get_female_number(self,obj):
+        female_count = obj.house_hold_data.filter(gender__icontains='female').count()
+        return female_count
+
 
 
 class AnimalDetailDataSerializer(serializers.ModelSerializer):

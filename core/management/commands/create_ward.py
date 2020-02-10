@@ -17,10 +17,24 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         df = pd.read_csv(sys.argv[3])
         for row in range(0, 6781):
-            print(row)
-            # district=District.objects.get(name=(df['DISTRICT'][row]).upper())
-            municipality = Municipality.objects.get(name=df['GaPa_NaPa'][row])
-            print(municipality.name)
+            municipality = Municipality.objects.get(hlcit_code=df['hlcit_code_palika'][row])
+            district = municipality.district
+            province = municipality.province
+
+            ward = Ward.objects.create(
+                name=df['NEW_WARD_N'][row],
+                municipality=municipality,
+                district=district,
+                province=province
+            )
+
+            print(row, 'ward successfully updated')
+
+            #
+            # print(row)
+            # # district=District.objects.get(name=(df['DISTRICT'][row]).upper())
+            # municipality = Municipality.objects.get(name=df['GaPa_NaPa'][row])
+            # print(municipality.name)
 
         # ward = [
         #     Ward(

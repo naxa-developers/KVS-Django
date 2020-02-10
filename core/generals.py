@@ -35,6 +35,19 @@ def export_municipality_csv(modeladmin, request, queryset):
     return response
 
 
+def export_district_csv(modeladmin, request,queryset):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="district.csv"'
 
+    writer = csv.writer(response)
+
+    writer.writerow(['name'])
+
+    districts = queryset.values_list('name')
+
+    for district in districts:
+        writer.writerow(district)
+
+    return response
 
 
