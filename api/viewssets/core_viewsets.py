@@ -756,7 +756,6 @@ class FddViewSet(APIView):
 
 
 class UniqueValuesViewSet(APIView):
-    authentication_classes = []
     permission_classes = [IsAuthenticated,]
 
     def get(self, request):
@@ -1038,7 +1037,6 @@ class FrontViewSet(APIView):
 
 
 class MoreViewSet(APIView):
-    authentication_classes = []
     permission_classes = [IsAuthenticated,]
 
     def post(self, request):
@@ -1086,7 +1084,6 @@ class MoreViewSet(APIView):
 
 
 class MoreDropDownViewSet(APIView):
-    authentication_classes = []
     permission_classes = [IsAuthenticated,]
 
     def get(self, request):
@@ -1196,7 +1193,6 @@ class MoreDropDownViewSet(APIView):
 
 
 class HighlightDataViewSet(APIView):
-    authentication_classes = []
     permission_classes = []
 
     def get(self,request):
