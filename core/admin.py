@@ -5,12 +5,12 @@ from core.models import Province, District, Municipality, HouseHoldData, AnimalD
 from core.resource import OwnerFamilyResource, AnimalDetailResource, HouseholdResource, OtherFamilyResource
 
 from import_export.admin import ImportExportModelAdmin
-from core.generals import export_municipality_csv
+from core.generals import export_municipality_csv, export_district_csv
 
 
 
 admin.site.register(Province)
-admin.site.register(District)
+# admin.site.register(District)
 # admin.site.register(Municipality)
 admin.site.register(Ward)
 admin.site.register(UserRole)
@@ -56,3 +56,8 @@ class MyAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Municipality, MyAdmin)
+
+class DistrictAdmin(admin.ModelAdmin):
+    actions = [export_district_csv]
+
+admin.site.register(District, DistrictAdmin)
