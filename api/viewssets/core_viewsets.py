@@ -1045,12 +1045,38 @@ class MoreViewSet(APIView):
         # if field:
         #     queryset = HouseHoldData.objects.filter(field__icontains='Agriculture')
         #     data = HouseHoldDataSerializer(queryset, many=True).data
-        household = HouseHoldData.objects.all()
+        user = self.request.user
+        roles = user.role.all()
+        user_ward = []
+        user_municipality = []
+        user_district = []
+        user_province = []
+        print(user_ward)
+        for i in roles:
+            if i.ward:
+                user_ward.append(i.ward)
+            if i.province:
+                user_province.append(i.province.id)
+            if i.municipality:
+                user_municipality.append(i.municipality.id)
+            if i.district:
+                user_district.append(i.district.id)
 
-        # index = []
-        # animals = AnimalDetailData.objects.all().values('parent_index').distinct()
-        # for i in animals:
-        #     print(i['parent_index'])
+        # creating dynamic q objects to query based on user ward, district and municipality and province
+        q = Q()
+        if user_ward:
+            q &= Q(ward__in=user_ward)
+
+        if user_municipality:
+            q &= Q(municipality__in=user_municipality)
+
+        if user_district:
+            q &= Q(district__in=user_district)
+
+        if user_province:
+            q &= Q(province__in=user_province)
+
+        query = HouseHoldData.objects.filter(q)
 
         if data['field'] == 'animals':
             index = []
@@ -1062,7 +1088,7 @@ class MoreViewSet(APIView):
                 if i.parent_index not in index:
                     index.append(i.parent_index)
 
-            household = HouseHoldData.objects.filter(id__in=index)
+            household = query.objects.filter(id__in=index)
 
         else:
             b = ast.literal_eval(data['value'])
@@ -1072,12 +1098,12 @@ class MoreViewSet(APIView):
                     '{0}__{1}'.format(data['field'], 'icontains'): i,
                 }
                 # household = household.filter(**kwargs)
-                house = household.filter(**kwargs)
+                house = query.filter(**kwargs)
                 for j in house:
                     if j not in data:
                         datas.append(j)
             household = datas
-        data = HouseHoldDataSerializer(household, many=True).data
+        data = HouseHoldAlternativeSerializer(household, many=True).data
 
         return Response({'data': data})
 
