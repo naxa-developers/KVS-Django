@@ -1099,8 +1099,9 @@ class MoreViewSet(APIView):
                 }
                 # household = household.filter(**kwargs)
                 house = query.filter(**kwargs)
+                print(house.count())
                 for j in house:
-                    if j not in data:
+                    if j not in datas:
                         datas.append(j)
             household = datas
         data = HouseHoldAlternativeSerializer(household, many=True).data
