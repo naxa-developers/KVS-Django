@@ -8,6 +8,9 @@ router.register(r'family_members', core_viewsets.FamilyDetailViewSet)
 router.register(r'animal_detail', core_viewsets.AnimalDetailViewSet)
 router.register(r'users', user_viewsets.UserViewSet)
 
+#role
+router.register(r'users_role', user_viewsets.RoleViewSet)
+
 
 # front page api urls
 router.register(r'header', front_viewsets.HeaderViewSet)
@@ -42,5 +45,8 @@ urlpatterns = [
     path('more_dropdown', core_viewsets.MoreDropDownViewSet.as_view(), name='drop'),
     path('fdd', core_viewsets.FddViewSet.as_view(), name='more'),
     path('highlight', core_viewsets.HighlightDataViewSet.as_view(), name='highlight'),
+
+    #user list
+    path('user_list', user_viewsets.UserListViewSet.as_view(), name='users_list'),
 
 ]
