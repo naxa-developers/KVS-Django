@@ -150,6 +150,8 @@ class UserListViewSet(APIView):
         data = []
         users = User.objects.all()
         for user in users:
+            group = None
+            place = None
             for role in user.role.all():
                 if role.group.name == 'Province User':
                     group = role.group.name
