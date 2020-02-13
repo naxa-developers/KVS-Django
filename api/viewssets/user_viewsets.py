@@ -8,6 +8,8 @@ from rest_framework import status
 from api.serializers.user_serializers import UserSerializer
 from rest_framework import viewsets
 from core.models import UserRole, Province, District, Municipality, Ward
+from rest_framework.permissions import IsAuthenticated
+
 
 
 class Register(APIView):
@@ -185,6 +187,51 @@ class UserListViewSet(APIView):
             })
         return Response({'data': data})
 
+
+class CreateUserDropDownViewSet(APIView):
+    permission_classes = [IsAuthenticated,]
+
+    def get(self, request):
+
+        logged_user = self.request.user
+        roles = logged_user.role.all()
+        level = []
+        district_list = []
+        municipality_list = []
+        ward_list = []
+
+        for role in roles:
+
+            if role.group.name == 'Province User':
+                level = ['District User', 'Municipality User']
+                districts = District.objects.filter(province__name=role.province.name).values('name')
+                municipalities = Municipality.objects.filter(province__name=role.province.name).values('name')
+
+                for district in districts:
+                    district_list.append(district['name'])
+
+                for municipality in municipalities:
+                    municipality_list.append(municipality['name'])
+
+            if role.group.name == 'District User':
+                level = ['Municipality User']
+                municipalities = Municipality.objects.filter(district__name=role.district.name).values('name')
+                for municipality in municipalities:
+                    municipality_list.append(municipality['name'])
+
+            if role.group.name == 'Municipality User':
+                level = ['Ward User']
+
+            if role.group.name == 'Ward User':
+                level = []
+                place = []
+
+        return Response({
+            'level': level,
+            'district': district_list,
+            'municipality': municipality_list,
+            'ward': ward_list
+        })
 
 
 

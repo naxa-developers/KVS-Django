@@ -48,5 +48,6 @@ urlpatterns = [
 
     #user list
     path('user_list', user_viewsets.UserListViewSet.as_view(), name='users_list'),
+    path('user_dropdown', user_viewsets.CreateUserDropDownViewSet.as_view(), name='users_list'),
 
 ]
