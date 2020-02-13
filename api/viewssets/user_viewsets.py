@@ -164,6 +164,11 @@ class UserListViewSet(APIView):
                     group = role.group.name
                     place = role.municipality.name + ' ' + role.ward
 
+                if role.group.name == 'Super User':
+                    group = role.group.name
+                    place = None
+
+
 
             data.append({
                 'name': user.username,
