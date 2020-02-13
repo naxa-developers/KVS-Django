@@ -9,6 +9,7 @@ from api.serializers.user_serializers import UserSerializer
 from rest_framework import viewsets
 from core.models import UserRole, Province, District, Municipality, Ward, HouseHoldData
 from rest_framework.permissions import IsAuthenticated
+from django.db.models import Q
 
 
 
@@ -149,9 +150,39 @@ class RoleViewSet(viewsets.ModelViewSet):
 
 
 class UserListViewSet(APIView):
+    permission_classes = [IsAuthenticated, ]
+
     def get(self, request):
         data = []
-        users = User.objects.all()
+        logged_user = self.request.user
+
+        logged_user_role = logged_user.role.all()
+
+        province = logged_user_role[0].province
+        district = logged_user_role[0].district
+        municipality = logged_user_role[0].municipality
+        ward = logged_user_role[0].ward
+
+        print(province,district,municipality,ward)
+
+        q = Q()
+
+        if province:
+            q &= Q(role__province=province)
+
+        if district:
+            q &= Q(role__district=district)
+
+        if municipality:
+            q &= Q(role__municipality=municipality)
+
+        if ward:
+            q &= Q(role__ward=ward)
+
+        users = User.objects.filter(q)
+
+        print(users)
+
         for user in users:
             group = None
             place = None
