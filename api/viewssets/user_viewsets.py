@@ -154,21 +154,23 @@ class UserListViewSet(APIView):
                 if role.group.name == 'Province User':
                     group = role.group.name
                     place = role.province.name
-                if role.group.name == 'District User':
+                elif role.group.name == 'District User':
                     group = role.group.name
                     place = role.district.name
-                if role.group.name == 'Municipality User':
+                elif role.group.name == 'Municipality User':
                     group = role.group.name
                     place = role.municipality.name
-                if role.group.name == 'Ward User':
+                elif role.group.name == 'Ward User':
                     group = role.group.name
                     place = role.municipality.name + ' ' + role.ward
 
-                if role.group.name == 'Super User':
+                elif role.group.name == 'Super User':
                     group = role.group.name
                     place = None
 
-
+                else:
+                    group = None
+                    place = None
 
             data.append({
                 'name': user.username,
