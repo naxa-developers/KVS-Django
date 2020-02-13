@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from api.serializers.user_serializers import UserSerializer
 from rest_framework import viewsets
-from core.models import UserRole, Province, District, Municipality, Ward
+from core.models import UserRole, Province, District, Municipality, Ward, HouseHoldData
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -19,12 +19,13 @@ class Register(APIView):
         self.email = userParams.get('email', None)
         self.username = userParams.get('user_name', None)
         self.password = userParams.get('password', None)
-        self.first_name = userParams.get('first_name', None)
-        self.last_name = userParams.get('last_name', None)
+        # self.first_name = userParams.get('first_name', None)
+        # self.last_name = userParams.get('last_name', None)
 
-        print(self.username)
-        user = User(username=self.username, email=self.email,
-                    first_name=self.first_name, last_name=self.last_name)
+        # print(self.username)
+        # user = User(username=self.username, email=self.email,
+        #             first_name=self.first_name, last_name=self.last_name)
+        user = User(username=self.username, email=self.email)
         # user.groups.add(g)
         user.set_password(self.password)
         user.save()
@@ -66,17 +67,17 @@ class Register(APIView):
 
         if group.name == 'Ward User':
             ward_id = userParams.get('ward', None)
-            if ward_id:
-                ward = Ward.objects.get(id=ward_id)
-                municipality = ward.municipality
+            municipality_id = userParams.get('municipality', None)
+            if ward_id and municipality_id:
+                municipality = Municipality.objects.get(id=municipality_id)
                 district = municipality.district
                 province = district.province
 
                 user_role = UserRole.objects.create(user=user, district=district, province=province,
-                                                    municipality=municipality, ward=ward, group=group)
+                                                    municipality=municipality, ward=ward_id, group=group)
 
             else:
-                return Response('Ward must be selected')
+                return Response('Ward  and Municipality must be selected')
 
 
         return Response({
@@ -203,7 +204,7 @@ class CreateUserDropDownViewSet(APIView):
         for role in roles:
 
             if role.group.name == 'Province User':
-                level = ['District User', 'Municipality User']
+                level = ['District User', 'Municipality User', 'Ward User']
                 districts = District.objects.filter(province__name=role.province.name).values('name')
                 municipalities = Municipality.objects.filter(province__name=role.province.name).values('name')
 
@@ -223,8 +224,7 @@ class CreateUserDropDownViewSet(APIView):
                 level = ['Ward User']
 
             if role.group.name == 'Ward User':
-                level = []
-                place = []
+                pass
 
         return Response({
             'level': level,
