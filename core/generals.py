@@ -25,9 +25,9 @@ def export_municipality_csv(modeladmin, request, queryset):
 
     writer = csv.writer(response)
 
-    writer.writerow(['name', 'hlcit_code'])
+    writer.writerow(['name', 'hlcit_code', 'district', 'province'])
 
-    municipalities = queryset.values_list('name', 'hlcit_code')
+    municipalities = queryset.values_list('name', 'hlcit_code', 'district__name', 'province')
 
     for municipality in municipalities:
         writer.writerow(municipality)

@@ -139,4 +139,44 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = []
 
 
+class RoleViewSet(viewsets.ModelViewSet):
+    serializer_class = UserRole
+    queryset = UserRole.objects.all()
+    permission_classes = []
+
+
+class UserListViewSet(APIView):
+    def get(self, request):
+        data = []
+        users = User.objects.all()
+        for user in users:
+            for role in user.role.all():
+                if role.group.name == 'Province User':
+                    group = role.group.name
+                    place = role.province.name
+                if role.group.name == 'District User':
+                    group = role.group.name
+                    place = role.district.name
+                if role.group.name == 'Municipality User':
+                    group = role.group.name
+                    place = role.municipality.name
+                if role.group.name == 'Ward User':
+                    group = role.group.name
+                    place = role.municipality.name + ' ' + role.ward
+
+
+            data.append({
+                'name': user.username,
+                'email': user.email,
+                'group': group,
+                'place': place,
+                'status': user.is_active,
+                'action': ''
+
+            })
+        return Response({'data': data})
+
+
+
+
 
