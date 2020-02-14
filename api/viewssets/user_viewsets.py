@@ -38,9 +38,9 @@ class Register(APIView):
             return Response('Please select the type of user')
 
         if group.name == 'Province User':
-            province_id = userParams.get('province', None)
-            if province_id:
-                province = Province.objects.get(id=province_id)
+            province_name = userParams.get('province', None)
+            if province_name:
+                province = Province.objects.get(name=province_name)
                 user_role = UserRole.objects.create(user=user, province=province, group=group)
             else:
                 return Response('Province must be selected')
