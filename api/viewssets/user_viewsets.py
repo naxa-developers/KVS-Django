@@ -29,6 +29,17 @@ class Register(APIView):
         user = User(username=self.username, email=self.email)
         # user.groups.add(g)
         user.set_password(self.password)
+        deactive = userParams.get('deactive', None)
+
+        if deactive is not None:
+            if deactive:
+                user.is_active = False
+            else:
+                user.is_active = True
+
+        else:
+            return Response(' Select user is active or deactive user')
+
         user.save()
 
         group = userParams.get('group', None)
@@ -86,7 +97,8 @@ class Register(APIView):
             'message': 'User has been successfully registered',
             'user': user.username,
             'id': user.id,
-            'role': user_role.group.name
+            'role': user_role.group.name,
+            'active': user.is_active
         })
 
 
