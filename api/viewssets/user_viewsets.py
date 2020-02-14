@@ -46,18 +46,18 @@ class Register(APIView):
                 return Response('Province must be selected')
 
         if group.name == 'District User':
-            district_id = userParams.get('district', None)
-            if district_id:
-                district = District.objects.get(id=district_id)
+            district_name = userParams.get('district', None)
+            if district_name:
+                district = District.objects.get(name=district_name)
                 province = district.province
                 user_role = UserRole.objects.create(user=user, district=district, province=province, group=group)
             else:
                 return Response('District must be selected')
 
         if group.name == 'Municipality User':
-            municipality_id = userParams.get('municipality', None)
-            if municipality_id:
-                municipality = Municipality.objects.get(id=municipality_id)
+            municipality_name = userParams.get('municipality', None)
+            if municipality_name:
+                municipality = Municipality.objects.get(name=municipality_name)
                 district = municipality.district
                 province = municipality.province
                 user_role = UserRole.objects.create(user=user, district=district, province=province,
@@ -68,9 +68,9 @@ class Register(APIView):
 
         if group.name == 'Ward User':
             ward_id = userParams.get('ward', None)
-            municipality_id = userParams.get('municipality', None)
-            if ward_id and municipality_id:
-                municipality = Municipality.objects.get(id=municipality_id)
+            municipality_name = userParams.get('municipality', None)
+            if ward_id and municipality_name:
+                municipality = Municipality.objects.get(name=municipality_name)
                 district = municipality.district
                 province = district.province
 
@@ -246,7 +246,7 @@ class CreateUserDropDownViewSet(APIView):
                     municipality_list.append(municipality['name'])
 
             if role.group.name == 'District User':
-                level = ['Municipality User']
+                level = ['Municipality User', 'Ward User']
                 municipalities = Municipality.objects.filter(district__name=role.district.name).values('name')
                 for municipality in municipalities:
                     municipality_list.append(municipality['name'])
