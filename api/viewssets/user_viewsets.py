@@ -79,6 +79,7 @@ class Register(APIView):
 
             else:
                 return Response('Ward  and Municipality must be selected')
+                print('abc')
 
 
         return Response({
