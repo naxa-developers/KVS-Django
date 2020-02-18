@@ -50,4 +50,7 @@ urlpatterns = [
     path('user_list', user_viewsets.UserListViewSet.as_view(), name='users_list'),
     path('user_dropdown', user_viewsets.CreateUserDropDownViewSet.as_view(), name='users_list'),
 
+    #CSV file upload
+    path('csv_upload', core_viewsets.CSVFileUploadHouseHold.as_view(), name='csv_upload'),
+
 ]
