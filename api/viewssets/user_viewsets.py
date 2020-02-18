@@ -12,7 +12,6 @@ from rest_framework.permissions import IsAuthenticated
 from django.db.models import Q
 
 
-
 class Register(APIView):
     def post(self, request, *args, **kwargs):
         userParams = request.data
@@ -250,19 +249,19 @@ class CreateUserDropDownViewSet(APIView):
             if role.group.name == 'Province User':
                 level = ['District User', 'Municipality User', 'Ward User']
                 districts = District.objects.filter(province__name=role.province.name).values('name')
-                municipalities = Municipality.objects.filter(province__name=role.province.name).values('name')
+                municipalities = Municipality.objects.filter(province__name=role.province.name).values('name', 'hlcit_code')
 
                 for district in districts:
                     district_list.append(district['name'])
 
                 for municipality in municipalities:
-                    municipality_list.append(municipality['name'])
+                    municipality_list.append({municipality['name']: municipality['hlcit_code']})
 
             if role.group.name == 'District User':
                 level = ['Municipality User', 'Ward User']
-                municipalities = Municipality.objects.filter(district__name=role.district.name).values('name')
+                municipalities = Municipality.objects.filter(district__name=role.district.name).values('name', 'hlcit_code')
                 for municipality in municipalities:
-                    municipality_list.append(municipality['name'])
+                    municipality_list.append({municipality['name']: municipality['hlcit_code']})
 
             if role.group.name == 'Municipality User':
                 level = ['Ward User']

@@ -14,6 +14,9 @@ from core.generals import edu_matching
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 # from django.db.models import Q
+from rest_framework.parsers import FileUploadParser
+from core.management.commands.house_upload_front import house_upload
+# import pandas as pd
 
 
 class ProvinceGeojsonViewSet(APIView):
@@ -274,6 +277,7 @@ class OverviewViewSet(APIView):
 
 #front filter api
 
+
 class FddViewSet(APIView):
     permission_classes = [IsAuthenticated,]
 
@@ -283,7 +287,6 @@ class FddViewSet(APIView):
         citizen = self.request.data.get('senior_citizen')
         education_list = self.request.data.get('education')
         flood = self.request.data.get('flood')
-        #3
         user = self.request.user
         roles = user.role.all()
         user_ward = []
@@ -325,7 +328,6 @@ class FddViewSet(APIView):
         # print(query.count())
         # print('abc')
 
-
         if ward and flood and social_security_received and citizen and education_list:
             print('vvv')
             edu_list = ast.literal_eval(education_list)
@@ -342,8 +344,6 @@ class FddViewSet(APIView):
                     index.append(parent_index)
             queryset = query.filter(flood_prone__icontains=flood, ward__in=wards_list, index__in=index)
 
-
-
         elif ward and flood and social_security_received and citizen:
             print('ward and social_security_received and citizen and flood')
 
@@ -358,7 +358,6 @@ class FddViewSet(APIView):
                 else:
                     index.append(parent_index)
             queryset = query.filter(flood_prone__icontains=flood, ward__in=wards_list, index__in=index)
-
 
         elif ward and flood and social_security_received and education_list:
             print('ward and social_security_received and education_list and flood')
@@ -392,7 +391,6 @@ class FddViewSet(APIView):
                     index.append(parent_index)
             queryset = query.filter(flood_prone__icontains=flood, ward__in=wards_list, index__in=index)
 
-
         elif flood and social_security_received and education_list and citizen:
             print('flood and social_security_received and education_list and citizen')
             edu_list = ast.literal_eval(education_list)
@@ -411,7 +409,6 @@ class FddViewSet(APIView):
 
             queryset = query.filter(flood_prone__icontains=flood, index__in=index)
 
-
         elif ward and flood and social_security_received:
             print('ward and flood and social_security_received')
             index = []
@@ -444,7 +441,6 @@ class FddViewSet(APIView):
             wards_list = ast.literal_eval(ward)
             edu_list = ast.literal_eval(education_list)
             query = edu_matching(edu_list, query)
-
 
             queryset = query.filter(ward__in=wards_list, flood_prone__icontains=flood)
 
@@ -493,8 +489,6 @@ class FddViewSet(APIView):
                     index.append(parent_index)
             queryset = query.filter(index__in=index)
 
-
-
         elif ward and flood and social_security_received:
             print('ward and flood and social_security_received')
             index = []
@@ -527,7 +521,6 @@ class FddViewSet(APIView):
             wards_list = ast.literal_eval(ward)
             edu_list = ast.literal_eval(education_list)
             query = edu_matching(edu_list, query)
-
 
             queryset = query.filter(ward__in=wards_list, flood_prone__icontains=flood)
 
@@ -575,7 +568,6 @@ class FddViewSet(APIView):
                 else:
                     index.append(parent_index)
             queryset = query.filter(index__in=index)
-
 
         elif ward and flood:
             print('ward and flood')
@@ -1247,6 +1239,28 @@ class HighlightDataViewSet(APIView):
         })
 
         return Response({'data':data})
+
+
+class CSVFileUploadHouseHold(APIView):
+    # parser_classes = [FileUploadParser]
+
+    def post(self, request):
+        file = request.data['file']
+        # print(file)
+        # df = pd.read_csv(file)
+
+        house = house_upload(file)
+
+        return Response('Successfully uploaded file')
+
+        # if file:
+        #     house_upload_front(file)
+        #     return Response('Successfully uploaded file')
+        #
+        # else:
+        #     return Response('Please select the file ')
+
+
 
 
 
