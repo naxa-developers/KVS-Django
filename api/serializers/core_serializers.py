@@ -106,7 +106,8 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
         fields = ('id', 'index', 'province', 'district', 'municipality', 'owner_name', 'owner_age', 'owner_sex',
                   'owner_citizenship_no', 'contact_no', 'ward', 'family_size', 'social_security_received',
                   'latitude', 'longitude', 'main_occupation', 'owner_education', 'mother_tongue', 'male_number',
-                  'female_number', 'member_received_social_security_number')
+                  'female_number', 'member_received_social_security_number',
+                  'member_not_received_social_security_number')
 
 
     def get_family_size(self,obj):
@@ -142,7 +143,6 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
         all_member = obj.house_hold_data.all()
         not_received = all_member-received
         return not_received
-
 
 
 class AnimalDetailDataSerializer(serializers.ModelSerializer):
