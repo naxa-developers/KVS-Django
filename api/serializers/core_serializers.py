@@ -135,11 +135,11 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
         return female_count
 
     def get_member_received_social_security_number(self, obj):
-        received = obj.house_hold_data.filter(social_security_received__icontains='Yes')
+        received = obj.house_hold_data.filter(social_security_received__icontains='Yes').count()
         return received
 
     def get_member_not_received_social_security_number(self,obj):
-        received = obj.house_hold_data.filter(social_security_received__icontains='Yes')
+        received = obj.house_hold_data.filter(social_security_received__icontains='Yes').count()
         all_member = obj.house_hold_data.all()
         not_received = all_member-received
         return not_received
