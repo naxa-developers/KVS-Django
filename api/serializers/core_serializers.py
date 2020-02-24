@@ -139,8 +139,8 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
 
     def get_member_not_received_social_security_number(self,obj):
         received = obj.house_hold_data.filter(social_security_received__icontains='Yes')
-        all = obj.house_hold_data.all()
-        not_received = all-received
+        all_member = obj.house_hold_data.all()
+        not_received = all_member-received
         return not_received
 
 
