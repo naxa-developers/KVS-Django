@@ -93,18 +93,20 @@ class HouseHoldDataSerializer(serializers.ModelSerializer):
             return True
 
 
-
 class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
     family_size = serializers.SerializerMethodField()
     social_security_received = serializers.SerializerMethodField()
     male_number = serializers.SerializerMethodField()
     female_number = serializers.SerializerMethodField()
+    member_received_social_security_number = serializers.SerializerMethodField()
+    member_not_received_social_security_number = serializers.SerializerMethodField()
+
     class Meta:
         model = HouseHoldData
         fields = ('id', 'index', 'province', 'district', 'municipality', 'owner_name', 'owner_age', 'owner_sex',
                   'owner_citizenship_no', 'contact_no', 'ward', 'family_size', 'social_security_received',
                   'latitude', 'longitude', 'main_occupation', 'owner_education', 'mother_tongue', 'male_number',
-                  'female_number')
+                  'female_number', 'member_received_social_security_number')
 
 
     def get_family_size(self,obj):
@@ -130,6 +132,16 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
     def get_female_number(self,obj):
         female_count = obj.house_hold_data.filter(gender__icontains='female').count()
         return female_count
+
+    def get_member_received_social_security_number(self, obj):
+        received = obj.house_hold_data.filter(social_security_received__icontains='Yes')
+        return received
+
+    def get_member_not_received_social_security_number(self,obj):
+        received = obj.house_hold_data.filter(social_security_received__icontains='Yes')
+        all_member = obj.house_hold_data.all()
+        not_received = all_member-received
+        return not_received
 
 
 

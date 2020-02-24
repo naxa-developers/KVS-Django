@@ -193,7 +193,6 @@ class OverviewViewSet(APIView):
         house_received_social_security = male.get('total_social')
         house_not_received_social_security = total_house - house_received_social_security
 
-
         edu_level_illiterate = house_hold.filter(owner_education__icontains='Illiterate').count()
         edu_level_literate = house_hold.filter(owner_education__icontains='Literate / ordinary').count()
         edu_level_seconday = house_hold.filter(owner_education__icontains='Secondary level').count()
@@ -735,11 +734,9 @@ class FddViewSet(APIView):
         else:
             queryset = query
 
-
-
         data = HouseHoldAlternativeSerializer(queryset, many=True).data
 
-        return Response({'data':data})
+        return Response({'data': data})
 
 
 
