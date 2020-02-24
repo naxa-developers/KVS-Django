@@ -10,12 +10,13 @@ import json
 from django.db.models import Count, Q, Sum
 from rest_framework.renderers import JSONRenderer
 import ast
-from core.generals import edu_matching
+from core.generals import edu_matching, member_edu_matching
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 # from django.db.models import Q
 from rest_framework.parsers import FileUploadParser
 from core.management.commands.house_upload_front import house_upload
+# from core.generals import member_edu_matching
 # import pandas as pd
 
 
@@ -739,7 +740,266 @@ class FddViewSet(APIView):
         return Response({'data': data})
 
 
+class FamilyMemberFilterViewSet(APIView):
+    permission_classes = [IsAuthenticated, ]
 
+    def post(self,request):
+        ward = self.request.data.get('ward')
+        social_security_received = self.request.data.get('social_security_received')
+        citizen = self.request.data.get('senior_citizen')
+        education_list = self.request.data.get('education')
+        flood = self.request.data.get('flood')
+        user = self.request.user
+        roles = user.role.all()
+        user_ward = []
+        user_municipality = []
+        user_district = []
+        user_province = []
+        print(user_ward)
+        for i in roles:
+            if i.ward:
+                user_ward.append(i.ward)
+            if i.province:
+                user_province.append(i.province.id)
+            if i.municipality:
+                user_municipality.append(i.municipality.id)
+            if i.district:
+                user_district.append(i.district.id)
+
+        # creating dynamic q objects to query based on user ward, district and municipality and province
+        q = Q()
+        if user_ward:
+            q &= Q(survey__ward__in=user_ward)
+
+        if user_municipality:
+            q &= Q(survey__municipality__in=user_municipality)
+
+        if user_district:
+            q &= Q(survey__district__in=user_district)
+
+        if user_province:
+            q &= Q(survey__province__in=user_province)
+
+        query = OwnerFamilyData.objects.filter(q)
+
+        if ward and flood and social_security_received and citizen and education_list:
+            print('abc')
+            edu_list = ast.literal_eval(education_list)
+            wards_list = ast.literal_eval(ward)
+
+            query = member_edu_matching(edu_list, query)
+            queryset = query.filter(survey__ward__in=wards_list,
+                                    social_security_received__icontains=social_security_received,
+                                    survey__flood_prone__icontains=flood,
+                                    falling_under_social_security_criteria__icontains=citizen
+                                    )
+
+        elif ward and flood and social_security_received and citizen:
+            print('war flood social and citi')
+            wards_list = ast.literal_eval(ward)
+            queryset = query.filter(survey__ward__in=wards_list,
+                                    social_security_received__icontains=social_security_received,
+                                    survey__flood_prone__icontains=flood,
+                                    falling_under_social_security_criteria__icontains=citizen
+                                    )
+
+        elif ward and flood and social_security_received and education_list:
+            print('war floo soc edu')
+            edu_list = ast.literal_eval(education_list)
+            wards_list = ast.literal_eval(ward)
+            query = member_edu_matching(edu_list, query)
+            queryset = query.filter(survey__ward__in=wards_list,
+                                    social_security_received__icontains=social_security_received,
+                                    survey__flood_prone__icontains=flood,
+                                    )
+
+        elif ward and flood and citizen and education_list:
+            print(' w f c e')
+            edu_list = ast.literal_eval(education_list)
+            wards_list = ast.literal_eval(ward)
+            query = member_edu_matching(edu_list, query)
+            queryset = query.filter(survey__ward__in=wards_list,
+                                    survey__flood_prone__icontains=flood,
+                                    falling_under_social_security_criteria__icontains=citizen
+                                    )
+
+        elif flood and social_security_received and education_list and citizen:
+            print('f s e c')
+            edu_list = ast.literal_eval(education_list)
+            query = member_edu_matching(edu_list, query)
+            queryset = query.filter(survey__flood_prone__icontains=flood,
+                                    social_security_received__icontains=social_security_received,
+                                    falling_under_social_security_criteria__icontains=citizen
+                                    )
+
+        elif ward and flood and social_security_received:
+            print('w f s')
+            wards_list = ast.literal_eval(ward)
+            queryset = query.filter(survey__ward__in=wards_list,
+                                    survey__flood_prone__icontains=flood,
+                                    social_security_received__icontains=social_security_received
+                                    )
+
+        elif ward and flood and citizen:
+            print('w f c')
+            wards_list = ast.literal_eval(ward)
+            queryset = query.filter(survey__ward__in=wards_list,
+                                    survey__flood_prone__icontains=flood,
+                                    falling_under_social_security_criteria__icontains=citizen
+                                    )
+
+        elif ward and flood and education_list:
+            print(' w f  e')
+            edu_list = ast.literal_eval(education_list)
+            wards_list = ast.literal_eval(ward)
+            query = member_edu_matching(edu_list, query)
+            queryset = query.filter(survey__ward__in=wards_list,
+                                    survey__flood_prone__icontains=flood,
+                                    )
+
+        elif flood and social_security_received and citizen:
+            print('aaa')
+            queryset = query.filter(
+                                    social_security_received__icontains=social_security_received,
+                                    survey__flood_prone__icontains=flood,
+                                    falling_under_social_security_criteria__icontains=citizen
+                                    )
+
+        elif flood and citizen and education_list:
+            print('f c e')
+            edu_list = ast.literal_eval(education_list)
+            query = member_edu_matching(edu_list, query)
+
+            queryset = query.filter(
+                survey__flood_prone__icontains=flood,
+                falling_under_social_security_criteria__icontains=citizen
+            )
+
+        elif social_security_received and citizen and education_list:
+            print('s c e')
+            edu_list = ast.literal_eval(education_list)
+            query = member_edu_matching(edu_list, query)
+
+            queryset = query.filter(
+                social_security_received__icontains=social_security_received,
+                falling_under_social_security_criteria__icontains=citizen
+            )
+
+        elif ward and flood and social_security_received:
+            print('w f s')
+            wards_list = ast.literal_eval(ward)
+
+            queryset = query.filter(
+                survey__ward__in=wards_list,
+                survey__flood_prone__icontains=flood,
+                social_security_received__icontains=social_security_received,
+            )
+
+        elif ward and flood:
+            print('ward and flood')
+            wards_list = ast.literal_eval(ward)
+
+            queryset = query.filter(
+                survey__ward__in=wards_list,
+                survey__flood_prone__icontains=flood,
+            )
+
+        elif ward and social_security_received:
+            print('ward and social security')
+            wards_list = ast.literal_eval(ward)
+
+            queryset = query.filter(
+                survey__ward__in=wards_list,
+                social_security_received__icontains=social_security_received,
+            )
+
+        elif ward and citizen:
+            print('ward and citizen')
+            wards_list = ast.literal_eval(ward)
+
+            queryset = query.filter(
+                survey__ward__in=wards_list,
+                falling_under_social_security_criteria__icontains=citizen
+            )
+
+        elif ward and education_list:
+            print('ward and education list')
+            wards_list = ast.literal_eval(ward)
+            edu_list = ast.literal_eval(education_list)
+            query = member_edu_matching(edu_list, query)
+
+            queryset = query.filter(survey__ward__in=wards_list,)
+
+        elif flood and social_security_received:
+            print('flood and social scurity')
+            queryset = query.filter(
+                social_security_received__icontains=social_security_received,
+                survey__flood_prone__icontains=flood
+            )
+
+        elif flood and citizen:
+            print('flood and citizen')
+            queryset = query.filter(
+                survey__flood_prone__icontains=flood,
+                falling_under_social_security_criteria__icontains=citizen
+            )
+
+        elif flood and education_list:
+            print('flood education list')
+            edu_list = ast.literal_eval(education_list)
+            query = member_edu_matching(edu_list, query)
+
+            queryset = query.filter(survey__flood_prone__icontains=flood)
+
+        elif social_security_received and citizen:
+            print('social_security and citizen')
+
+            queryset = query.filter(
+                social_security_received__icontains=social_security_received,
+                falling_under_social_security_criteria__icontains=citizen
+            )
+
+        elif social_security_received and education_list:
+            edu_list = ast.literal_eval(education_list)
+            query = member_edu_matching(edu_list, query)
+            queryset = query.filter(social_security_received__icontains=social_security_received)
+
+        elif citizen and education_list:
+            print('citizen and education list')
+            edu_list = ast.literal_eval(education_list)
+            query = member_edu_matching(edu_list, query)
+
+            queryset = query.filter(falling_under_social_security_criteria__icontains=citizen)
+
+        elif flood:
+            print('flood')
+            queryset = query.filter(survey__flood_prone__icontains=flood)
+
+        elif social_security_received:
+            print('social_security_received')
+            queryset = query.filter(social_security_received__icontains=social_security_received)
+
+        elif citizen:
+            print('citizen')
+            queryset = query.filter(falling_under_social_security_criteria__icontains=citizen)
+
+        elif education_list:
+            print('education list')
+            edu_list = ast.literal_eval(education_list)
+            queryset = member_edu_matching(edu_list, query)
+
+        elif ward:
+            print('ward')
+            wards_list = ast.literal_eval(ward)
+            queryset = query.filter(survey__ward__in=wards_list)
+
+        else:
+            print('bb')
+            queryset = query
+
+        data = OwnerFamilyDataSerializer(queryset, many=True).data
+
+        return Response({'data': data})
 
 
 
@@ -798,7 +1058,6 @@ class UniqueValuesViewSet(APIView):
         })
 
         return Response({'data':data})
-
 
 
 class FrontViewSet(APIView):

@@ -53,4 +53,7 @@ urlpatterns = [
     #CSV file upload
     path('csv_upload', core_viewsets.CSVFileUploadHouseHold.as_view(), name='csv_upload'),
 
+    #family_member_filter
+    path('member_filter', core_viewsets.FamilyMemberFilterViewSet.as_view(), name='family_filter'),
+
 ]

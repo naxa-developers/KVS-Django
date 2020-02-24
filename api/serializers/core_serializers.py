@@ -150,6 +150,7 @@ class AnimalDetailDataSerializer(serializers.ModelSerializer):
         model = AnimalDetailData
         fields = '__all__'
 
+
 class OwnerFamilyDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = OwnerFamilyData

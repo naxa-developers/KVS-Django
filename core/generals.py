@@ -19,6 +19,14 @@ def edu_matching(lists, query):
     return query.filter(q)
 
 
+def member_edu_matching(list, query):
+    q = Q()
+    for edu in list:
+        q |= Q(education_level__icontains=edu)
+
+    return query.filter(q)
+
+
 def export_municipality_csv(modeladmin, request, queryset):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="municipality.csv"'
