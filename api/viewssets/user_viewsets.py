@@ -124,11 +124,45 @@ class UserLogIn(APIView):
         if user is not None:
             if user.is_active:
                 login(request, user)
+                role_a = []
+                roles = user.role.all()
+                for role in roles:
+                    if role.group.name == 'Ward User':
+                        role_a.append({
+                            'ward': role.ward,
+                            'municipality': role.municipality.name,
+                            'district': role.district.name,
+                            'province': role.province.name,
+                            'group': 'Ward User'
+                        })
+
+                    elif role.group.name == 'Municipality User':
+                        role_a.append({
+                            'municipality': role.municipality.name,
+                            'district': role.district.name,
+                            'province': role.province.name,
+                            'group': 'Municipality User'
+                        })
+
+                    elif role.group.name == 'District User':
+                        role_a.append({
+                            'district': role.district.name,
+                            'province': role.province.name,
+                            'group': 'District User'
+                        })
+
+                    elif role.group.name == 'Province User':
+                        role_a.append({
+                            'province': role.province.name,
+                            'group': 'District User'
+                        })
+
                 token, created = Token.objects.get_or_create(user=user)
                 return Response({
                     'message': 'Successfully logged in',
                     'status': status.HTTP_200_OK,
-                    'token': token.key
+                    'token': token.key,
+                    'role': role_a
                 })
             else:
                 return Response({

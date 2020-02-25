@@ -119,7 +119,6 @@ class FamilyDetailViewSet(viewsets.ModelViewSet):
         return queryset
 
 
-
 class OverviewViewSet(APIView):
     permission_classes = [IsAuthenticated,]
 
