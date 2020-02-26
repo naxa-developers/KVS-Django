@@ -138,6 +138,7 @@ class UserLogIn(APIView):
 
                     elif role.group.name == 'Municipality User':
                         role_a.append({
+                            'ward': None,
                             'municipality': role.municipality.name,
                             'district': role.district.name,
                             'province': role.province.name,
@@ -146,6 +147,8 @@ class UserLogIn(APIView):
 
                     elif role.group.name == 'District User':
                         role_a.append({
+                            'ward': None,
+                            'municipality': None,
                             'district': role.district.name,
                             'province': role.province.name,
                             'group': 'District User'
@@ -153,8 +156,11 @@ class UserLogIn(APIView):
 
                     elif role.group.name == 'Province User':
                         role_a.append({
+                            'ward': None,
+                            'municipality': None,
+                            'district': None,
                             'province': role.province.name,
-                            'group': 'District User'
+                            'group': 'Province User'
                         })
 
                 token, created = Token.objects.get_or_create(user=user)
