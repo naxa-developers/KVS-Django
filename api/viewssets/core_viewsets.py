@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from core.models import Province, District, Municipality, HouseHoldData, AnimalDetailData, OwnerFamilyData
 from api.serializers.core_serializers import HouseHoldDataSerializer, OwnerFamilyDataSerializer, \
-    AnimalDetailDataSerializer, HouseHoldAlternativeSerializer
+    AnimalDetailDataSerializer, HouseHoldAlternativeSerializer, MunicipalitySerializer
 from django.core.serializers import serialize
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -73,6 +73,25 @@ class MunicipalityGeojsonViewSet(APIView):
                                     fields=('pk', 'name', 'district'))
         municipality_geo_json = json.loads(serializers)
         return Response(municipality_geo_json)
+
+
+class MunicipalityViewSet(APIView):
+    permission_classes = []
+
+    def get(self, request):
+        district = self.request.query_params.get('district', None)
+        data = []
+
+        if district:
+            municipality = Municipality.objects.filter(district__name__icontains=district).values('name', 'hlcit_code')
+        else:
+            municipality = Municipality.objects.all().values('name', 'hlcit_code')
+
+        for i in municipality:
+            data.append({i['name']: i['hlcit_code']})
+
+        return Response({'data': data})
+
 
 
 class HouseHoldViewSet(viewsets.ModelViewSet):
