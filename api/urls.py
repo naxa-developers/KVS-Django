@@ -6,6 +6,7 @@ router = DefaultRouter()
 router.register(r'house_hold', core_viewsets.HouseHoldViewSet)
 router.register(r'family_members', core_viewsets.FamilyDetailViewSet)
 router.register(r'animal_detail', core_viewsets.AnimalDetailViewSet)
+# router.register(r'municipality', core_viewsets.MunicipalityViewSet)
 router.register(r'users', user_viewsets.UserViewSet)
 
 #role
@@ -55,5 +56,10 @@ urlpatterns = [
 
     #family_member_filter
     path('member_filter', core_viewsets.FamilyMemberFilterViewSet.as_view(), name='family_filter'),
+
+
+    path('municipality', core_viewsets.MunicipalityViewSet.as_view(), name='municipality'),
+
+
 
 ]
