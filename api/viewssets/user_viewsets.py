@@ -288,12 +288,16 @@ class CreateUserDropDownViewSet(APIView):
         municipality_list = []
         ward_list = []
 
-        for role in roles:
 
+        for role in roles:
+            print(role.group.name)
             if role.group.name == 'Province User':
+                district = self.request.query_params.get('district', None)
+                print(district)
                 level = ['District User', 'Municipality User', 'Ward User']
                 districts = District.objects.filter(province__name=role.province.name).values('name')
-                municipalities = Municipality.objects.filter(province__name=role.province.name).values('name', 'hlcit_code')
+
+                municipalities = Municipality.objects.filter(district__name__icontains=district, province__name=role.province.name).values('name', 'hlcit_code')
 
                 for district in districts:
                     district_list.append(district['name'])
