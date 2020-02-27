@@ -131,6 +131,7 @@ class UserLogIn(APIView):
                         role_a.append({
                             'ward': role.ward,
                             'municipality': role.municipality.name,
+                            'municipality_hlcit': role.municipality.hlcit_code,
                             'district': role.district.name,
                             'province': role.province.name,
                             'group': 'Ward User'
@@ -140,6 +141,7 @@ class UserLogIn(APIView):
                         role_a.append({
                             'ward': None,
                             'municipality': role.municipality.name,
+                            'municipality_hlcit': role.municipality.hlcit_code,
                             'district': role.district.name,
                             'province': role.province.name,
                             'group': 'Municipality User'
@@ -149,6 +151,7 @@ class UserLogIn(APIView):
                         role_a.append({
                             'ward': None,
                             'municipality': None,
+                            'municipality_hlcit': None,
                             'district': role.district.name,
                             'province': role.province.name,
                             'group': 'District User'
@@ -159,6 +162,7 @@ class UserLogIn(APIView):
                             'ward': None,
                             'municipality': None,
                             'district': None,
+                            'municipality_hlcit': None,
                             'province': role.province.name,
                             'group': 'Province User'
                         })
