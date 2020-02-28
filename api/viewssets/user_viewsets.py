@@ -31,7 +31,7 @@ class Register(APIView):
         deactive = userParams.get('deactive', None)
 
         if deactive is not None:
-            if deactive:
+            if deactive == 'True':
                 user.is_active = False
             else:
                 user.is_active = True
@@ -89,7 +89,7 @@ class Register(APIView):
 
             else:
                 return Response('Ward  and Municipality must be selected')
-                print('abc')
+
 
 
         return Response({
@@ -121,6 +121,7 @@ class UserLogIn(APIView):
         password = request.data.get('password')
 
         user = authenticate(username=username, password=password)
+        print(user)
         if user is not None:
             if user.is_active:
                 login(request, user)
