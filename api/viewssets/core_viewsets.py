@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.views import APIView
-from core.models import Province, District, Municipality, HouseHoldData, AnimalDetailData, OwnerFamilyData
+from core.models import Province, District, Municipality, HouseHoldData, AnimalDetailData, OwnerFamilyData, Gallery
 from api.serializers.core_serializers import HouseHoldDataSerializer, OwnerFamilyDataSerializer, \
-    AnimalDetailDataSerializer, HouseHoldAlternativeSerializer, MunicipalitySerializer
+    AnimalDetailDataSerializer, HouseHoldAlternativeSerializer, MunicipalitySerializer, GallerySerializer
 from django.core.serializers import serialize
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -107,6 +107,12 @@ class HouseHoldViewSet(viewsets.ModelViewSet):
     #     return super(self).get_queryset()
 
     # def filter_queryset(self, queryset):
+
+
+class GalleryViewSet(viewsets.ModelViewSet):
+    serializer_class = GallerySerializer
+    queryset = Gallery.objects.all()
+    permission_classes = []
 
 
 

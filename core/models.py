@@ -82,6 +82,11 @@ class UserRole(models.Model):
         return self.user.username
 
 
+class Gallery(models.Model):
+    image = models.ImageField(upload_to='house_gallery')
+    survey = models.ForeignKey('HouseHoldData', on_delete=models.CASCADE, related_name='gallery')
+
+
 class HouseHoldData(models.Model):
     index = models.CharField(max_length=1000, blank=True, null=True)
     deviceid = models.CharField(max_length=1000, blank=True, null=True)

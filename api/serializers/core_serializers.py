@@ -1,5 +1,11 @@
-from core.models import Province, District, Municipality, HouseHoldData, AnimalDetailData, OwnerFamilyData
+from core.models import Province, District, Municipality, HouseHoldData, AnimalDetailData, OwnerFamilyData, Gallery
 from rest_framework import serializers
+
+
+class GallerySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Gallery
+        fields = '__all__'
 
 
 class ProvinceSerializer(serializers.ModelSerializer):
@@ -100,6 +106,7 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
     female_number = serializers.SerializerMethodField()
     member_received_social_security_number = serializers.SerializerMethodField()
     member_not_received_social_security_number = serializers.SerializerMethodField()
+    total_security_received_members = serializers.SerializerMethodField()
 
     class Meta:
         model = HouseHoldData
@@ -129,7 +136,6 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
 
         return male_count
 
-
     def get_female_number(self,obj):
         female_count = obj.house_hold_data.filter(gender__icontains='female').count()
         return female_count
@@ -143,6 +149,12 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
         all_member = obj.house_hold_data.all().count()
         not_received = all_member-received
         return not_received
+
+    def get_total_security_received_members(self,obj):
+        member = OwnerFamilyData.objects.filter(social_security_received__icontains='Yes').count()
+        return member
+
+
 
 
 class AnimalDetailDataSerializer(serializers.ModelSerializer):
