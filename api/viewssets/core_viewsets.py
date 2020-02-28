@@ -115,7 +115,6 @@ class GalleryViewSet(viewsets.ModelViewSet):
     permission_classes = []
 
 
-
 class AnimalDetailViewSet(viewsets.ModelViewSet):
     serializer_class = AnimalDetailDataSerializer
     queryset = AnimalDetailData.objects.all()
