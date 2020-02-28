@@ -8,6 +8,7 @@ router.register(r'family_members', core_viewsets.FamilyDetailViewSet)
 router.register(r'animal_detail', core_viewsets.AnimalDetailViewSet)
 # router.register(r'municipality', core_viewsets.MunicipalityViewSet)
 router.register(r'users', user_viewsets.UserViewSet)
+router.register(r'gallery', core_viewsets.GalleryViewSet)
 
 #role
 router.register(r'users_role', user_viewsets.RoleViewSet)
