@@ -132,9 +132,12 @@ class UserLogIn(APIView):
                         role_a.append({
                             'ward': role.ward,
                             'municipality': role.municipality.name,
+                            'municipality_id': role.municipality.id,
                             'municipality_hlcit': role.municipality.hlcit_code,
                             'district': role.district.name,
+                            'district_id': role.district.id,
                             'province': role.province.name,
+                            'province_id': role.province.id,
                             'group': 'Ward User'
                         })
 
@@ -142,9 +145,12 @@ class UserLogIn(APIView):
                         role_a.append({
                             'ward': None,
                             'municipality': role.municipality.name,
+                            'municipality_id': role.municipality.id,
                             'municipality_hlcit': role.municipality.hlcit_code,
                             'district': role.district.name,
+                            'district_id': role.district.id,
                             'province': role.province.name,
+                            'province_id': role.province.id,
                             'group': 'Municipality User'
                         })
 
@@ -152,9 +158,12 @@ class UserLogIn(APIView):
                         role_a.append({
                             'ward': None,
                             'municipality': None,
+                            'municipality_id': None,
                             'municipality_hlcit': None,
                             'district': role.district.name,
+                            'district_id': role.district.id,
                             'province': role.province.name,
+                            'province_id': role.province.id,
                             'group': 'District User'
                         })
 
@@ -162,9 +171,12 @@ class UserLogIn(APIView):
                         role_a.append({
                             'ward': None,
                             'municipality': None,
+                            'municipality_id': None,
                             'district': None,
+                            'district_id': None,
                             'municipality_hlcit': None,
                             'province': role.province.name,
+                            'province_id': role.province.id,
                             'group': 'Province User'
                         })
 
