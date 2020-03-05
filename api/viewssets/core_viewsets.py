@@ -137,8 +137,12 @@ class FamilyDetailViewSet(viewsets.ModelViewSet):
 
 
     def get_queryset(self):
-        house_index = self.request.query_params.get('house_index')
-        queryset = OwnerFamilyData.objects.filter(parent_index=house_index)
+        queryset = OwnerFamilyData.objects.all()
+        house_index = self.request.query_params.get('house_index', None)
+        if house_index:
+            queryset = queryset.filter(parent_index=house_index)
+        else:
+            queryset = queryset
 
         return queryset
 
