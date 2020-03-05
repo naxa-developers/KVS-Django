@@ -33,7 +33,7 @@ class HouseHoldDataSerializer(serializers.ModelSerializer):
         model = HouseHoldData
         fields = ('id', 'index', 'deviceid', 'date', 'surveyor_name', 'place_name', 'province', 'district', 'municipality',
                   'ward', 'house_number', 'latitude', 'longitude', 'altitude', 'gps_precision', 'household_number',
-                  'owner_name', 'owner_age', 'owner_sex', 'owner_status', 'owner_status_other', 'owner_caste',
+                  'owner_name', 'date_of_birth', 'owner_age', 'owner_sex', 'owner_status', 'owner_status_other', 'owner_caste',
                   'owner_caste_other', 'religion', 'religion_other', 'mother_tongue', 'mother_tongue_other',
                   'contact_no', 'owner_education', 'owner_citizenship_no', 'responder_name', 'responder_sex',
                   'responder_age', 'responder_contact', 'other_family_living', 'main_occupation', 'other_occupation',
@@ -110,17 +110,15 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HouseHoldData
-        fields = ('id', 'index', 'province', 'district', 'municipality', 'owner_name', 'owner_age', 'owner_sex',
+        fields = ('id', 'index', 'province', 'district', 'municipality', 'owner_name','date_of_birth', 'owner_age', 'owner_sex',
                   'owner_citizenship_no', 'contact_no', 'ward', 'family_size', 'social_security_received',
                   'latitude', 'longitude', 'main_occupation', 'owner_education', 'mother_tongue', 'male_number',
                   'female_number', 'member_received_social_security_number',
                   'member_not_received_social_security_number', 'total_security_received_members')
 
-
     def get_family_size(self,obj):
         size = obj.house_hold_data.all().count()
         return size
-
 
     def get_social_security_received(self, obj):
         query = obj.house_hold_data.filter(social_security_received__icontains='Yes')
