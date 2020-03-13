@@ -18,6 +18,7 @@ from rest_framework.parsers import FileUploadParser
 from core.management.commands.house_upload_front import house_upload
 # from core.generals import member_edu_matching
 # import pandas as pd
+from .choices_array import *
 
 
 class ProvinceGeojsonViewSet(APIView):
@@ -1542,6 +1543,93 @@ class CSVFileUploadHouseHold(APIView):
         #
         # else:
         #     return Response('Please select the file ')
+
+
+class ChoiceViewSet(APIView):
+    def get(self, request):
+        data = []
+        data.append({
+            'optionGen': optionGen,
+            'ownerStatusOptions': ownerStatusOptions,
+            'casteOptions': casteOptions,
+            'religionOptions': religionOptions,
+            'mtOptions': mtOptions,
+            'ageOptions': ageOptions,
+            'genderOptions': genderOptions,
+            'educationOptions': educationOptions,
+            'occupationOptions': occupationOptions,
+            'workstatusOptions': workstatusOptions,
+            'ssCriteriaOptions': ssCriteriaOptions,
+            'ssReceivedOptions': ssReceivedOptions,
+            'ssReasonOptions': ssReasonOptions,
+            'statusOptions': statusOptions,
+            'disabilityOptions': disabilityOptions,
+            'chronicIllnessOptions': chronicIllnessOptions,
+            'businessOptions': businessOptions,
+            'loanOptions': loanOptions,
+            'insuranceOptions': insuranceOptions,
+            'vehicleOptions': vehicleOptions,
+            'facilitiesOptions': facilitiesOptions,
+            'fuelOptions': fuelOptions,
+            'landOwnershipOptions': landOwnershipOptions,
+            'houseTypeOptions': houseTypeOptions,
+            'houseRegisteredOptions': houseRegisteredOptions,
+            'eqResistanceOptions': eqResistanceOptions,
+            'floodProneOptions': floodProneOptions,
+            'landAreaOptions': landAreaOptions,
+            'manpowerTypeOptions': manpowerTypeOptions,
+            'doctorSexOptions': doctorSexOptions,
+            'engineerSexOptions': engineerSexOptions,
+            'subEngineerSexOptions': subEngineerSexOptions,
+            'haLabSexOptions': haLabSexOptions,
+            'veterinarySexOptions': veterinarySexOptions,
+            'carpenterSexOptions': carpenterSexOptions,
+            'electricianSexOptions': electricianSexOptions,
+            'nurseSexOptions': nurseSexOptions,
+            'plumberSexOptions': plumberSexOptions,
+            'jtSexOptions': jtSexOptions,
+            'distanceFromMainRoad': distanceFromMainRoad,
+            'roadType': roadType,
+            'roadCapacity': roadCapacity,
+            'nearestSchool': nearestSchool,
+            'nearestHealthInstitution': nearestHealthInstitution,
+            'nearestSecurityForces': nearestSecurityForces,
+            'waterSources': waterSources,
+            'tubewellType': tubewellType,
+            'tubewellStatus': tubewellStatus,
+            'publicTapDistance': publicTapDistance,
+            'toiletType': toiletType,
+            'disasterType': disasterType,
+            'hazardType': hazardType,
+            'disasterInformationMedium': disasterInformationMedium,
+            'mediumSuitableForEarlyWarning': mediumSuitableForEarlyWarning,
+            'nearestOpenSpace': nearestOpenSpace,
+            'nearestMarket': nearestMarket,
+            'goodsAvailableInNearestMarket': goodsAvailableInNearestMarket,
+            'distanceToAlternativeMarket': distanceToAlternativeMarket,
+            'copingMechanismDuringDisaster': copingMechanismDuringDisaster,
+            'disasterTrainingType': disasterTrainingType,
+            'hazardSimulationType': hazardSimulationType,
+            'disastersInWard': disastersInWard,
+            'distanceToSafePlaceForFlood': distanceToSafePlaceForFlood,
+            'damageOccuredDuringFlood': damageOccuredDuringFlood,
+            'houseDamageTypeDuringFlood': houseDamageTypeDuringFlood,
+            'migratedPlaceDuringFlood': migratedPlaceDuringFlood,
+            'damageOccuredDuringEarthquake': damageOccuredDuringEarthquake,
+            'houseDamageTypeDuringEarthquake': houseDamageTypeDuringEarthquake,
+            'migratedPlaceDuringEarthquake': migratedPlaceDuringEarthquake,
+            'damageOccuredDuringLandslide': damageOccuredDuringLandslide,
+            'houseDamageTypeDuringLandslide': houseDamageTypeDuringLandslide,
+            'migratedPlaceDuringLandslide': migratedPlaceDuringLandslide,
+            'damageOccuredDuringFire': damageOccuredDuringFire,
+            'houseDamageTypeDuringFire': houseDamageTypeDuringFire,
+            'migratedPlaceDuringFire': migratedPlaceDuringFire,
+            'animalOptions': animalOptions,
+            'commercialOptions': commercialOptions
+        })
+
+        return Response({'data': data})
+
 
 
 

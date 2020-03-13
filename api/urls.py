@@ -60,6 +60,7 @@ urlpatterns = [
 
 
     path('municipality', core_viewsets.MunicipalityViewSet.as_view(), name='municipality'),
+    path('choices', core_viewsets.ChoiceViewSet.as_view(), name='choices'),
 
 
 

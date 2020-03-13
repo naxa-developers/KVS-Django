@@ -32,3 +32,6 @@ class ContactViewSet(viewsets.ModelViewSet):
     serializer_class = ContactSerializer
     queryset = Contact.objects.all()
     permission_classes = []
+
+
+
