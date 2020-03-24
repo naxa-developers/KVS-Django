@@ -1625,12 +1625,17 @@ class ChoiceViewSet(APIView):
             'houseDamageTypeDuringFire': houseDamageTypeDuringFire,
             'migratedPlaceDuringFire': migratedPlaceDuringFire,
             'animalOptions': animalOptions,
-            'commercialOptions': commercialOptions
+            'commercialOptions': commercialOptions,
+            'responderSex': responderSex,
+            'involvedInDisasterTraining': involvedInDisasterTraining,
+            'warehouseAvailableInWard': warehouseAvailableInWard,
+            'nearestMarketOperationDuringDisaster': nearestMarketOperationDuringDisaster,
+            'evacuationShelterAvailability': evacuationShelterAvailability,
+            'earlyWarningSystem': earlyWarningSystem,
+            'identifiedRiskArea': identifiedRiskArea,
         })
 
         return Response({'data': data})
-
-
 
 
 

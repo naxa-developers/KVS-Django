@@ -5,12 +5,12 @@ optionGen = [
 ]
 
 ownerStatusOptions = [
-  { 'value': '1', 'label': 'Female’s leadership', 'name': 'ownerStatus' },
-  { 'value': '2', 'label': 'Senior Citizen’s leadership', 'name': 'ownerStatus' },
-  { 'value': '3', 'label': 'Children’s leadership', 'name': 'ownerStatus' },
-  { 'value': '4', 'label': 'Single woman’s leadership', 'name': 'ownerStatus' },
-  { 'value': '5', 'label': 'Disabled member’s leadership', 'name': 'ownerStatus' },
-  { 'value': '6', 'label': 'Other', 'name': 'ownerStatus' }
+  { 'value': '1', 'label': 'Female’s leadership', 'name': 'owner_status' },
+  { 'value': '2', 'label': 'Senior Citizen’s leadership', 'name': 'owner_status' },
+  { 'value': '3', 'label': 'Children’s leadership', 'name': 'owner_status' },
+  { 'value': '4', 'label': 'Single woman’s leadership', 'name': 'owner_status' },
+  { 'value': '5', 'label': 'Disabled member’s leadership', 'name': 'owner_status' },
+  { 'value': '6', 'label': 'Other', 'name': 'owner_status' }
 ]
 
 casteOptions = [
@@ -33,27 +33,27 @@ religionOptions = [
   { 'value': 'Other', 'label': 'Other', 'name': 'religion' }
 ]
 mtOptions = [
-  { 'value': 'Nepali', 'label': 'Nepali', 'name': 'motherTongue' },
-  { 'value': 'Newari', 'label': 'Newari', 'name': 'motherTongue' },
-  { 'value': 'Tamang', 'label': 'Tamang', 'name': 'motherTongue' },
-  { 'value': 'Gurung', 'label': 'Gurung', 'name': 'motherTongue' },
-  { 'value': 'Maithili', 'label': 'Maithili', 'name': 'motherTongue' },
-  { 'value': 'Limbu', 'label': 'Limbu', 'name': 'motherTongue' },
-  { 'value': 'Tharu', 'label': 'Tharu', 'name': 'motherTongue' },
-  { 'value': 'Rajbanshi', 'label': 'Rajbanshi', 'name': 'motherTongue' },
-  { 'value': 'Bhojpuri', 'label': 'Bhojpuri', 'name': 'motherTongue' },
-  { 'value': 'Aawadi', 'label': 'Aawadi', 'name': 'motherTongue' },
-  { 'value': 'Kiranti', 'label': 'Kiranti', 'name': 'motherTongue' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'motherTongue' }
+  { 'value': 'Nepali', 'label': 'Nepali', 'name': 'mother_tongue' },
+  { 'value': 'Newari', 'label': 'Newari', 'name': 'mother_tongue' },
+  { 'value': 'Tamang', 'label': 'Tamang', 'name': 'mother_tongue' },
+  { 'value': 'Gurung', 'label': 'Gurung', 'name': 'mother_tongue' },
+  { 'value': 'Maithili', 'label': 'Maithili', 'name': 'mother_tongue' },
+  { 'value': 'Limbu', 'label': 'Limbu', 'name': 'mother_tongue' },
+  { 'value': 'Tharu', 'label': 'Tharu', 'name': 'mother_tongue' },
+  { 'value': 'Rajbanshi', 'label': 'Rajbanshi', 'name': 'mother_tongue' },
+  { 'value': 'Bhojpuri', 'label': 'Bhojpuri', 'name': 'mother_tongue' },
+  { 'value': 'Aawadi', 'label': 'Aawadi', 'name': 'mother_tongue' },
+  { 'value': 'Kiranti', 'label': 'Kiranti', 'name': 'mother_tongue' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'mother_tongue' }
 ]
 
 ageOptions = [
-  { 'label': 'under 18', 'value': 1, 'name': 'ageGroup' },
-  { 'label': '19 - 29', 'value': 2, 'name': 'ageGroup' },
-  { 'label': '30 - 39', 'value': 3, 'name': 'ageGroup' },
-  { 'label': '40 - 49', 'value': 4, 'name': 'ageGroup' },
-  { 'label': '50 - 59', 'value': 5, 'name': 'ageGroup' },
-  { 'label': 'Above 60', 'value': 6, 'name': 'ageGroup' }
+  { 'label': 'under 18', 'value': 1, 'name': 'age_group' },
+  { 'label': '19 - 29', 'value': 2, 'name': 'age_group' },
+  { 'label': '30 - 39', 'value': 3, 'name': 'age_group' },
+  { 'label': '40 - 49', 'value': 4, 'name': 'age_group' },
+  { 'label': '50 - 59', 'value': 5, 'name': 'age_group' },
+  { 'label': 'Above 60', 'value': 6, 'name': 'age_group' }
 ]
 
 genderOptions = [
@@ -63,241 +63,247 @@ genderOptions = [
 ]
 
 educationOptions = [
-  { 'value': 'Literate', 'label': 'Literate', 'name': 'educationLevel' },
+  { 'value': 'Literate', 'label': 'Literate', 'name': 'owner_education' },
   {
     'value': 'Primary level (1-8)',
     'label': 'Primary level (1-8)',
-    'name': 'educationLevel'
+    'name': 'owner_education'
   },
   {
     'value': 'Secondary level (9-12)',
     'label': 'Secondary level (9-12)',
-    'name': 'educationLevel'
+    'name': 'owner_education'
   },
   {
     'value': 'Bachelor degree',
     'label': 'Bachelor degree',
-    'name': 'educationLevel'
+    'name': 'owner_education'
   },
   {
     'value': 'Master’s degree',
     'label': 'Master’s degree',
-    'name': 'educationLevel'
+    'name': 'owner_education'
   },
-  { 'value': 'P.hd', 'label': 'P.hd', 'name': 'educationLevel' },
-  { 'value': 'Illiterate', 'label': 'Illiterate', 'name': 'educationLevel' }
+  { 'value': 'P.hd', 'label': 'P.hd', 'name': 'owner_education' },
+  { 'value': 'Illiterate', 'label': 'Illiterate', 'name': 'owner_education' }
+]
+
+responderSex = [
+  { 'label': 'Male', 'value': 'Male', 'name': 'responder_sex' },
+  { 'label': 'Female', 'value': 'Female', 'name': 'responder_sex' },
+  { 'label': 'Other', 'value': 'Other', 'name': 'responder_sex' }
 ]
 
 occupationOptions = [
-  { 'value': 'Agriculture', 'label': 'Agriculture', 'name': 'occupation' },
+  { 'value': 'Agriculture', 'label': 'Agriculture', 'name': 'main_occupation' },
   {
     'value': 'Agricultural wages',
     'label': 'Agricultural wages',
-    'name': 'occupation'
+    'name': 'main_occupation'
   },
-  { 'value': 'Daily wages', 'label': 'Daily wages', 'name': 'occupation' },
+  { 'value': 'Daily wages', 'label': 'Daily wages', 'name': 'main_occupation' },
   {
     'value': 'Government service',
     'label': 'Government service',
-    'name': 'occupation'
+    'name': 'main_occupation'
   },
   {
     'value': 'Non-government service',
     'label': 'Non-government service',
-    'name': 'occupation'
+    'name': 'main_occupation'
   },
   {
     'value': 'Foreign employment',
     'label': 'Foreign employment',
-    'name': 'occupation'
+    'name': 'main_occupation'
   },
-  { 'value': 'Entrepreneur', 'label': 'Entrepreneur', 'name': 'occupation' },
-  { 'value': 'Business', 'label': 'Business', 'name': 'occupation' },
+  { 'value': 'Entrepreneur', 'label': 'Entrepreneur', 'name': 'main_occupation' },
+  { 'value': 'Business', 'label': 'Business', 'name': 'main_occupation' },
   {
     'value': 'Seasonal labor, India',
     'label': 'Seasonal labor, India',
-    'name': 'occupation'
+    'name': 'main_occupation'
   },
   {
     'value': 'Seasonal labor, Nepal',
     'label': 'Seasonal labor, Nepal',
-    'name': 'occupation'
+    'name': 'main_occupation'
   },
-  { 'value': 'Student', 'label': 'Student', 'name': 'occupation' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'occupation' }
+  { 'value': 'Student', 'label': 'Student', 'name': 'main_occupation' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'main_occupation' }
 ]
 
 workstatusOptions = [
-  { 'value': 'Active', 'label': 'Active', 'name': 'workingStatus' },
-  { 'value': 'Passive', 'label': 'Passive', 'name': 'workingStatus' }
+  { 'value': 'Active', 'label': 'Active', 'name': 'working_status' },
+  { 'value': 'Passive', 'label': 'Passive', 'name': 'working_status' }
 ]
 
 ssCriteriaOptions = [
   {
     'value': 'Senior citizen of 70 years',
     'label': 'Senior citizen of 70 years',
-    'name': 'socialSecurityCriteria'
+    'name': 'falling_under_social_security_criteria'
   },
   {
     'value': 'Dalit, Senior Citizen of 60 years',
     'label': 'Dalit, Senior Citizen of 60 years',
-    'name': 'socialSecurityCriteria'
+    'name': 'falling_under_social_security_criteria'
   },
   {
     'value': 'Unmarried 60 years old woman',
     'label': 'Unmarried 60 years old woman',
-    'name': 'socialSecurityCriteria'
+    'name': 'falling_under_social_security_criteria'
   },
   {
     'value': '60 years old single woman',
     'label': '60 years old single woman',
-    'name': 'socialSecurityCriteria'
+    'name': 'falling_under_social_security_criteria'
   },
   { 'value': 'Widow of any age', 'label': 'Widow of any age', 'name': 'ss_criteria' },
   {
     'value': 'People with disability of any age',
     'label': 'People with disability of any age',
-    'name': 'socialSecurityCriteria'
+    'name': 'falling_under_social_security_criteria'
   },
   {
     'value': 'Endangered tribes of any age',
     'label': 'Endangered tribes of any age',
-    'name': 'socialSecurityCriteria'
+    'name': 'falling_under_social_security_criteria'
   },
   {
     'value': 'Children under 5 years of age',
     'label': 'Children under 5 years of age',
-    'name': 'socialSecurityCriteria'
+    'name': 'falling_under_social_security_criteria'
   },
-  { 'value': 'No', 'label': 'No', 'name': 'socialSecurityCriteria' }
+  { 'value': 'No', 'label': 'No', 'name': 'falling_under_social_security_criteria' }
 ]
 
 ssReceivedOptions = [
-  { 'value': 'Yes', 'label': 'Yes', 'name': 'socialSecurityReceived' },
-  { 'value': 'No', 'label': 'No', 'name': 'socialSecurityReceived' },
-  { 'value': "Don't know", 'label': "Don't know", 'name': 'socialSecurityReceived' }
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'social_security_received' },
+  { 'value': 'No', 'label': 'No', 'name': 'social_security_received' },
+  { 'value': "Don't know", 'label': "Don't know", 'name': 'social_security_received' }
 ]
 ssReasonOptions = [
   {
     'value': 'No citizenship',
     'label': 'No citizenship',
-    'name': 'socialSecurityReason'
+    'name': 'reason_for_not_received_social_security'
   },
   {
     'value': 'Lack of information',
     'label': 'Lack of information',
-    'name': 'socialSecurityReason'
+    'name': 'reason_for_not_received_social_security'
   },
   {
     'value':
       'Didn’t receive recommendation letter from municipality/related body',
     'label':
       'Didn’t receive recommendation letter from municipality/related body',
-    'name': 'socialSecurityReason'
+    'name': 'reason_for_not_received_social_security'
   },
   {
     'value': 'Not eligible to get the facility',
     'label': 'Not eligible to get the facility',
-    'name': 'socialSecurityReason'
+    'name': 'reason_for_not_received_social_security'
   },
   {
     'value': 'Not registered',
     'label': 'Not registered',
-    'name': 'socialSecurityReason'
+    'name': 'reason_for_not_received_social_security'
   },
   {
     'value': 'People with disability',
     'label': 'People with disability',
-    'name': 'socialSecurityReason'
+    'name': 'reason_for_not_received_social_security'
   }
 ]
 statusOptions = [
-  { 'value': 'Pregnant', 'label': 'Pregnant', 'name': 'status' },
+  { 'value': 'Pregnant', 'label': 'Pregnant', 'name': 'status_of_family_member' },
   {
     'value': 'Breast feeding woman',
     'label': 'Breast feeding woman',
-    'name': 'status'
+    'name': 'status_of_family_member'
   },
-  { 'value': 'Single Woman', 'label': 'Single Woman', 'name': 'status' },
-  { 'value': 'Senior Citizen', 'label': 'Senior Citizen', 'name': 'status' },
-  { 'value': 'Milk feeding baby', 'label': 'Milk feeding baby', 'name': 'status' },
+  { 'value': 'Single Woman', 'label': 'Single Woman', 'name': 'status_of_family_member' },
+  { 'value': 'Senior Citizen', 'label': 'Senior Citizen', 'name': 'status_of_family_member' },
+  { 'value': 'Milk feeding baby', 'label': 'Milk feeding baby', 'name': 'status_of_family_member' },
   {
     'value': 'People with disability',
     'label': 'People with disability',
-    'name': 'status'
+    'name': 'status_of_family_member'
   },
-  { 'value': 'Chronic illness', 'label': 'Chronic illness', 'name': 'status' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'status' }
+  { 'value': 'Chronic illness', 'label': 'Chronic illness', 'name': 'status_of_family_member' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'status_of_family_member' }
 ]
 disabilityOptions = [
   {
     'value': 'Mental/psychological disability',
     'label': 'Mental/psychological disability',
-    'name': 'disabilityType'
+    'name': 'disability_type'
   },
   {
     'value': 'Intellectual disability',
     'label': 'Intellectual disability',
-    'name': 'disabilityType'
+    'name': 'disability_type'
   },
   {
     'value': 'Multiple disability',
     'label': 'Multiple disability',
-    'name': 'disabilityType'
+    'name': 'disability_type'
   },
   {
     'value': 'Difficulties with communicating',
     'label': 'Difficulties with communicating',
-    'name': 'disabilityType'
+    'name': 'disability_type'
   },
   {
     'value': 'Difficulties with seeing',
     'label': 'Difficulties with seeing',
-    'name': 'disabilityType'
+    'name': 'disability_type'
   },
   {
     'value': 'Difficulties with hearing',
     'label': 'Difficulties with hearing',
-    'name': 'disabilityType'
+    'name': 'disability_type'
   },
   {
     'value': 'Difficulties with both hearing and seeing',
     'label': 'Difficulties with both hearing and seeing',
-    'name': 'disabilityType'
+    'name': 'disability_type'
   },
   {
     'value': 'Difficulties with self-care like washing, bathing, etc.',
     'label': 'Difficulties with self-care like washing, bathing, etc.',
-    'name': 'disabilityType'
+    'name': 'disability_type'
   },
   {
     'value': 'Difficulties with remembering',
     'label': 'Difficulties with remembering',
-    'name': 'disabilityType'
+    'name': 'disability_type'
   },
   {
     'value': 'Difficulties with walking or climbing steps',
     'label': 'Difficulties with walking or climbing steps',
-    'name': 'disabilityType'
+    'name': 'disability_type'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'disabilityType' },
-  { 'value': 'None', 'label': 'None', 'name': 'disabilityType' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'disability_type' },
+  { 'value': 'None', 'label': 'None', 'name': 'disability_type' }
 ]
 chronicIllnessOptions = [
-  { 'value': 'Diabetes', 'label': 'Diabetes', 'name': 'chronicIllness' },
-  { 'value': 'Asthma', 'label': 'Asthma', 'name': 'chronicIllness' },
-  { 'value': 'Heart disease', 'label': 'Heart disease', 'name': 'chronicIllness' },
+  { 'value': 'Diabetes', 'label': 'Diabetes', 'name': 'chronic_illness' },
+  { 'value': 'Asthma', 'label': 'Asthma', 'name': 'chronic_illness' },
+  { 'value': 'Heart disease', 'label': 'Heart disease', 'name': 'chronic_illness' },
   {
     'value': 'Kidney’s disease',
     'label': 'Kidney’s disease',
-    'name': 'chronicIllness'
+    'name': 'chronic_illness'
   },
-  { 'value': 'Cancer', 'label': 'Cancer', 'name': 'chronicIllness' },
-  { 'value': 'Leprosy', 'label': 'Leprosy', 'name': 'chronicIllness' },
-  { 'value': 'HIV/AIDS', 'label': 'HIV/AIDS', 'name': 'chronicIllness' },
-  { 'value': 'Alzheimer', 'label': 'Alzheimer', 'name': 'chronicIllness' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'chronicIllness' },
-  { 'value': 'None', 'label': 'None', 'name': 'chronicIllness' }
+  { 'value': 'Cancer', 'label': 'Cancer', 'name': 'chronic_illness' },
+  { 'value': 'Leprosy', 'label': 'Leprosy', 'name': 'chronic_illness' },
+  { 'value': 'HIV/AIDS', 'label': 'HIV/AIDS', 'name': 'chronic_illness' },
+  { 'value': 'Alzheimer', 'label': 'Alzheimer', 'name': 'chronic_illness' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'chronic_illness' },
+  { 'value': 'None', 'label': 'None', 'name': 'chronic_illness' }
 ]
 
 businessOptions = [
@@ -341,19 +347,19 @@ loanOptions = [
 
 
 insuranceOptions = [
-  { 'value': 'Life insurance', 'label': 'Life insurance', 'name': 'insuranceType' },
+  { 'value': 'Life insurance', 'label': 'Life insurance', 'name': 'insurance_type' },
   {
     'value': 'Livestock insurance',
     'label': 'Livestock insurance',
-    'name': 'insuranceType'
+    'name': 'insurance_type'
   },
-  { 'value': 'Crop insurance', 'label': 'Crop insurance', 'name': 'insuranceType' },
+  { 'value': 'Crop insurance', 'label': 'Crop insurance', 'name': 'insurance_type' },
   {
     'value': 'House/Other asset insurance',
     'label': 'House/Other asset insurance',
-    'name': 'insuranceType'
+    'name': 'insurance_type'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'insuranceType' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'insurance_type' }
 ]
 
 
@@ -361,210 +367,210 @@ vehicleOptions = [
   {
     'value': 'Motorcycle/Scooter',
     'label': 'Motorcycle/Scooter',
-    'name': 'vehicles'
+    'name': 'vehicle'
   },
   {
     'value': 'Car/Jeep/Van (Personal Purpose) ',
     'label': 'Car/Jeep/Van (Personal Purpose) ',
-    'name': 'vehicles'
+    'name': 'vehicle'
   },
   {
     'value': 'Car/Jeep/Van (Commercial purpose) ',
     'label': 'Car/Jeep/Van (Commercial purpose) ',
-    'name': 'vehicles'
+    'name': 'vehicle'
   },
   {
     'value': 'Minibus/Mini truck',
     'label': 'Minibus/Mini truck',
-    'name': 'vehicles'
+    'name': 'vehicle'
   },
-  { 'value': 'Cycle', 'label': 'Cycle', 'name': 'vehicles' },
+  { 'value': 'Cycle', 'label': 'Cycle', 'name': 'vehicle' },
   {
     'value': 'Bus/Tipper/Big Vehicles',
     'label': 'Bus/Tipper/Big Vehicles',
-    'name': 'vehicles'
+    'name': 'vehicle'
   },
   {
     'value': 'Tractor/Power tailor',
     'label': 'Tractor/Power tailor',
-    'name': 'vehicles'
+    'name': 'vehicle'
   },
   {
     'value': 'Other heavy equipment',
     'label': 'Other heavy equipment',
-    'name': 'vehicles'
+    'name': 'vehicle'
   },
-  { 'value': 'No any vehicles', 'label': 'No any vehicles', 'name': 'vehicles' }
+  { 'value': 'No any vehicles', 'label': 'No any vehicles', 'name': 'vehicle' }
 ]
 
 facilitiesOptions = [
-  { 'value': 'Radio', 'label': 'Radio', 'name': 'facilities' },
-  { 'value': 'T.V', 'label': 'T.V', 'name': 'facilities' },
-  { 'value': 'Fridge', 'label': 'Fridge', 'name': 'facilities' },
-  { 'value': 'Oven', 'label': 'Oven', 'name': 'facilities' },
-  { 'value': 'Mobile/Telephone', 'label': 'Mobile/Telephone', 'name': 'facilities' },
-  { 'value': 'Washing Machine', 'label': 'Washing Machine', 'name': 'facilities' },
-  { 'value': 'Internet', 'label': 'Internet', 'name': 'facilities' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'facilities' }
+  { 'value': 'Radio', 'label': 'Radio', 'name': 'facilities_type' },
+  { 'value': 'T.V', 'label': 'T.V', 'name': 'facilities_type' },
+  { 'value': 'Fridge', 'label': 'Fridge', 'name': 'facilities_type' },
+  { 'value': 'Oven', 'label': 'Oven', 'name': 'facilities_type' },
+  { 'value': 'Mobile/Telephone', 'label': 'Mobile/Telephone', 'name': 'facilities_type' },
+  { 'value': 'Washing Machine', 'label': 'Washing Machine', 'name': 'facilities_type' },
+  { 'value': 'Internet', 'label': 'Internet', 'name': 'facilities_type' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'facilities_type' }
 ]
 
 
 fuelOptions = [
-  { 'value': 'Kerosene', 'label': 'Kerosene', 'name': 'fuel' },
-  { 'value': 'L.P.G', 'label': 'L.P.G', 'name': 'fuel' },
-  { 'value': 'Guitha', 'label': 'Guitha', 'name': 'fuel' },
-  { 'value': 'Bio-gas', 'label': 'Bio-gas', 'name': 'fuel' },
+  { 'value': 'Kerosene', 'label': 'Kerosene', 'name': 'fuel_type' },
+  { 'value': 'L.P.G', 'label': 'L.P.G', 'name': 'fuel_type' },
+  { 'value': 'Guitha', 'label': 'Guitha', 'name': 'fuel_type' },
+  { 'value': 'Bio-gas', 'label': 'Bio-gas', 'name': 'fuel_type' },
   {
     'value': 'Electrical appliances like heater/rice cooker',
     'label': 'Electrical appliances like heater/rice cooker',
-    'name': 'fuel'
+    'name': 'fuel_type'
   },
-  { 'value': 'Firewood/coal', 'label': 'Firewood/coal', 'name': 'fuel' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'fuel' }
+  { 'value': 'Firewood/coal', 'label': 'Firewood/coal', 'name': 'fuel_type' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'fuel_type' }
 ]
 
 
 landOwnershipOptions = [
-  { 'value': 'Female', 'label': 'Female', 'name': 'landOwnership' },
-  { 'value': 'Male', 'label': 'Male', 'name': 'landOwnership' },
-  { 'value': 'Both', 'label': 'Both', 'name': 'landOwnership' }
+  { 'value': 'Female', 'label': 'Female', 'name': 'land_ownership' },
+  { 'value': 'Male', 'label': 'Male', 'name': 'land_ownership' },
+  { 'value': 'Both', 'label': 'Both', 'name': 'land_ownership' }
 ]
 
 houseTypeOptions = [
   {
     'value': 'Permanent house with RCC structure',
     'label': 'Permanent house with RCC structure',
-    'name': 'houseType'
+    'name': 'house_type'
   },
   {
     'value': 'Permanent house with CGI roof',
     'label': 'Permanent house with CGI roof',
-    'name': 'houseType'
+    'name': 'house_type'
   },
   {
     'value': 'Permanent house with slate roof',
     'label': 'Permanent house with slate roof',
-    'name': 'houseType'
+    'name': 'house_type'
   },
   {
     'value': 'Semi-permanent house',
     'label': 'Semi-permanent house',
-    'name': 'houseType'
+    'name': 'house_type'
   },
   {
     'value': 'Temporary house with CGI roof',
     'label': 'Temporary house with CGI roof',
-    'name': 'houseType'
+    'name': 'house_type'
   },
   {
     'value': 'Temporary house with thatched/mud roof',
     'label': 'Temporary house with thatched/mud roof',
-    'name': 'houseType'
+    'name': 'house_type'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'houseType' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'house_type' }
 ]
 
 houseRegisteredOptions = [
-  { 'value': 'Yes', 'label': 'Yes', 'name': 'houseRegistered' },
-  { 'value': 'No', 'label': 'No', 'name': 'houseRegistered' },
-  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'houseRegistered' }
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'house_map_registered' },
+  { 'value': 'No', 'label': 'No', 'name': 'house_map_registered' },
+  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'house_map_registered' }
 ]
 
 eqResistanceOptions = [
-  { 'value': 'Yes', 'label': 'Yes', 'name': 'eqResistance' },
-  { 'value': 'No', 'label': 'No', 'name': 'eqResistance' },
-  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'eqResistance' }
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'earthquake_resistance' },
+  { 'value': 'No', 'label': 'No', 'name': 'earthquake_resistance' },
+  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'earthquake_resistance' }
 ]
 
 floodProneOptions = [
-  { 'value': 'Yes', 'label': 'Yes', 'name': 'floodProne' },
-  { 'value': 'No', 'label': 'No', 'name': 'floodProne' },
-  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'floodProne' }
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'flood_prone' },
+  { 'value': 'No', 'label': 'No', 'name': 'flood_prone' },
+  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'flood_prone' }
 ]
 
 landAreaOptions = [
   {
     'value': 'Less than a kathha',
     'label': 'Less than a kathha',
-    'name': 'landArea'
+    'name': 'owned_land_area'
   },
-  { 'value': '1-5 kathha', 'label': '1-5 kathha', 'name': 'landArea' },
-  { 'value': '5-10 kathha', 'label': '5-10 kathha', 'name': 'landArea' },
+  { 'value': '1-5 kathha', 'label': '1-5 kathha', 'name': 'owned_land_area' },
+  { 'value': '5-10 kathha', 'label': '5-10 kathha', 'name': 'owned_land_area' },
   {
     'value': 'More than 10 kathha',
     'label': 'More than 10 kathha',
-    'name': 'landArea'
+    'name': 'owned_land_area'
   },
-  { 'value': 'Landless', 'label': 'Landless', 'name': 'landArea' }
+  { 'value': 'Landless', 'label': 'Landless', 'name': 'owned_land_area' }
 ]
 
 
 manpowerTypeOptions = [
-  { 'value': 'Doctor', 'label': 'Doctor', 'name': 'manpowerType' },
-  { 'value': 'Engineer', 'label': 'Engineer', 'name': 'manpowerType' },
-  { 'value': 'Sub-engineer', 'label': 'Sub-engineer', 'name': 'manpowerType' },
-  { 'value': 'Nurse', 'label': 'Nurse', 'name': 'manpowerType' },
+  { 'value': 'Doctor', 'label': 'Doctor', 'name': 'manpower_type' },
+  { 'value': 'Engineer', 'label': 'Engineer', 'name': 'manpower_type' },
+  { 'value': 'Sub-engineer', 'label': 'Sub-engineer', 'name': 'manpower_type' },
+  { 'value': 'Nurse', 'label': 'Nurse', 'name': 'manpower_type' },
   {
     'value': 'H.A/Lab Assistant/Radiologist/Pharmacist',
     'label': 'H.A/Lab Assistant/Radiologist/Pharmacist',
-    'name': 'manpowerType'
+    'name': 'manpower_type'
   },
-  { 'value': 'Veterinary', 'label': 'Veterinary', 'name': 'manpowerType' },
-  { 'value': 'Carpenter', 'label': 'Carpenter', 'name': 'manpowerType' },
-  { 'value': 'Electrician', 'label': 'Electrician', 'name': 'manpowerType' },
-  { 'value': 'Plumber', 'label': 'Plumber', 'name': 'manpowerType' },
-  { 'value': 'J.T/J.T.A', 'label': 'J.T/J.T.A', 'name': 'manpowerType' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'manpowerType' }
+  { 'value': 'Veterinary', 'label': 'Veterinary', 'name': 'manpower_type' },
+  { 'value': 'Carpenter', 'label': 'Carpenter', 'name': 'manpower_type' },
+  { 'value': 'Electrician', 'label': 'Electrician', 'name': 'manpower_type' },
+  { 'value': 'Plumber', 'label': 'Plumber', 'name': 'manpower_type' },
+  { 'value': 'J.T/J.T.A', 'label': 'J.T/J.T.A', 'name': 'manpower_type' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'manpower_type' }
 ]
 
 doctorSexOptions = [
-  { 'value': 'Male', 'label': 'Male', 'name': 'doctorSex' },
-  { 'value': 'Female', 'label': 'Female', 'name': 'doctorSex' }
+  { 'value': 'Male', 'label': 'Male', 'name': 'doctor_sex' },
+  { 'value': 'Female', 'label': 'Female', 'name': 'doctor_sex' }
 ]
 
 engineerSexOptions = [
-  { 'value': 'Male', 'label': 'Male', 'name': 'engineerSex' },
-  { 'value': 'Female', 'label': 'Female', 'name': 'engineerSex' }
+  { 'value': 'Male', 'label': 'Male', 'name': 'engineer_sex' },
+  { 'value': 'Female', 'label': 'Female', 'name': 'engineer_sex' }
 ]
 
 subEngineerSexOptions = [
-  { 'value': 'Male', 'label': 'Male', 'name': 'subEngineerSex' },
-  { 'value': 'Female', 'label': 'Female', 'name': 'subEngineerSex' }
+  { 'value': 'Male', 'label': 'Male', 'name': 'subengineer_sex' },
+  { 'value': 'Female', 'label': 'Female', 'name': 'subengineer_sex' }
 ]
 
 nurseSexOptions = [
-  { 'value': 'Male', 'label': 'Male', 'name': 'nurseSex' },
-  { 'value': 'Female', 'label': 'Female', 'name': 'nurseSex' }
+  { 'value': 'Male', 'label': 'Male', 'name': 'nurse_sex' },
+  { 'value': 'Female', 'label': 'Female', 'name': 'nurse_sex' }
 ]
 
 haLabSexOptions = [
-  { 'value': 'Male', 'label': 'Male', 'name': 'haLabSex' },
-  { 'value': 'Female', 'label': 'Female', 'name': 'haLabSex' }
+  { 'value': 'Male', 'label': 'Male', 'name': 'ha_lab_sex' },
+  { 'value': 'Female', 'label': 'Female', 'name': 'ha_lab_sex' }
 ]
 
 veterinarySexOptions = [
-  { 'value': 'Male', 'label': 'Male', 'name': 'veterinarySex' },
-  { 'value': 'Female', 'label': 'Female', 'name': 'veterinarySex' }
+  { 'value': 'Male', 'label': 'Male', 'name': 'veterinary_sex' },
+  { 'value': 'Female', 'label': 'Female', 'name': 'veterinary_sex' }
 ]
 
 carpenterSexOptions = [
-  { 'value': 'Male', 'label': 'Male', 'name': 'carpenterSex' },
-  { 'value': 'Female', 'label': 'Female', 'name': 'carpenterSex' }
+  { 'value': 'Male', 'label': 'Male', 'name': 'dakarmi_sikarmi_sex' },
+  { 'value': 'Female', 'label': 'Female', 'name': 'dakarmi_sikarmi_sex' }
 ]
 
 electricianSexOptions = [
-  { 'value': 'Male', 'label': 'Male', 'name': 'electricianSex' },
-  { 'value': 'Female', 'label': 'Female', 'name': 'electricianSex' }
+  { 'value': 'Male', 'label': 'Male', 'name': 'electrician_sex' },
+  { 'value': 'Female', 'label': 'Female', 'name': 'electrician_sex' }
 ]
 
 plumberSexOptions = [
-  { 'value': 'Male', 'label': 'Male', 'name': 'plumberSex' },
-  { 'value': 'Female', 'label': 'Female', 'name': 'plumberSex' }
+  { 'value': 'Male', 'label': 'Male', 'name': 'plumber_sex' },
+  { 'value': 'Female', 'label': 'Female', 'name': 'plumber_sex' }
 ]
 
 jtSexOptions = [
-  { 'value': 'Male', 'label': 'Male', 'name': 'jtSex' },
-  { 'value': 'Female', 'label': 'Female', 'name': 'jtSex' }
+  { 'value': 'Male', 'label': 'Male', 'name': 'jt_sex' },
+  { 'value': 'Female', 'label': 'Female', 'name': 'jt_sex' }
 ]
 
 
@@ -572,48 +578,48 @@ distanceFromMainRoad = [
   {
     'value': 'Near to the house',
     'label': 'Near to the house',
-    'name': 'distanceFromMainRoad'
+    'name': 'distance_from_main_road'
   },
   {
     'value': '15-30 minutes',
     'label': '15-30 minutes',
-    'name': 'distanceFromMainRoad'
+    'name': 'distance_from_main_road'
   },
   {
     'value': '30 minutes-1 hour',
     'label': '30 minutes-1 hour',
-    'name': 'distanceFromMainRoad'
+    'name': 'distance_from_main_road'
   },
   {
     'value': 'More than an hour',
     'label': 'More than an hour',
-    'name': 'distanceFromMainRoad'
+    'name': 'distance_from_main_road'
   }
 ]
 
 roadType = [
-  { 'value': 'Alley road', 'label': 'Alley road', 'name': 'roadType' },
-  { 'value': 'Graveled road', 'label': 'Graveled road', 'name': 'roadType' },
+  { 'value': 'Alley road', 'label': 'Alley road', 'name': 'road_type' },
+  { 'value': 'Graveled road', 'label': 'Graveled road', 'name': 'road_type' },
   {
     'value': 'Stone/mud/block printed road',
     'label': 'Stone/mud/block printed road',
-    'name': 'roadType'
+    'name': 'road_type'
   },
-  { 'value': 'Off road', 'label': 'Off road', 'name': 'roadType' },
+  { 'value': 'Off road', 'label': 'Off road', 'name': 'road_type' },
   {
     'value': 'Pitched road (10 m- 11 m)',
     'label': 'Pitched road (10 m- 11 m)',
-    'name': 'roadType'
+    'name': 'road_type'
   },
   {
     'value': 'Pitched road (12-14 m)',
     'label': 'Pitched road (12-14 m)',
-    'name': 'roadType'
+    'name': 'road_type'
   },
   {
     'value': 'Pitched road (> 15 m)',
     'label': 'Pitched road (> 15 m)',
-    'name': 'roadType'
+    'name': 'road_type'
   }
 ]
 
@@ -621,32 +627,32 @@ roadCapacity = [
   {
     'value': 'Crane/Dozer/Excavator/Truck/Tipper operating road',
     'label': 'Crane/Dozer/Excavator/Truck/Tipper operating road',
-    'name': 'roadCapacity'
+    'name': 'road_capacity'
   },
   {
     'value': 'Minibus/Mini truck operating road',
     'label': 'Minibus/Mini truck operating road',
-    'name': 'roadCapacity'
+    'name': 'road_capacity'
   },
   {
     'value': 'Tractor/Power tailor operating road',
     'label': 'Tractor/Power tailor operating road',
-    'name': 'roadCapacity'
+    'name': 'road_capacity'
   },
   {
     'value': 'Fire brigade operating road',
     'label': 'Fire brigade operating road',
-    'name': 'roadCapacity'
+    'name': 'road_capacity'
   },
   {
     'value': 'Bus/Pickup/Car operating road',
     'label': 'Bus/Pickup/Car operating road',
-    'name': 'roadCapacity'
+    'name': 'road_capacity'
   },
   {
     'value': 'Motorcycle operating road',
     'label': 'Motorcycle operating road',
-    'name': 'roadCapacity'
+    'name': 'road_capacity'
   }
 ]
 
@@ -654,22 +660,22 @@ nearestSchool = [
   {
     'value': 'Nearby/In a walking distance',
     'label': 'Nearby/In a walking distance',
-    'name': 'nearestSchool'
+    'name': 'distance_from_nearest_school'
   },
   {
     'value': '15-30 minutes in vehicles',
     'label': '15-30 minutes in vehicles',
-    'name': 'nearestSchool'
+    'name': 'distance_from_nearest_school'
   },
   {
     'value': '30 minutes-1 hour in vehicles',
     'label': '30 minutes-1 hour in vehicles',
-    'name': 'nearestSchool'
+    'name': 'distance_from_nearest_school'
   },
   {
     'value': 'More than an hour in vehicles',
     'label': 'More than an hour in vehicles',
-    'name': 'nearestSchool'
+    'name': 'distance_from_nearest_school'
   }
 ]
 
@@ -677,22 +683,22 @@ nearestHealthInstitution = [
   {
     'value': 'Nearby/In a walking distance',
     'label': 'Nearby/In a walking distance',
-    'name': 'nearestHealthInstitution'
+    'name': 'distance_from_nearest_health_institution'
   },
   {
     'value': '15-30 minutes',
     'label': '15-30 minutes',
-    'name': 'nearestHealthInstitution'
+    'name': 'distance_from_nearest_health_institution'
   },
   {
     'value': '30 minutes-1 hour',
     'label': '30 minutes-1 hour',
-    'name': 'nearestHealthInstitution'
+    'name': 'distance_from_nearest_health_institution'
   },
   {
     'value': 'More than an hour',
     'label': 'More than an hour',
-    'name': 'nearestHealthInstitution'
+    'name': 'distance_from_nearest_health_institution'
   }
 ]
 
@@ -700,22 +706,22 @@ nearestSecurityForces = [
   {
     'value': 'Nearby/In a walking distance',
     'label': 'Nearby/In a walking distance',
-    'name': 'nearestSecurityForces'
+    'name': 'distance_from_nearest_security_forces'
   },
   {
     'value': '15-30 minutes',
     'label': '15-30 minutes',
-    'name': 'nearestSecurityForces'
+    'name': 'distance_from_nearest_security_forces'
   },
   {
     'value': '30 minutes-1 hour',
     'label': '30 minutes-1 hour',
-    'name': 'nearestSecurityForces'
+    'name': 'distance_from_nearest_security_forces'
   },
   {
     'value': 'More than an hour',
     'label': 'More than an hour',
-    'name': 'nearestSecurityForces'
+    'name': 'distance_from_nearest_security_forces'
   }
 ]
 
@@ -723,235 +729,271 @@ waterSources = [
   {
     'value': 'Public Tap-stand',
     'label': 'Public Tap-stand',
-    'name': 'waterSources'
+    'name': 'water_sources'
   },
-  { 'value': 'spring source', 'label': 'spring source', 'name': 'waterSources' },
-  { 'value': 'Well/Spout', 'label': 'Well/Spout', 'name': 'waterSources' },
-  { 'value': 'River/Rivulet', 'label': 'River/Rivulet', 'name': 'waterSources' },
-  { 'value': 'Tube well', 'label': 'Tube well', 'name': 'waterSources' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'waterSources' }
+  { 'value': 'spring source', 'label': 'spring source', 'name': 'water_sources' },
+  { 'value': 'Well/Spout', 'label': 'Well/Spout', 'name': 'water_sources' },
+  { 'value': 'River/Rivulet', 'label': 'River/Rivulet', 'name': 'water_sources' },
+  { 'value': 'Tube well', 'label': 'Tube well', 'name': 'water_sources' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'water_sources' }
 ]
 
 tubewellType = [
-  { 'value': 'Private', 'label': 'Public', 'name': 'tubewellType' },
-  { 'value': 'Public', 'label': 'Public', 'name': 'tubewellType' }
+  { 'value': 'Private', 'label': 'Public', 'name': 'tubewell_type' },
+  { 'value': 'Public', 'label': 'Public', 'name': 'tubewell_type' }
 ]
 
 tubewellStatus = [
-  { 'value': 'Good', 'label': 'Good', 'name': 'tubewellStatus' },
-  { 'value': 'Must Repair', 'label': 'Must Repair', 'name': 'tubewellStatus' }
+  { 'value': 'Good', 'label': 'Good', 'name': 'tubewell_status' },
+  { 'value': 'Must Repair', 'label': 'Must Repair', 'name': 'tubewell_status' }
 ]
 
 publicTapDistance = [
   {
     'value': 'Nearby the house',
     'label': 'Nearby the house',
-    'name': 'publicTapDistance'
+    'name': 'public_tap_distance'
   },
-  { 'value': '15-30 minutes', 'label': '15-30 minutes', 'name': 'publicTapDistance' },
+  { 'value': '15-30 minutes', 'label': '15-30 minutes', 'name': 'public_tap_distance' },
   {
     'value': '30 minutes-1 hour',
     'label': '30 minutes-1 hour',
-    'name': 'publicTapDistance'
+    'name': 'public_tap_distance'
   },
   {
     'value': 'More than an hour',
     'label': 'More than an hour',
-    'name': 'publicTapDistance'
+    'name': 'public_tap_distance'
   },
-  { 'value': 'No public tap', 'label': 'No public tap', 'name': 'publicTapDistance' }
+  { 'value': 'No public tap', 'label': 'No public tap', 'name': 'public_tap_distance' }
 ]
 
 toiletType = [
-  { 'value': 'Drainage', 'label': 'Drainage', 'name': 'toiletType' },
-  { 'value': 'Pit hole', 'label': 'Pit hole', 'name': 'toiletType' },
-  { 'value': 'Bio-gas attached', 'label': 'Bio-gas attached', 'name': 'toiletType' },
-  { 'value': 'Septic tank', 'label': 'Septic tank', 'name': 'toiletType' },
-  { 'value': 'Ring type', 'label': 'Ring type', 'name': 'toiletType' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'toiletType' }
+  { 'value': 'Drainage', 'label': 'Drainage', 'name': 'toilet_type' },
+  { 'value': 'Pit hole', 'label': 'Pit hole', 'name': 'toilet_type' },
+  { 'value': 'Bio-gas attached', 'label': 'Bio-gas attached', 'name': 'toilet_type' },
+  { 'value': 'Septic tank', 'label': 'Septic tank', 'name': 'toilet_type' },
+  { 'value': 'Ring type', 'label': 'Ring type', 'name': 'toilet_type' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'toilet_type' }
 ]
 
 
 disasterType = [
-  { 'value': 'Earthquake', 'label': 'Earthquake', 'name': 'disasterType' },
-  { 'value': 'Fire', 'label': 'Fire', 'name': 'disasterType' },
-  { 'value': 'LandslideFlood', 'label': 'LandslideFlood', 'name': 'disasterType' },
-  { 'value': 'Flood', 'label': 'Flood', 'name': 'disasterType' },
-  { 'value': 'Thunderstorm', 'label': 'Thunderstorm', 'name': 'disasterType' },
-  { 'value': 'Drought', 'label': 'Drought', 'name': 'disasterType' },
-  { 'value': 'Windstorm', 'label': 'Windstorm', 'name': 'disasterType' },
-  { 'value': 'Epidemic', 'label': 'Epidemic', 'name': 'disasterType' },
-  { 'value': 'Animal attack', 'label': 'Animal attack', 'name': 'disasterType' },
-  { 'value': 'Road accident', 'label': 'Road accident', 'name': 'disasterType' },
-  { 'value': 'Snake bite', 'label': 'Snake bite', 'name': 'disasterType' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'disasterType' },
-  { 'value': '', 'label': '', 'name': 'disasterType' }
+  { 'value': 'Earthquake', 'label': 'Earthquake', 'name': 'disaster_type' },
+  { 'value': 'Fire', 'label': 'Fire', 'name': 'disaster_type' },
+  { 'value': 'LandslideFlood', 'label': 'LandslideFlood', 'name': 'disaster_type' },
+  { 'value': 'Flood', 'label': 'Flood', 'name': 'disaster_type' },
+  { 'value': 'Thunderstorm', 'label': 'Thunderstorm', 'name': 'disaster_type' },
+  { 'value': 'Drought', 'label': 'Drought', 'name': 'disaster_type' },
+  { 'value': 'Windstorm', 'label': 'Windstorm', 'name': 'disaster_type' },
+  { 'value': 'Epidemic', 'label': 'Epidemic', 'name': 'disaster_type' },
+  { 'value': 'Animal attack', 'label': 'Animal attack', 'name': 'disaster_type' },
+  { 'value': 'Road accident', 'label': 'Road accident', 'name': 'disaster_type' },
+  { 'value': 'Snake bite', 'label': 'Snake bite', 'name': 'disaster_type' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'disaster_type' },
+  { 'value': '', 'label': '', 'name': 'disaster_type' }
 ]
 
 hazardType = [
-  { 'value': 'Earthquake', 'label': 'Earthquake', 'name': 'hazardType' },
-  { 'value': 'Fire', 'label': 'Fire', 'name': 'hazardType' },
-  { 'value': 'LandslideFlood', 'label': 'LandslideFlood', 'name': 'hazardType' },
-  { 'value': 'Flood', 'label': 'Flood', 'name': 'hazardType' },
-  { 'value': 'Thunderstorm', 'label': 'Thunderstorm', 'name': 'hazardType' },
-  { 'value': 'Drought', 'label': 'Drought', 'name': 'hazardType' },
-  { 'value': 'Windstorm', 'label': 'Windstorm', 'name': 'hazardType' },
-  { 'value': 'Epidemic', 'label': 'Epidemic', 'name': 'hazardType' },
-  { 'value': 'Animal attack', 'label': 'Animal attack', 'name': 'hazardType' },
-  { 'value': 'Road accident', 'label': 'Road accident', 'name': 'hazardType' },
-  { 'value': 'Snake bite', 'label': 'Snake bite', 'name': 'hazardType' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'hazardType' }
+  { 'value': 'Earthquake', 'label': 'Earthquake', 'name': 'hazard_type' },
+  { 'value': 'Fire', 'label': 'Fire', 'name': 'hazard_type' },
+  { 'value': 'LandslideFlood', 'label': 'LandslideFlood', 'name': 'hazard_type' },
+  { 'value': 'Flood', 'label': 'Flood', 'name': 'hazard_type' },
+  { 'value': 'Thunderstorm', 'label': 'Thunderstorm', 'name': 'hazard_type' },
+  { 'value': 'Drought', 'label': 'Drought', 'name': 'hazard_type' },
+  { 'value': 'Windstorm', 'label': 'Windstorm', 'name': 'hazard_type' },
+  { 'value': 'Epidemic', 'label': 'Epidemic', 'name': 'hazard_type' },
+  { 'value': 'Animal attack', 'label': 'Animal attack', 'name': 'hazard_type' },
+  { 'value': 'Road accident', 'label': 'Road accident', 'name': 'hazard_type' },
+  { 'value': 'Snake bite', 'label': 'Snake bite', 'name': 'hazard_type' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'hazard_type' }
+]
+
+identifiedRiskArea = [
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'is_there_identified_risk_areas' },
+  { 'value': 'No', 'label': 'No', 'name': 'is_there_identified_risk_areas' },
+  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'is_there_identified_risk_areas' }
+]
+
+earlyWarningSystem = [
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'early_warning_system_installed_nearby' },
+  { 'value': 'No', 'label': 'No', 'name': 'early_warning_system_installed_nearby' },
+  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'early_warning_system_installed_nearby' }
+]
+
+evacuationShelterAvailability = [
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'evacuation_shelter_availability' },
+  { 'value': 'No', 'label': 'No', 'name': 'evacuation_shelter_availability' },
+  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'evacuation_shelter_availability' }
+]
+
+nearestMarketOperationDuringDisaster = [
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'nearest_market_operation_during_disaster' },
+  { 'value': 'No', 'label': 'No', 'name': 'nearest_market_operation_during_disaster' },
+  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'nearest_market_operation_during_disaster' }
+]
+
+warehouseAvailableInWard = [
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'warehouse_available_in_ward' },
+  { 'value': 'No', 'label': 'No', 'name': 'warehouse_available_in_ward' },
+  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'warehouse_available_in_ward' }
+]
+
+involvedInDisasterTraining = [
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'involved_in_disaster_training' },
+  { 'value': 'No', 'label': 'No', 'name': 'involved_in_disaster_training' },
+  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'involved_in_disaster_training' }
 ]
 
 disasterInformationMedium = [
-  { 'value': 'Radio/T.V', 'label': 'Radio/T.V', 'name': 'disasterInformationMedium' },
+  { 'value': 'Radio/T.V', 'label': 'Radio/T.V', 'name': 'disaster_information_medium' },
   {
     'value': 'Local people',
     'label': 'Local people',
-    'name': 'disasterInformationMedium'
+    'name': 'disaster_information_medium'
   },
-  { 'value': 'Newspaper', 'label': 'Newspaper', 'name': 'disasterInformationMedium' },
+  { 'value': 'Newspaper', 'label': 'Newspaper', 'name': 'disaster_information_medium' },
   {
     'value': 'Related authority',
     'label': 'Related authority',
-    'name': 'disasterInformationMedium'
+    'name': 'disaster_information_medium'
   },
   {
     'value': 'Havent received any information',
     'label': 'Havent received any information',
-    'name': 'disasterInformationMedium'
+    'name': 'disaster_information_medium'
   },
   {
     'value': 'Hoarding board',
     'label': 'Hoarding board',
-    'name': 'disasterInformationMedium'
+    'name': 'disaster_information_medium'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'disasterInformationMedium' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'disaster_information_medium' }
 ]
 
 mediumSuitableForEarlyWarning = [
-  { 'value': 'Radio', 'label': 'Radio', 'name': 'mediumSuitableForEarlyWarning' },
-  { 'value': 'T.V', 'label': 'T.V', 'name': 'mediumSuitableForEarlyWarning' },
-  { 'value': 'Miking', 'label': 'Miking', 'name': 'mediumSuitableForEarlyWarning' },
-  { 'value': 'Siren', 'label': 'Siren', 'name': 'mediumSuitableForEarlyWarning' },
-  { 'value': 'Sms', 'label': 'Sms', 'name': 'mediumSuitableForEarlyWarning' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'mediumSuitableForEarlyWarning' }
+  { 'value': 'Radio', 'label': 'Radio', 'name': 'medium_suitable_for_early_warning' },
+  { 'value': 'T.V', 'label': 'T.V', 'name': 'medium_suitable_for_early_warning' },
+  { 'value': 'Miking', 'label': 'Miking', 'name': 'medium_suitable_for_early_warning' },
+  { 'value': 'Siren', 'label': 'Siren', 'name': 'medium_suitable_for_early_warning' },
+  { 'value': 'Sms', 'label': 'Sms', 'name': 'medium_suitable_for_early_warning' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'medium_suitable_for_early_warning' }
 ]
 
 nearestOpenSpace = [
   {
     'value': 'Nearby/In a walking distance',
     'label': 'Nearby/In a walking distance',
-    'name': 'nearestOpenSpace'
+    'name': 'distance_to_nearest_open_space'
   },
-  { 'value': '15-30 minutes', 'label': '15-30 minutes', 'name': 'nearestOpenSpace' },
+  { 'value': '15-30 minutes', 'label': '15-30 minutes', 'name': 'distance_to_nearest_open_space' },
   {
     'value': '30 minutes-1 hour',
     'label': '30 minutes-1 hour',
-    'name': 'nearestOpenSpace'
+    'name': 'distance_to_nearest_open_space'
   },
   {
     'value': 'More than an hour',
     'label': 'More than an hour',
-    'name': 'nearestOpenSpace'
+    'name': 'distance_to_nearest_open_space'
   },
-  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'nearestOpenSpace' },
-  { 'value': '', 'label': '', 'name': 'nearestOpenSpace' }
+  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'distance_to_nearest_open_space' },
+  { 'value': '', 'label': '', 'name': 'distance_to_nearest_open_space' }
 ]
 
 nearestMarket = [
-  { 'value': 'Nearby', 'label': 'Nearby', 'name': 'nearestMarket' },
-  { 'value': '5-15 minutes', 'label': '5-15 minutes', 'name': 'nearestMarket' },
-  { 'value': '15-30 minutes', 'label': '15-30 minutes', 'name': 'nearestMarket' },
+  { 'value': 'Nearby', 'label': 'Nearby', 'name': 'distance_to_nearest_market' },
+  { 'value': '5-15 minutes', 'label': '5-15 minutes', 'name': 'distance_to_nearest_market' },
+  { 'value': '15-30 minutes', 'label': '15-30 minutes', 'name': 'distance_to_nearest_market' },
   {
     'value': '30 minutes-1 hour',
     'label': '30 minutes-1 hour',
-    'name': 'nearestMarket'
+    'name': 'distance_to_nearest_market'
   },
   {
     'value': 'More than an hour',
     'label': 'More than an hour',
-    'name': 'nearestMarket'
+    'name': 'distance_to_nearest_market'
   }
 ]
 
 goodsAvailableInNearestMarket = [
-  { 'value': 'Cereals', 'label': 'Cereals', 'name': 'goodsAvailableInNearestMarket' },
-  { 'value': 'Pulses', 'label': 'Pulses', 'name': 'goodsAvailableInNearestMarket' },
+  { 'value': 'Cereals', 'label': 'Cereals', 'name': 'goods_available_in_nearest_market' },
+  { 'value': 'Pulses', 'label': 'Pulses', 'name': 'goods_available_in_nearest_market' },
   {
     'value': 'Vegetables',
     'label': 'Vegetables',
-    'name': 'goodsAvailableInNearestMarket'
+    'name': 'goods_available_in_nearest_market'
   },
-  { 'value': 'Fruits', 'label': 'Fruits', 'name': 'goodsAvailableInNearestMarket' },
+  { 'value': 'Fruits', 'label': 'Fruits', 'name': 'goods_available_in_nearest_market' },
   {
     'value': 'Edible oil',
     'label': 'Edible oil',
-    'name': 'goodsAvailableInNearestMarket'
+    'name': 'goods_available_in_nearest_market'
   },
   {
     'value': 'Milk and products',
     'label': 'Milk and products',
-    'name': 'goodsAvailableInNearestMarket'
+    'name': 'goods_available_in_nearest_market'
   },
   {
     'value': 'Egg and meat',
     'label': 'Egg and meat',
-    'name': 'goodsAvailableInNearestMarket'
+    'name': 'goods_available_in_nearest_market'
   },
   {
     'value': 'Agriculture tools',
     'label': 'Agriculture tools',
-    'name': 'goodsAvailableInNearestMarket'
+    'name': 'goods_available_in_nearest_market'
   },
   {
     'value': 'Other non edible items',
     'label': 'Other non edible items',
-    'name': 'goodsAvailableInNearestMarket'
+    'name': 'goods_available_in_nearest_market'
   },
   {
     'value': 'ruction materials',
     'label': 'ruction materials',
-    'name': 'goodsAvailableInNearestMarket'
+    'name': 'goods_available_in_nearest_market'
   },
   {
     'value': 'Clothing',
     'label': 'Clothing',
-    'name': 'goodsAvailableInNearestMarket'
+    'name': 'goods_available_in_nearest_market'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'goodsAvailableInNearestMarket' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'goods_available_in_nearest_market' }
 ]
 
 distanceToAlternativeMarket = [
   {
     'value': 'Nearby/In a walking distance',
     'label': 'Nearby/In a walking distance',
-    'name': 'distanceToAlternativeMarket'
+    'name': 'distance_to_alternative_market'
   },
   {
     'value': '5-15 minutes',
     'label': '5-15 minutes',
-    'name': 'distanceToAlternativeMarket'
+    'name': 'distance_to_alternative_market'
   },
   {
     'value': '15-30 minutes',
     'label': '15-30 minutes',
-    'name': 'distanceToAlternativeMarket'
+    'name': 'distance_to_alternative_market'
   },
   {
     'value': '30 minutes-1 hour',
     'label': '30 minutes-1 hour',
-    'name': 'distanceToAlternativeMarket'
+    'name': 'distance_to_alternative_market'
   },
   {
     'value': 'More than an hour',
     'label': 'More than an hour',
-    'name': 'distanceToAlternativeMarket'
+    'name': 'distance_to_alternative_market'
   },
   {
     'value': 'No other market',
     'label': 'No other market',
-    'name': 'distanceToAlternativeMarket'
+    'name': 'distance_to_alternative_market'
   }
 ]
 
@@ -959,98 +1001,98 @@ copingMechanismDuringDisaster = [
   {
     'value': 'Migration/Residing elsewhere',
     'label': 'Migration/Residing elsewhere',
-    'name': 'copingMechanismDuringDisaster'
+    'name': 'coping_mechanism_during_disaster'
   },
   {
     'value': 'Sheltered in relatives/neighbors house',
     'label': 'Sheltered in relatives/neighbors house',
-    'name': 'copingMechanismDuringDisaster'
+    'name': 'coping_mechanism_during_disaster'
   },
   {
     'value': 'Took a loan',
     'label': 'Took a loan',
-    'name': 'copingMechanismDuringDisaster'
+    'name': 'coping_mechanism_during_disaster'
   },
   {
     'value': 'Sold jewelry and assets',
     'label': 'Sold jewelry and assets',
-    'name': 'copingMechanismDuringDisaster'
+    'name': 'coping_mechanism_during_disaster'
   },
   {
     'value': 'Sold other assets',
     'label': 'Sold other assets',
-    'name': 'copingMechanismDuringDisaster'
+    'name': 'coping_mechanism_during_disaster'
   },
   {
     'value': 'Reduced the food quantity',
     'label': 'Reduced the food quantity',
-    'name': 'copingMechanismDuringDisaster'
+    'name': 'coping_mechanism_during_disaster'
   },
   {
     'value': 'Sold the food stock',
     'label': 'Sold the food stock',
-    'name': 'copingMechanismDuringDisaster'
+    'name': 'coping_mechanism_during_disaster'
   },
   {
     'value': 'Sold the cattle and livestock',
     'label': 'Sold the cattle and livestock',
-    'name': 'copingMechanismDuringDisaster'
+    'name': 'coping_mechanism_during_disaster'
   },
   {
     'value': 'Labor enrollment, India',
     'label': 'Labor enrollment, India',
-    'name': 'copingMechanismDuringDisaster'
+    'name': 'coping_mechanism_during_disaster'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'copingMechanismDuringDisaster' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'coping_mechanism_during_disaster' }
 ]
 
 disasterTrainingType = [
   {
     'value': 'Disaster risk management',
     'label': 'Disaster risk management',
-    'name': 'disasterTrainingType'
+    'name': 'involved_disaster_training_type'
   },
-  { 'value': 'First Aid', 'label': 'First Aid', 'name': 'disasterTrainingType' },
+  { 'value': 'First Aid', 'label': 'First Aid', 'name': 'involved_disaster_training_type' },
   {
     'value': 'Search and rescue',
     'label': 'Search and rescue',
-    'name': 'disasterTrainingType'
+    'name': 'involved_disaster_training_type'
   },
   {
     'value': 'psycho-social support',
     'label': 'psycho-social support',
-    'name': 'disasterTrainingType'
+    'name': 'involved_disaster_training_type'
   },
-  { 'value': 'WASH', 'label': 'WASH', 'name': 'disasterTrainingType' },
-  { 'value': 'VCA', 'label': 'VCA', 'name': 'disasterTrainingType' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'disasterTrainingType' }
+  { 'value': 'WASH', 'label': 'WASH', 'name': 'involved_disaster_training_type' },
+  { 'value': 'VCA', 'label': 'VCA', 'name': 'involved_disaster_training_type' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'involved_disaster_training_type' }
 ]
 
 hazardSimulationType = [
-  { 'value': 'Earthquake', 'label': 'Earthquake', 'name': 'hazardSimulationType' },
-  { 'value': 'Flood', 'label': 'Flood', 'name': 'hazardSimulationType' },
-  { 'value': 'Fire', 'label': 'Fire', 'name': 'hazardSimulationType' },
-  { 'value': 'Landslide', 'label': 'Landslide', 'name': 'hazardSimulationType' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'hazardSimulationType' }
+  { 'value': 'Earthquake', 'label': 'Earthquake', 'name': 'involved_in_simulation_type' },
+  { 'value': 'Flood', 'label': 'Flood', 'name': 'involved_in_simulation_type' },
+  { 'value': 'Fire', 'label': 'Fire', 'name': 'involved_in_simulation_type' },
+  { 'value': 'Landslide', 'label': 'Landslide', 'name': 'involved_in_simulation_type' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'involved_in_simulation_type' }
 ]
 
 disastersInWard = [
-  { 'value': 'Flood', 'label': 'Flood', 'name': 'disastersInWard' },
+  { 'value': 'Flood', 'label': 'Flood', 'name': 'most_occuring_disasters_in_ward' },
   {
     'value': 'Earthquake',
     'label': 'Earthquake',
-    'name': 'disastersInWard'
+    'name': 'most_occuring_disasters_in_ward'
   },
   {
     'value': 'Landslide',
     'label': 'Landslide',
-    'name': 'disastersInWard'
+    'name': 'most_occuring_disasters_in_ward'
   },
-  { 'value': 'Fire', 'label': 'Fire', 'name': 'disastersInWard' },
+  { 'value': 'Fire', 'label': 'Fire', 'name': 'most_occuring_disasters_in_ward' },
   {
     'value': 'None of the above',
     'label': 'None of the above',
-    'name': 'disastersInWard'
+    'name': 'most_occuring_disasters_in_ward'
   }
 ]
 
@@ -1059,22 +1101,22 @@ distanceToSafePlaceForFlood = [
   {
     'value': 'Nearby/in a walking distance',
     'label': 'Nearby/in a walking distance',
-    'name': 'distanceToSafePlaceForFlood'
+    'name': 'distance_to_safe_place_for_flood'
   },
   {
     'value': '15-30 minutes',
     'label': '15-30 minutes',
-    'name': 'distanceToSafePlaceForFlood'
+    'name': 'distance_to_safe_place_for_flood'
   },
   {
     'value': '30 minutes-1 hour',
     'label': '30 minutes-1 hour',
-    'name': 'distanceToSafePlaceForFlood'
+    'name': 'distance_to_safe_place_for_flood'
   },
   {
     'value': 'More than an hour',
     'label': 'More than an hour',
-    'name': 'distanceToSafePlaceForFlood'
+    'name': 'distance_to_safe_place_for_flood'
   }
 ]
 
@@ -1082,80 +1124,80 @@ damageOccuredDuringFlood = [
   {
     'value': 'Death/Injured family members',
     'label': 'Death/Injured family members',
-    'name': 'damageOccuredDuringFlood'
+    'name': 'damages_occurred_during_flood'
   },
-  { 'value': 'House', 'label': 'House', 'name': 'damageOccuredDuringFlood' },
-  { 'value': 'Furniture', 'label': 'Furniture', 'name': 'damageOccuredDuringFlood' },
-  { 'value': 'Land', 'label': 'Land', 'name': 'damageOccuredDuringFlood' },
-  { 'value': 'Livestock', 'label': 'Livestock', 'name': 'damageOccuredDuringFlood' },
-  { 'value': 'Crops', 'label': 'Crops', 'name': 'damageOccuredDuringFlood' },
+  { 'value': 'House', 'label': 'House', 'name': 'damages_occurred_during_flood' },
+  { 'value': 'Furniture', 'label': 'Furniture', 'name': 'damages_occurred_during_flood' },
+  { 'value': 'Land', 'label': 'Land', 'name': 'damages_occurred_during_flood' },
+  { 'value': 'Livestock', 'label': 'Livestock', 'name': 'damages_occurred_during_flood' },
+  { 'value': 'Crops', 'label': 'Crops', 'name': 'damages_occurred_during_flood' },
   {
     'value': 'Food stock',
     'label': 'Food stock',
-    'name': 'damageOccuredDuringFlood'
+    'name': 'damages_occurred_during_flood'
   },
-  { 'value': 'Machinery', 'label': 'Machinery', 'name': 'damageOccuredDuringFlood' },
+  { 'value': 'Machinery', 'label': 'Machinery', 'name': 'damages_occurred_during_flood' },
   {
     'value': 'Personal documents',
     'label': 'Personal documents',
-    'name': 'damageOccuredDuringFlood'
+    'name': 'damages_occurred_during_flood'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'damageOccuredDuringFlood' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'damages_occurred_during_flood' }
 ]
 
 houseDamageTypeDuringFlood = [
   {
     'value': 'Damage in foundation',
     'label': 'Damage in foundation',
-    'name': 'houseDamageTypeDuringFlood'
+    'name': 'house_damage_type_during_flood'
   },
   {
     'value': 'Damage in roof',
     'label': 'Damage in roof',
-    'name': 'houseDamageTypeDuringFlood'
+    'name': 'house_damage_type_during_flood'
   },
   {
     'value': 'Minor damages in walls',
     'label': 'Minor damages in walls',
-    'name': 'houseDamageTypeDuringFlood'
+    'name': 'house_damage_type_during_flood'
   },
   {
     'value': 'Completely destroyed',
     'label': 'Completely destroyed',
-    'name': 'houseDamageTypeDuringFlood'
+    'name': 'house_damage_type_during_flood'
   },
   {
     'value': 'House was flooded',
     'label': 'House was flooded',
-    'name': 'houseDamageTypeDuringFlood'
+    'name': 'house_damage_type_during_flood'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'houseDamageTypeDuringFlood' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'house_damage_type_during_flood' }
 ]
 
 migratedPlaceDuringFlood = [
-  { 'value': 'Nowhere', 'label': 'Nowhere', 'name': 'migratedPlaceDuringFlood' },
-  { 'value': 'School', 'label': 'School', 'name': 'migratedPlaceDuringFlood' },
+  { 'value': 'Nowhere', 'label': 'Nowhere', 'name': 'migrated_place_during_flood' },
+  { 'value': 'School', 'label': 'School', 'name': 'migrated_place_during_flood' },
   {
     'value': 'On the high road',
     'label': 'On the high road',
-    'name': 'migratedPlaceDuringFlood'
+    'name': 'migrated_place_during_flood'
   },
   {
     'value': 'Evacuation shelter',
     'label': 'Evacuation shelter',
-    'name': 'migratedPlaceDuringFlood'
+    'name': 'migrated_place_during_flood'
   },
   {
     'value': 'Flood plain',
     'label': 'Flood plain',
-    'name': 'migratedPlaceDuringFlood'
+    'name': 'migrated_place_during_flood'
   },
   {
     'value': 'Relative/Neighbors house',
     'label': 'Relative/Neighbors house',
-    'name': 'migratedPlaceDuringFlood'
+    'name': 'migrated_place_during_flood'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'migratedPlaceDuringFlood' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'migrated_place_during_flood' }
 ]
 
 
@@ -1163,127 +1205,127 @@ damageOccuredDuringEarthquake = [
   {
     'value': 'Death/Injured family members',
     'label': 'Death/Injured family members',
-    'name': 'damageOccuredDuringEarthquake'
+    'name': 'damages_occurred_during_earthquake'
   },
-  { 'value': 'House', 'label': 'House', 'name': 'damageOccuredDuringEarthquake' },
-  { 'value': 'Land', 'label': 'Land', 'name': 'damageOccuredDuringEarthquake' },
+  { 'value': 'House', 'label': 'House', 'name': 'damages_occurred_during_earthquake' },
+  { 'value': 'Land', 'label': 'Land', 'name': 'damages_occurred_during_earthquake' },
   {
     'value': 'Livestock',
     'label': 'Livestock',
-    'name': 'damageOccuredDuringEarthquake'
+    'name': 'damages_occurred_during_earthquake'
   },
-  { 'value': 'Crops', 'label': 'Crops', 'name': 'damageOccuredDuringEarthquake' },
+  { 'value': 'Crops', 'label': 'Crops', 'name': 'damages_occurred_during_earthquake' },
   {
     'value': 'None of the above',
     'label': 'None of the above',
-    'name': 'damageOccuredDuringEarthquake'
+    'name': 'damages_occurred_during_earthquake'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'damageOccuredDuringEarthquake' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'damages_occurred_during_earthquake' }
 ]
 
 houseDamageTypeDuringEarthquake = [
   {
     'value': 'Completely destroyed',
     'label': 'Completely destroyed',
-    'name': 'houseDamageTypeDuringEarthquake'
+    'name': 'house_damage_type_during_earthquake'
   },
   {
     'value': 'Damage in foundation',
     'label': 'Damage in foundation',
-    'name': 'houseDamageTypeDuringEarthquake'
+    'name': 'house_damage_type_during_earthquake'
   },
   {
     'value': 'Damage in wall',
     'label': 'Damage in wall',
-    'name': 'houseDamageTypeDuringEarthquake'
+    'name': 'house_damage_type_during_earthquake'
   },
   {
     'value': 'Damage in roof',
     'label': 'Damage in roof',
-    'name': 'houseDamageTypeDuringEarthquake'
+    'name': 'house_damage_type_during_earthquake'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'houseDamageTypeDuringEarthquake' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'house_damage_type_during_earthquake' }
 ]
 
 migratedPlaceDuringEarthquake = [
-  { 'value': 'School', 'label': 'School', 'name': 'migratedPlaceDuringEarthquake' },
+  { 'value': 'School', 'label': 'School', 'name': 'migrated_place_during_earthquake' },
   {
     'value': 'Evacuation shelter',
     'label': 'Evacuation shelter',
-    'name': 'migratedPlaceDuringEarthquake'
+    'name': 'migrated_place_during_earthquake'
   },
   {
     'value': 'In relative/neighbors house',
     'label': 'In relative/neighbors house',
-    'name': 'migratedPlaceDuringEarthquake'
+    'name': 'migrated_place_during_earthquake'
   },
   {
     'value': 'Open space',
     'label': 'Open space',
-    'name': 'migratedPlaceDuringEarthquake'
+    'name': 'migrated_place_during_earthquake'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'migratedPlaceDuringEarthquake' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'migrated_place_during_earthquake' }
 ]
 
 damageOccuredDuringLandslide = [
   {
     'value': 'Death/Injured family members',
     'label': 'Death/Injured family members',
-    'name': 'damageOccuredDuringLandslide'
+    'name': 'damage_occurred_during_landslide'
   },
-  { 'value': 'House', 'label': 'House', 'name': 'damageOccuredDuringLandslide' },
-  { 'value': 'Land', 'label': 'Land', 'name': 'damageOccuredDuringLandslide' },
+  { 'value': 'House', 'label': 'House', 'name': 'damage_occurred_during_landslide' },
+  { 'value': 'Land', 'label': 'Land', 'name': 'damage_occurred_during_landslide' },
   {
     'value': 'Livestock',
     'label': 'Livestock',
-    'name': 'damageOccuredDuringLandslide'
+    'name': 'damage_occurred_during_landslide'
   },
-  { 'value': 'Crops', 'label': 'Crops', 'name': 'damageOccuredDuringLandslide' },
+  { 'value': 'Crops', 'label': 'Crops', 'name': 'damage_occurred_during_landslide' },
   {
     'value': 'None of the above',
     'label': 'None of the above',
-    'name': 'damageOccuredDuringLandslide'
+    'name': 'damage_occurred_during_landslide'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'damageOccuredDuringLandslide' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'damage_occurred_during_landslide' }
 ]
 
 houseDamageTypeDuringLandslide = [
   {
     'value': 'Completely destroyed',
     'label': 'Completely destroyed',
-    'name': 'houseDamageTypeDuringLandslide'
+    'name': 'house_damage_type_during_landslide'
   },
   {
     'value': 'Damage in foundation',
     'label': 'Damage in foundation',
-    'name': 'houseDamageTypeDuringLandslide'
+    'name': 'house_damage_type_during_landslide'
   },
   {
     'value': 'Damage in wall',
     'label': 'Damage in wall',
-    'name': 'houseDamageTypeDuringLandslide'
+    'name': 'house_damage_type_during_landslide'
   },
   {
     'value': 'Damage in roof',
     'label': 'Damage in roof',
-    'name': 'houseDamageTypeDuringLandslide'
+    'name': 'house_damage_type_during_landslide'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'houseDamageTypeDuringLandslide' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'house_damage_type_during_landslide' }
 ]
 
 migratedPlaceDuringLandslide = [
-  { 'value': 'School', 'label': 'School', 'name': 'migratedPlaceDuringLandslide' },
+  { 'value': 'School', 'label': 'School', 'name': 'migrated_place_during_landslide' },
   {
     'value': 'Evacuation shelter',
     'label': 'Evacuation shelter',
-    'name': 'migratedPlaceDuringLandslide'
+    'name': 'migrated_place_during_landslide'
   },
   {
     'value': 'Relatives/Neighbors house',
     'label': 'Relatives/Neighbors house',
-    'name': 'migratedPlaceDuringLandslide'
+    'name': 'migrated_place_during_landslide'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'migratedPlaceDuringLandslide' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'migrated_place_during_landslide' }
 ]
 
 
@@ -1291,62 +1333,62 @@ damageOccuredDuringFire = [
   {
     'value': 'Death/Injured family members',
     'label': 'Death/Injured family members',
-    'name': 'damageOccuredDuringFire'
+    'name': 'damages_occurred_during_fire'
   },
-  { 'value': 'House', 'label': 'House', 'name': 'damageOccuredDuringFire' },
-  { 'value': 'Shed', 'label': 'Shed', 'name': 'damageOccuredDuringFire' },
-  { 'value': 'Livestock', 'label': 'Livestock', 'name': 'damageOccuredDuringFire' },
-  { 'value': 'Crops', 'label': 'Crops', 'name': 'damageOccuredDuringFire' },
+  { 'value': 'House', 'label': 'House', 'name': 'damages_occurred_during_fire' },
+  { 'value': 'Shed', 'label': 'Shed', 'name': 'damages_occurred_during_fire' },
+  { 'value': 'Livestock', 'label': 'Livestock', 'name': 'damages_occurred_during_fire' },
+  { 'value': 'Crops', 'label': 'Crops', 'name': 'damages_occurred_during_fire' },
   {
     'value': 'None of the above',
     'label': 'None of the above',
-    'name': 'damageOccuredDuringFire'
+    'name': 'damages_occurred_during_fire'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'damageOccuredDuringFire' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'damages_occurred_during_fire' }
 ]
 houseDamageTypeDuringFire = [
   {
     'value': 'Completely destroyed',
     'label': 'Completely destroyed',
-    'name': 'houseDamageTypeDuringFire'
+    'name': 'house_damage_type_during_fire'
   },
   {
     'value': 'Partially destroyed',
     'label': 'Partially destroyed',
-    'name': 'houseDamageTypeDuringFire'
+    'name': 'house_damage_type_during_fire'
   }
 ]
 migratedPlaceDuringFire = [
-  { 'value': 'School', 'label': 'School', 'name': 'migratedPlaceDuringFire' },
+  { 'value': 'School', 'label': 'School', 'name': 'migrated_place_during_fire' },
   {
     'value': 'Evacuation shelter',
     'label': 'Evacuation shelter',
-    'name': 'migratedPlaceDuringFire'
+    'name': 'migrated_place_during_fire'
   },
   {
     'value': 'In relative/neighbors house',
     'label': 'In relative/neighbors house',
-    'name': 'migratedPlaceDuringFire'
+    'name': 'migrated_place_during_fire'
   },
   {
     'value': 'Community center',
     'label': 'Community center',
-    'name': 'migratedPlaceDuringFire'
+    'name': 'migrated_place_during_fire'
   },
-  { 'value': 'Other', 'label': 'Other', 'name': 'migratedPlaceDuringFire' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'migrated_place_during_fire' }
 ]
 
 
 animalOptions = [
-  { 'value': 'Cow', 'label': 'Cow', 'name': 'animalType' },
-  { 'value': 'Buffaloes', 'label': 'Buffaloes', 'name': 'animalType' },
-  { 'value': 'Cattle', 'label': 'Cattle', 'name': 'animalType' },
-  { 'value': 'Boar', 'label': 'Boar', 'name': 'animalType' },
-  { 'value': 'Hens/Ducks', 'label': 'Hens/Ducks', 'name': 'animalType' },
-  { 'value': 'Fish', 'label': 'Fish', 'name': 'animalType' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'animalType' }
+  { 'value': 'Cow', 'label': 'Cow', 'name': 'animal_type' },
+  { 'value': 'Buffaloes', 'label': 'Buffaloes', 'name': 'animal_type' },
+  { 'value': 'Cattle', 'label': 'Cattle', 'name': 'animal_type' },
+  { 'value': 'Boar', 'label': 'Boar', 'name': 'animal_type' },
+  { 'value': 'Hens/Ducks', 'label': 'Hens/Ducks', 'name': 'animal_type' },
+  { 'value': 'Fish', 'label': 'Fish', 'name': 'animal_type' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'animal_type' }
 ]
 commercialOptions = [
-  { 'value': 'Yes', 'label': 'Yes', 'name': 'commercialPurpose' },
-  { 'value': 'No', 'label': 'No', 'name': 'commercialPurpose' }
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'is_it_for_commercial_purpose' },
+  { 'value': 'No', 'label': 'No', 'name': 'is_it_for_commercial_purpose' }
 ]
