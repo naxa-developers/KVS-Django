@@ -1,7 +1,7 @@
 optionGen = [
-  { 'label': 'Male', 'value': 'Male', 'name': 'gender' },
-  { 'label': 'Female', 'value': 'Female', 'name': 'gender' },
-  { 'label': 'Other', 'value': 'Other', 'name': 'gender' }
+  { 'label': 'Male', 'value': 'Male', 'name': 'owner_sex' },
+  { 'label': 'Female', 'value': 'Female', 'name': 'owner_sex' },
+  { 'label': 'Other', 'value': 'Other', 'name': 'owner_sex' }
 ]
 
 ownerStatusOptions = [
@@ -14,15 +14,15 @@ ownerStatusOptions = [
 ]
 
 casteOptions = [
-  { 'value': 'Brahmin', 'label': 'Brahmin', 'name': 'caste' },
-  { 'value': 'Chhetri', 'label': 'Chhetri', 'name': 'caste' },
-  { 'value': 'Terai Janajati', 'label': 'Terai Janajati', 'name': 'caste' },
-  { 'value': 'Pahadi Janajati', 'label': 'Pahadi Janajati', 'name': 'caste' },
-  { 'value': 'Terai Dalit', 'label': 'Terai Dalit', 'name': 'caste' },
-  { 'value': 'Pahadi Dalit', 'label': 'Pahadi Dalit', 'name': 'caste' },
-  { 'value': 'Newar', 'label': 'Newar', 'name': 'caste' },
-  { 'value': 'Muslim', 'label': 'Muslim', 'name': 'caste' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'caste' }
+  { 'value': 'Brahmin', 'label': 'Brahmin', 'name': 'owner_caste' },
+  { 'value': 'Chhetri', 'label': 'Chhetri', 'name': 'owner_caste' },
+  { 'value': 'Terai Janajati', 'label': 'Terai Janajati', 'name': 'owner_caste' },
+  { 'value': 'Pahadi Janajati', 'label': 'Pahadi Janajati', 'name': 'owner_caste' },
+  { 'value': 'Terai Dalit', 'label': 'Terai Dalit', 'name': 'owner_caste' },
+  { 'value': 'Pahadi Dalit', 'label': 'Pahadi Dalit', 'name': 'owner_caste' },
+  { 'value': 'Newar', 'label': 'Newar', 'name': 'owner_caste' },
+  { 'value': 'Muslim', 'label': 'Muslim', 'name': 'owner_caste' },
+  { 'value': 'Other', 'label': 'Other', 'name': 'owner_caste' }
 ]
 
 religionOptions = [
@@ -476,6 +476,12 @@ houseRegisteredOptions = [
   { 'value': 'Dont know', 'label': 'Dont know', 'name': 'house_map_registered' }
 ]
 
+buildingStandardCode = [
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'building_standard_code'},
+  { 'value': 'No', 'label': 'No', 'name': 'building_standard_code' },
+  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'building_standard_code' }
+]
+
 eqResistanceOptions = [
   { 'value': 'Yes', 'label': 'Yes', 'name': 'earthquake_resistance' },
   { 'value': 'No', 'label': 'No', 'name': 'earthquake_resistance' },
@@ -486,6 +492,19 @@ floodProneOptions = [
   { 'value': 'Yes', 'label': 'Yes', 'name': 'flood_prone' },
   { 'value': 'No', 'label': 'No', 'name': 'flood_prone' },
   { 'value': 'Dont know', 'label': 'Dont know', 'name': 'flood_prone' }
+]
+
+workRegardingFloodResilience = [
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'work_regarding_flood_resilience' },
+  { 'value': 'No', 'label': 'No', 'name': 'work_regarding_flood_resilience' },
+  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'work_regarding_flood_resilience' }
+]
+
+floodResilienceActivities = [
+   { 'value': 'Raised plinth', 'label': 'Raised plinth', 'name': 'flood_resilience_activities' },
+   { 'value': 'Strong wall', 'label': 'Strong wall', 'name': 'flood_resilience_activities' },
+   { 'value': 'Proper drainage', 'label': 'Proper drainage', 'name': 'flood_resilience_activities' },
+   { 'value': 'Other', 'label': 'Other', 'name': 'flood_resilience_activities' }
 ]
 
 landAreaOptions = [
@@ -739,7 +758,7 @@ waterSources = [
 ]
 
 tubewellType = [
-  { 'value': 'Private', 'label': 'Public', 'name': 'tubewell_type' },
+  { 'value': 'Private', 'label': 'Private', 'name': 'tubewell_type' },
   { 'value': 'Public', 'label': 'Public', 'name': 'tubewell_type' }
 ]
 
@@ -790,8 +809,7 @@ disasterType = [
   { 'value': 'Animal attack', 'label': 'Animal attack', 'name': 'disaster_type' },
   { 'value': 'Road accident', 'label': 'Road accident', 'name': 'disaster_type' },
   { 'value': 'Snake bite', 'label': 'Snake bite', 'name': 'disaster_type' },
-  { 'value': 'Other', 'label': 'Other', 'name': 'disaster_type' },
-  { 'value': '', 'label': '', 'name': 'disaster_type' }
+  { 'value': 'Other', 'label': 'Other', 'name': 'disaster_type' }
 ]
 
 hazardType = [
@@ -840,9 +858,9 @@ warehouseAvailableInWard = [
 ]
 
 involvedInDisasterTraining = [
-  { 'value': 'Yes', 'label': 'Yes', 'name': 'involved_in_disaster_training' },
-  { 'value': 'No', 'label': 'No', 'name': 'involved_in_disaster_training' },
-  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'involved_in_disaster_training' }
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'involved_disaster_training' },
+  { 'value': 'No', 'label': 'No', 'name': 'involved_disaster_training' },
+  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'involved_disaster_training' }
 ]
 
 disasterInformationMedium = [
@@ -952,8 +970,8 @@ goodsAvailableInNearestMarket = [
     'name': 'goods_available_in_nearest_market'
   },
   {
-    'value': 'ruction materials',
-    'label': 'ruction materials',
+    'value': 'Construction materials',
+    'label': 'Construction materials',
     'name': 'goods_available_in_nearest_market'
   },
   {
@@ -995,6 +1013,12 @@ distanceToAlternativeMarket = [
     'label': 'No other market',
     'name': 'distance_to_alternative_market'
   }
+]
+
+easyAccessToGoods = [
+  { 'value': 'Yes', 'label': 'Yes', 'name': 'easy_access_to_goods' },
+  { 'value': 'No', 'label': 'No', 'name': 'easy_access_to_goods' },
+  { 'value': 'Dont know', 'label': 'Dont know', 'name': 'easy_access_to_goods' }
 ]
 
 copingMechanismDuringDisaster = [

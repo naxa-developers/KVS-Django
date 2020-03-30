@@ -165,6 +165,7 @@ class HouseHoldData(models.Model):
     building_standard_code = models.CharField(max_length=1000, blank=True, null=True)
     earthquake_resistance = models.CharField(max_length=1000, blank=True, null=True)
     flood_prone = models.CharField(max_length=1000, blank=True, null=True)
+    flood_resilience_work = models.CharField(max_length=1000, blank=True, null=True)
     flood_resilience_activities = models.CharField(max_length=1000, blank=True, null=True)
     flood_activities_resilience_other = models.CharField(max_length=1000, blank=True, null=True)
     owned_land_area = models.CharField(max_length=1000, blank=True, null=True)

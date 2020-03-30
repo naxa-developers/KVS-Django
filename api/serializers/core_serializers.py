@@ -43,7 +43,7 @@ class HouseHoldDataSerializer(serializers.ModelSerializer):
                   'loan_duration', 'animal_presence', 'insurance', 'other_insurance', 'vehicle', 'vehicles_other',
                   'facilities_type', 'other_facilities', 'fuel_type', 'other_fuel_type', 'land_ownership', 'house_type',
                   'house_type_other', 'house_built_year', 'house_stories', 'no_of_rooms', 'house_map_registered',
-                  'building_standard_code', 'earthquake_resistance', 'flood_prone', 'flood_resilience_activities',
+                  'building_standard_code', 'earthquake_resistance', 'flood_prone', 'flood_resilience_work', 'flood_resilience_activities',
                   'flood_activities_resilience_other', 'owned_land_area', 'owned_land_near_river',
                   'owned_land_area_near_river', 'owned_land_image', 'technical_manpower_presence', 'manpower_type',
                   'doctor_sex', 'doctor_male_number', 'doctor_female_number', 'engineer_sex', 'engineer_male_number',

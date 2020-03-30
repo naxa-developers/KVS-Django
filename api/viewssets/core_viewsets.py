@@ -1633,6 +1633,10 @@ class ChoiceViewSet(APIView):
             'evacuationShelterAvailability': evacuationShelterAvailability,
             'earlyWarningSystem': earlyWarningSystem,
             'identifiedRiskArea': identifiedRiskArea,
+            'buildingStandardCode': buildingStandardCode,
+            'workRegardingFloodResilience': workRegardingFloodResilience,
+            'floodResilienceActivities': floodResilienceActivities,
+            'easyAccessToGoods': easyAccessToGoods,
         })
 
         return Response({'data': data})
