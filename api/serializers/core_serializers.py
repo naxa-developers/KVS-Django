@@ -1,5 +1,7 @@
 from core.models import Province, District, Municipality, HouseHoldData, AnimalDetailData, OwnerFamilyData, Gallery
 from rest_framework import serializers
+from datetime import date, datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
 
 class GallerySerializer(serializers.ModelSerializer):
@@ -152,8 +154,47 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
         member = OwnerFamilyData.objects.filter(social_security_received__icontains='Yes').count()
         return member
 
+class PersonFromHHSerializer(serializers.ModelSerializer):
+    social_security_received = serializers.SerializerMethodField()
+    name = serializers.CharField(source='owner_name')
+    age = serializers.CharField(source='owner_age')
+    gender = serializers.CharField(source='owner_sex')
+    citizenship_number = serializers.CharField(source='owner_citizenship_no')
 
+    class Meta:
+        model = HouseHoldData
+        fields = ('id', 'index', 'name', 'age', 'gender',
+                  'citizenship_number', 'contact_no', 'ward', 'social_security_received')
 
+    def get_social_security_received(self, obj):
+        query = obj.house_hold_data.filter(social_security_received__icontains='Yes')
+        if not query:
+            return False
+        else:
+            return True
+
+class PersonFromOFSerializer(serializers.ModelSerializer):
+    age = serializers.SerializerMethodField()
+    contact_no = serializers.SerializerMethodField()
+    ward = serializers.SerializerMethodField()
+    index = serializers.CharField(source='parent_index')
+
+    class Meta:
+        model = OwnerFamilyData
+        fields = ('id', 'index', 'name', 'age', 'gender',
+                  'citizenship_number', 'contact_no', 'ward', 'social_security_received')
+
+    def get_age(self, obj):
+        age = (relativedelta(date.today(), obj.date_of_birth).years if obj.date_of_birth != None else '---')
+        return age
+
+    def get_contact_no(self,obj):
+        contact = obj.survey.contact_no
+        return contact
+
+    def get_ward(self,obj):
+        ward_no = obj.survey.ward
+        return ward_no
 
 class AnimalDetailDataSerializer(serializers.ModelSerializer):
     class Meta:

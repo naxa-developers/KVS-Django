@@ -18,7 +18,7 @@ services:
     restart: on-failure
     command: ./docker-entrypoint.local.sh
     ports:
-      - "8021:8001"
+      - "8022:8001"
     volumes:
       - ./media:/code/media
       - ./static:/code/static
