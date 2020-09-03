@@ -20,6 +20,7 @@ class Category(models.Model):
 class Question(models.Model):
     question = models.CharField(max_length=200)
     parent_category = models.ForeignKey("ranking.Category", on_delete=models.CASCADE)
+    mappable = models.BooleanField(default=True)
     map_to_field = models.CharField(max_length=200)
     map_to_model = models.CharField(max_length=500)
     weight = models.DecimalField(max_digits=6, decimal_places=3)
