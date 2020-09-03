@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'api',
     'dashboard',
     'front',
+    'ranking'
 ]
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True

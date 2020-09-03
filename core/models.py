@@ -295,6 +295,7 @@ class HouseHoldData(models.Model):
     migrated_place_during_fire_other = models.CharField(max_length=500, blank=True, null=True)
     remarks = models.CharField(max_length=500, blank=True, null=True)
     owned_land_image_thumbnail = models.ImageField(upload_to='thumbs', editable=False, null=True, blank=True)
+    risk_score = models.IntegerField(null=True, blank=True)
 
     def make_thumbnail(self):
 
