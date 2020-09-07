@@ -11,7 +11,7 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = ('id','name')
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('id','question','parent_category','weight','map_to_field','calculated_value')
+    list_display = ('id','question','parent_category','weight','map_to_field_1','calculated_value')
     search_fields = ('id','name')
 
 class AnswerAdmin(admin.ModelAdmin):

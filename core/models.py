@@ -297,6 +297,11 @@ class HouseHoldData(models.Model):
     owned_land_image_thumbnail = models.ImageField(upload_to='thumbs', editable=False, null=True, blank=True)
     risk_score = models.IntegerField(null=True, blank=True)
 
+    def save(self, *args, **kwargs):
+        score = calculateScore(self.id)
+        self.score = score
+        super(HouseHoldData, self).save(*args, **kwargs)
+
     def make_thumbnail(self):
 
         image = Image.open(self.owned_land_image)
