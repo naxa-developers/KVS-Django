@@ -19,8 +19,11 @@ def calculateHouseHoldScore(request, id):
     this_house.save()
     if this_house.risk_score > 0:
         print("Household", this_house, "-------->", this_house.risk_score)
-    html = "<html><body><p>Ranking Households</p></body></html>"
-    return HttpResponse(html)
+    themes = Theme.objects.all()
+    categories = Category.objects.all()
+    questions = Question.objects.all()
+    answers = Answer.objects.all()
+    return render(request, 'index.html', {'house': this_house, 'categories': categories, 'themes': themes, 'questions':questions, 'answers': answers})
 
 
 def calculateThemeScore(request, id):
@@ -96,7 +99,7 @@ def calculateCriteriaScore(*args):
                     map_to_field1, flat=True)
                 selected_answer = Answer.objects.annotate(answer_field=Value(household_answer[0], output_field=CharField(
                 ))).filter(parent_question=this_question, answer_field__icontains=F('answer_choice'))
-                this_score = selected_answer[0].weight * this_question.weight
+                this_score = selected_answer[0].weight * this_question.weight if len(selected_answer)>0 else 0
                 this_question.calculated_value = this_score
                 this_question.save()
                 print("Question ", this_question, "------->",
