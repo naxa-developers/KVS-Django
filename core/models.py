@@ -298,7 +298,7 @@ class HouseHoldData(models.Model):
     risk_score = models.IntegerField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        score = calculateScore(self.id)
+        score = calculateHouseHoldScore(self.id)
         self.score = score
         super(HouseHoldData, self).save(*args, **kwargs)
 
