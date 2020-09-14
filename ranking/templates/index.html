@@ -15,7 +15,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-    <title>Socres</title>
+    <title>Scores</title>
 </head>
 
 <body>
@@ -29,6 +29,7 @@
                         <h4 style="color: red;">Questions</h4>
                         <tr>
                             <th>Name</th>
+                            <th>Scoring Menthod</th>
                             <th>Score</th>
                         </tr>
                     </thead>
@@ -36,48 +37,8 @@
                         {% for qn in questions %}
                         <tr>
                             <td>{{qn.question}}</td>
+                            <td>{{qn.scoring_method}}</td>
                             <td>{{qn.calculated_value}}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-6">
-                <table id="table-4" class="display table table-hover c_table">
-                    <thead>
-                        <h4 style="color: red;">Answers</h4>
-                        <tr>
-                            <th>Name</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for an in answers %}
-                        <tr>
-                            <td>{{an.answer_choice}}</td>
-                            <td>{{an.calculated_value}}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <hr><hr>
-        <div class="row">
-            <div class="col-md-6">
-                <table id="table-1" class="display table table-hover c_table">
-                    <thead>
-                        <h4 style="color: red;">Themes</h4>
-                        <tr>
-                            <th>Name</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for theme in themes %}
-                        <tr>
-                            <td>{{theme.name}}</td>
-                            <td>{{theme.calculated_value}}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -97,6 +58,48 @@
                         <tr>
                             <td>{{cat.name}}</td>
                             <td>{{cat.calculated_value}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- <div class="col-md-6">
+                <table id="table-4" class="display table table-hover c_table">
+                    <thead>
+                        <h4 style="color: red;">Answers</h4>
+                        <tr>
+                            <th>Name</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for an in answers %}
+                        <tr>
+                            <td>{{an.answer_choice}}</td>
+                            <td>{{an.calculated_value}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div> -->
+        </div>
+        <hr>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <table id="table-1" class="display table table-hover c_table">
+                    <thead>
+                        <h4 style="color: red;">Themes</h4>
+                        <tr>
+                            <th>Name</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for theme in themes %}
+                        <tr>
+                            <td>{{theme.name}}</td>
+                            <td>{{theme.calculated_value}}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

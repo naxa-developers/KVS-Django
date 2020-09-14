@@ -62,7 +62,8 @@ class Answer(models.Model):
         ('time_range_from_substring',
          'time range need to be derived from substring of the field'),
         ('count_from_substring', 'count need to be derived from substring of the field'),
-        ('complex_calculation',	'involves a number of factors ans fields to find the score')
+        ('complex_calculation',	'involves a number of factors ans fields to find the score'),
+        ('with_blank_rows', 'data contains blank rows')
     )
     answer_choice = models.CharField(max_length=100)
     parent_question = models.ForeignKey(
