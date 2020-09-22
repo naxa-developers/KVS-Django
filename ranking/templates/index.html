@@ -28,7 +28,9 @@
                     <thead>
                         <h4 style="color: red;">Questions</h4>
                         <tr>
+                            <th>S.N.</th>
                             <th>Name</th>
+                            <th>Category</th>
                             <th>Scoring Menthod</th>
                             <th>Score</th>
                         </tr>
@@ -36,7 +38,9 @@
                     <tbody>
                         {% for qn in questions %}
                         <tr>
+                            <th>{{ forloop.counter }}</th>
                             <td>{{qn.question}}</td>
+                            <td>{{qn.parent_category}}</td>
                             <td>{{qn.scoring_method}}</td>
                             <td>{{qn.calculated_value}}</td>
                         </tr>
