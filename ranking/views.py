@@ -236,6 +236,27 @@ def calculateQuestionScore(request, id):
             calculateCriteriaScore(question, this_house, check_phrases)
 
 
+def returnScore(selected_answer, this_question):
+    if len(selected_answer) > 1:
+        try:
+            has_multiple = Answer.objects.get(
+                parent_question=this_question, answer_choice__icontains='Multiple')
+            this_answer = has_multiple
+        except Answer.DoesNotExist:
+            this_answer = selected_answer[0]
+            for answer in selected_answer:
+                if answer.weight > this_answer.weight:
+                    this_answer = answer
+    elif selected_answer == '':
+        this_answer = ''
+    else:
+        this_answer = selected_answer[0]
+    this_score = this_answer.weight * \
+        this_question.weight if this_answer != '' else 0
+    this_question.calculated_value = this_score
+    this_question.save()
+
+
 def calculateCriteriaScore(*args):
     this_question = args[0]
     if this_question.scoring_method == 'substrings':
@@ -248,19 +269,15 @@ def calculateCriteriaScore(*args):
                     parent_question=this_question)
                 household_answer = args[1].values_list(
                     map_to_field1, flat=True)
-                selected_answer = Answer.objects.annotate(answer_field=Value(household_answer[0].strip(), output_field=CharField(
-                ))).filter(parent_question=this_question, answer_field__icontains=F('answer_choice'))
+                selected_answer = Answer.objects.filter(
+                    parent_question=this_question, answer_choice__icontains=household_answer[0].strip())
                 if len(selected_answer) == 0:
-                    selected_answer = Answer.objects.filter(
-                        parent_question=this_question, answer_choice__icontains=household_answer[0].strip())
-                this_score = selected_answer[0].weight * \
-                    this_question.weight if len(selected_answer) > 0 else 0
-                if this_question.question == 'Other Productive Assets':
-                    print(household_answer[0].strip())
-                this_question.calculated_value = this_score
-                this_question.save()
-                # print("Question ", this_question, "-------->",
-                #     this_question.calculated_value)
+                    selected_answer = Answer.objects.annotate(answer_field=Value(household_answer[0].strip(), output_field=CharField(
+                    ))).filter(parent_question=this_question, answer_field__icontains=F('answer_choice'))
+                selected_answer = '' if len(
+                    selected_answer) == 0 else selected_answer
+                returnScore(selected_answer, this_question)
+
         elif sample_answer[0].answer_types == 'with_blank_rows':
             if map_to_model == "HouseHoldData":
                 sample_answer = Answer.objects.filter(
@@ -276,10 +293,9 @@ def calculateCriteriaScore(*args):
                     if len(selected_answer) == 0:
                         selected_answer = Answer.objects.filter(
                             parent_question=this_question, answer_choice__icontains=household_answer[0].strip())
-                this_score = selected_answer[0].weight * \
-                    this_question.weight if len(selected_answer) > 0 else 0
-                this_question.calculated_value = this_score
-                this_question.save()
+                selected_answer = '' if len(
+                    selected_answer) == 0 else selected_answer
+                returnScore(selected_answer, this_question)
         elif sample_answer[0].answer_types == 'multi_object_row':
             if map_to_model == "HouseHoldData":
                 sample_answer = Answer.objects.filter(
@@ -307,10 +323,9 @@ def calculateCriteriaScore(*args):
                     this_item = Answer.objects.filter(id=int(item))
                     if this_item[0].weight < lowest_weight:
                         selected_answer = this_item
-                this_score = selected_answer[0].weight * \
-                    this_question.weight if len(selected_answer) > 0 else 0
-                this_question.calculated_value = this_score
-                this_question.save()
+                selected_answer = '' if len(
+                    selected_answer) == 0 else selected_answer
+                returnScore(selected_answer, this_question)
 
     elif this_question.scoring_method == "multifield_substring":
         map_to_field1 = this_question.map_to_field_1
@@ -327,16 +342,9 @@ def calculateCriteriaScore(*args):
                         if member[0] == "People with disability":
                             selected_answer = Answer.objects.annotate(disability_type=Value(member[1], output_field=CharField(
                             ))).filter(parent_question=this_question, disability_type__icontains=F('answer_choice'))
-                            if selected_answer.count() > 1:
-                                this_score = 1 * this_question.weight
-                            else:
-                                this_score = selected_answer[0].weight * \
-                                    this_question.weight if len(
-                                        selected_answer) > 0 else 0
-                            this_question.calculated_value = this_score
-                            this_question.save()
-                            # print("Question ", this_question, "-------->",
-                            #       this_question.calculated_value)
+                            selected_answer = '' if len(
+                                selected_answer) == 0 else selected_answer
+                            returnScore(selected_answer, this_question)
                 if map_to_field1 == 'parent_index':
                     dependent = 0
                     for member in owner_families:
@@ -366,10 +374,11 @@ def calculateCriteriaScore(*args):
                             upper_limit = float(limit_list[1])
                             if dependency_ratio >= lower_limit and dependency_ratio <= upper_limit:
                                 selected_answer = answer
-                    this_score = selected_answer.weight * \
-                        this_question.weight
-                    this_question.calculated_value = this_score
-                    this_question.save()
+                    selected_answer_qset = sample_answer.filter(
+                        answer_choice=selected_answer.answer_choice)
+                    selected_answer = '' if len(
+                        selected_answer_qset) == 0 else selected_answer_qset
+                    returnScore(selected_answer, this_question)
         if map_to_model == "AnimalDetailData":
             if map_to_field1 == 'animal_number':
                 animal_data = AnimalDetailData.objects.filter(
@@ -388,11 +397,9 @@ def calculateCriteriaScore(*args):
                     else:
                         selected_answer = Answer.objects.filter(
                             parent_question=this_question, answer_choice='No')
-                    this_score = selected_answer[0].weight * \
-                        this_question.weight if len(
-                            selected_answer) > 0 else 0
-                    this_question.calculated_value = this_score
-                    this_question.save()
+                    selected_answer = '' if len(
+                        selected_answer) == 0 else selected_answer
+                    returnScore(selected_answer, this_question)
 
     elif this_question.scoring_method == "composite_count":
         map_to_field1 = this_question.map_to_field_1
@@ -427,8 +434,6 @@ def calculateCriteriaScore(*args):
                         this_question.weight
                 this_question.calculated_value = this_score
                 this_question.save()
-                # print("Question ", this_question, "-------->",
-                #         this_question.calculated_value)
 
     elif this_question.scoring_method == "yes/no":
         map_to_field1 = this_question.map_to_field_1
@@ -446,12 +451,9 @@ def calculateCriteriaScore(*args):
                         keyword = "Yes"
                 selected_answer = Answer.objects.filter(
                     parent_question=this_question, answer_choice=keyword)
-                this_score = selected_answer[0].weight * \
-                    this_question.weight
-                this_question.calculated_value = this_score
-                this_question.save()
-                # print("Question ", this_question, "--------->",
-                #       this_question.calculated_value)
+                selected_answer = '' if len(
+                    selected_answer) == 0 else selected_answer
+                returnScore(selected_answer, this_question)
             elif sample_answer[0].answer_types == 'varying_data':
                 owner_families = OwnerFamilyData.objects.filter(
                     parent_index=args[1][0].index).values_list(this_question.map_to_field_1)
@@ -461,14 +463,12 @@ def calculateCriteriaScore(*args):
                         keyword = 'No'
                 selected_answer = Answer.objects.filter(
                     parent_question=this_question, answer_choice=keyword)
-                this_score = selected_answer[0].weight * \
-                    this_question.weight
-                this_question.calculated_value = this_score
-                this_question.save()
+                selected_answer = '' if len(
+                    selected_answer) == 0 else selected_answer
+                returnScore(selected_answer, this_question)
         elif map_to_model == "HouseHoldData":
             sample_answer = Answer.objects.filter(
                 parent_question=this_question)
-            # print(this_question, sample_answer[0].answer_types)
             if sample_answer[0].answer_types == 'substrings':
                 keyword = 'No'
                 possible_answers = args[2][this_question.map_to_field_1]
@@ -478,12 +478,9 @@ def calculateCriteriaScore(*args):
                     keyword = 'Yes'
                 selected_answer = Answer.objects.filter(
                     parent_question=this_question, answer_choice__icontains=keyword)
-                this_score = selected_answer[0].weight * \
-                    this_question.weight
-                this_question.calculated_value = this_score
-                this_question.save()
-                # print("Question ", this_question, "--------->",
-                #       this_question.calculated_value)
+                selected_answer = '' if len(
+                    selected_answer) == 0 else selected_answer
+                returnScore(selected_answer, this_question)
             elif sample_answer[0].answer_types == 'keywords':
                 household_answer = args[1].values_list(
                     map_to_field1, flat=True)
@@ -492,12 +489,9 @@ def calculateCriteriaScore(*args):
                     keyword = household_answer[0]
                 selected_answer = Answer.objects.filter(
                     parent_question=this_question, answer_choice=keyword)
-                this_score = selected_answer[0].weight * \
-                    this_question.weight
-                this_question.calculated_value = this_score
-                this_question.save()
-                # print("Question ", this_question, "--------->",
-                #       this_question.calculated_value)
+                selected_answer = '' if len(
+                    selected_answer) == 0 else selected_answer
+                returnScore(selected_answer, this_question)
             elif sample_answer[0].answer_types == 'varying_data':
                 household_answer = args[1].values_list(
                     map_to_field1, flat=True)
@@ -507,11 +501,9 @@ def calculateCriteriaScore(*args):
                     keyword = 'Yes'
                 selected_answer = Answer.objects.filter(
                     parent_question=this_question, answer_choice=keyword)
-                this_score = selected_answer[0].weight * \
-                    this_question.weight
-                this_question.calculated_value = this_score
-                this_question.save()
-
+                selected_answer = '' if len(
+                    selected_answer) == 0 else selected_answer
+                returnScore(selected_answer, this_question)
     elif this_question.scoring_method == "code_mapping":
         map_to_field1 = this_question.map_to_field_1
         map_to_model = this_question.map_to_model
@@ -525,12 +517,9 @@ def calculateCriteriaScore(*args):
                     this_question.question)][household_answer[0].strip()]
                 selected_answer = Answer.objects.filter(
                     parent_question=this_question, answer_choice__icontains=this_owner_answer)
-                this_score = selected_answer[0].weight * \
-                    this_question.weight if len(selected_answer) > 0 else 0
-                this_question.calculated_value = this_score
-                this_question.save()
-                # print("Question ", this_question, "--------->",
-                #       this_question.calculated_value)
+                selected_answer = '' if len(
+                    selected_answer) == 0 else selected_answer
+                returnScore(selected_answer, this_question)
             elif sample_answer[0].answer_types == 'substrings':
                 this_owner_answer = []
                 household_answer = args[1].values_list(
@@ -545,10 +534,9 @@ def calculateCriteriaScore(*args):
                 else:
                     selected_answer = Answer.objects.filter(
                         parent_question=this_question, answer_choice__icontains=this_owner_answer[0])
-                this_score = selected_answer[0].weight * \
-                    this_question.weight if len(selected_answer) > 0 else 0
-                this_question.calculated_value = this_score
-                this_question.save()
+                selected_answer = '' if len(
+                    selected_answer) == 0 else selected_answer
+                returnScore(selected_answer, this_question)
 
     elif this_question.scoring_method == "keywords":
         map_to_field1 = this_question.map_to_field_1
@@ -561,24 +549,18 @@ def calculateCriteriaScore(*args):
                     map_to_field1, flat=True)
                 selected_answer = Answer.objects.filter(
                     parent_question=this_question, answer_choice__iexact=household_answer[0].strip())
-                this_score = selected_answer[0].weight * \
-                    this_question.weight if len(selected_answer) > 0 else 0
-                this_question.calculated_value = this_score
-                this_question.save()
-                # print("Question ", this_question, "--------->",
-                #       this_question.calculated_value)
+                selected_answer = '' if len(
+                    selected_answer) == 0 else selected_answer
+                returnScore(selected_answer, this_question)
         if sample_answer[0].answer_types == 'substrings':
             if map_to_model == "HouseHoldData":
                 household_answer = args[1].values_list(
                     map_to_field1, flat=True)
                 selected_answer = Answer.objects.filter(
                     parent_question=this_question, answer_choice__iexact=household_answer[0])
-                this_score = selected_answer[0].weight * \
-                    this_question.weight
-                this_question.calculated_value = this_score
-                this_question.save()
-                # print("Question ", this_question, "--------->",
-                #       this_question.calculated_value)
+                selected_answer = '' if len(
+                    selected_answer) == 0 else selected_answer
+                returnScore(selected_answer, this_question)
 
     elif this_question.scoring_method == "range_based":
         map_to_field1 = this_question.map_to_field_1
@@ -607,12 +589,14 @@ def calculateCriteriaScore(*args):
                             if int(current_answer) == this_value:
                                 selected_answer = answer
                         elif current_answer.startswith('more'):
-                            lower_limit_list = returnNum(current_answer, 'more_than')
+                            lower_limit_list = returnNum(
+                                current_answer, 'more_than')
                             limit = lower_limit_list[0]
                             if this_value > limit:
                                 selected_answer = answer
                         elif current_answer.startswith('less'):
-                            upper_limit_list = returnNum(current_answer, 'less_than')
+                            upper_limit_list = returnNum(
+                                current_answer, 'less_than')
                             limit = upper_limit_list[0]
                             if this_value < limit:
                                 selected_answer = answer
@@ -622,13 +606,10 @@ def calculateCriteriaScore(*args):
                             upper_limit = limit_list[1]
                             if this_value >= lower_limit and this_value <= upper_limit:
                                 selected_answer = answer
-                this_score = selected_answer.weight * \
-                    this_question.weight
-                this_question.calculated_value = this_score
-                this_question.save()
-                # print(selected_answer)
-                # print("Question ", this_question, "-------->",
-                #     this_question.calculated_value, selected_answer)
+                    selected_answer = sample_answer.filter(answer_choice=selected_answer.answer_choice)
+                selected_answer = '' if len(
+                    selected_answer) == 0 else selected_answer
+                returnScore(selected_answer, this_question)
         elif sample_answer[0].answer_types == 'complex_calculation':
             if map_to_model == "HouseHoldData":
                 household_answer = args[1].values_list(
@@ -647,14 +628,12 @@ def calculateCriteriaScore(*args):
                         if len(current_answer) == 1:
                             if int(current_answer) == size_of_household:
                                 selected_answer = answer
-                                # print(current_answer)
                         elif current_answer.startswith('more'):
                             lower_limit_list = [int(num) for num in current_answer.split(
                                 'than') if num.strip().isnumeric()]
                             limit = lower_limit_list[0]
                             if size_of_household > limit:
                                 selected_answer = answer
-                                # print(current_answer, household_answer, limit, "==============")
                         elif current_answer.startswith('less'):
                             upper_limit_list = [int(num) for num in current_answer.split(
                                 'than') if num.strip().isnumeric()]
@@ -668,7 +647,7 @@ def calculateCriteriaScore(*args):
                             upper_limit = limit_list[1]
                             if size_of_household >= lower_limit and size_of_household <= upper_limit:
                                 selected_answer = answer
-                this_score = selected_answer.weight * \
-                    this_question.weight
-                this_question.calculated_value = this_score
-                this_question.save()
+                    selected_answer = sample_answer.filter(answer_choice=selected_answer.answer_choice)
+                selected_answer = '' if len(
+                    selected_answer) == 0 else selected_answer
+                returnScore(selected_answer, this_question)

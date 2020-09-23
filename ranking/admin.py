@@ -15,7 +15,7 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ('id','name')
 
 class AnswerAdmin(admin.ModelAdmin):
-    list_display = ('id','answer_choice','parent_question','weight','calculated_value')
+    list_display = ('id','answer_choice','parent_question','weight','answer_types')
     search_fields = ('id','name')
 
 admin.site.register(Theme, ThemeAdmin)
