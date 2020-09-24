@@ -2,11 +2,21 @@ from django.db.models import Value, F, CharField
 from django.shortcuts import render
 from django.http import HttpResponse
 import requests
+from celery import shared_task
 
 from .models import Theme, Category, Question, Answer
 from core.models import HouseHoldData, OwnerFamilyData, OtherFamilyMember, AnimalDetailData
 from .utils import flatten, returnNum
 
+def calc(request, id):
+    from .tasks import calcScoreFromCelery
+    this_household_score = calculateHouseHoldScore(id)
+    this_house = HouseHoldData.objects.get(index=id)
+    themes = Theme.objects.all()
+    categories = Category.objects.all().order_by('parent_theme')
+    questions = Question.objects.all().order_by('parent_category')
+    answers = Answer.objects.all()
+    return render(request, 'index.html', {'house': this_house, 'categories': categories, 'themes': themes, 'questions': questions, 'answers': answers})
 
 def calculateHouseHoldScore(id):
     calculateThemeScore(id)
@@ -23,7 +33,6 @@ def calculateHouseHoldScore(id):
     questions = Question.objects.all().order_by('parent_category')
     answers = Answer.objects.all()
     return this_household_score
-    # return render(request, 'index.html', {'house': this_house, 'categories': categories, 'themes': themes, 'questions': questions, 'answers': answers})
 
 
 def calculateThemeScore(id):
@@ -40,7 +49,7 @@ def calculateThemeScore(id):
 
 
 def calculateCategoryScore(id):
-    calculateQuestionScore(request, id)
+    calculateQuestionScore(id)
     all_categories = Category.objects.all()
     for category in all_categories:
         category_questions = Question.objects.filter(parent_category=category)

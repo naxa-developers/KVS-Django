@@ -9,7 +9,32 @@ services:
      - "5429:5432"
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
- 
+
+  redis:
+    image: redis:alpine
+    restart: always
+    container_name: redis
+    command: redis-server --appendonly yes
+    volumes:
+      - ./_redis_data:/var/lib/redis
+      - ./redis/rc.local:/etc/rc.local
+    ports:
+     - 6379:6379
+
+  celery:
+    build: .
+    image: kvs_celery
+    restart: always
+    container_name: worker
+    command: "celery -A KVS-Django worker -l INFO"
+    env_file:
+      - .env
+    volumes:
+      - ./media:/code/media
+      - .:/code
+    depends_on:
+      - redis
+
   server:
     build: .
     container_name: kvs_db
@@ -26,3 +51,4 @@ services:
 
     depends_on:
       - db
+      - redis

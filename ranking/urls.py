@@ -1,7 +1,7 @@
 from django.urls import  path
 
-from  .views import calculateHouseHoldScore
+from  .views import calc
 
 urlpatterns = [
-    # path('calculate-score/<int:id>', calculateHouseHoldScore, name='calculate_score'),
+    path('calculate-score/<int:id>', calc, name='calculate_score'),
 ]
