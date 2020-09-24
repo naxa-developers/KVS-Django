@@ -7,9 +7,7 @@ from io import BytesIO
 from PIL import Image
 import os.path
 
-from ranking.views import calculateHouseHoldScore
 from ranking.utils import returnRiskType
-
 
 # Create your models here.
 
@@ -95,6 +93,7 @@ class HouseHoldData(models.Model):
         ('Medium Vulnerable', 'Medium Vulnerable'),
         ('Highly Vulnerable', 'Highly Vulnerable')
     )
+
     index = models.CharField(max_length=1000, blank=True, null=True)
     deviceid = models.CharField(max_length=1000, blank=True, null=True)
     date = models.CharField(max_length=1000, blank=True, null=True)
@@ -304,9 +303,10 @@ class HouseHoldData(models.Model):
     remarks = models.CharField(max_length=500, blank=True, null=True)
     owned_land_image_thumbnail = models.ImageField(upload_to='thumbs', editable=False, null=True, blank=True)
     risk_score = models.DecimalField(default=0.0, max_digits=5, decimal_places=3)
-    risk_type = models.CharField(choices=RISK_TYPES, blank=True, null=True)
+    risk_type = models.CharField(choices=RISK_TYPES, blank=True, null=True, max_length=30)
 
     def save(self, *args, **kwargs):
+        from ranking.views import calculateHouseHoldScore
         score = calculateHouseHoldScore(self.id)
         self.score = score
         risk = returnRiskType(score)
