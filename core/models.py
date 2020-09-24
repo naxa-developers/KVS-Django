@@ -7,6 +7,9 @@ from io import BytesIO
 from PIL import Image
 import os.path
 
+from ranking.views import calculateHouseHoldScore
+from ranking.utils import returnRiskType
+
 
 # Create your models here.
 
@@ -87,6 +90,11 @@ class Gallery(models.Model):
 
 
 class HouseHoldData(models.Model):
+    RISK_TYPES = (
+        ('Least Vulnerable', 'Least Vulnerable'),
+        ('Medium Vulnerable', 'Medium Vulnerable'),
+        ('Highly Vulnerable', 'Highly Vulnerable')
+    )
     index = models.CharField(max_length=1000, blank=True, null=True)
     deviceid = models.CharField(max_length=1000, blank=True, null=True)
     date = models.CharField(max_length=1000, blank=True, null=True)
@@ -295,11 +303,14 @@ class HouseHoldData(models.Model):
     migrated_place_during_fire_other = models.CharField(max_length=500, blank=True, null=True)
     remarks = models.CharField(max_length=500, blank=True, null=True)
     owned_land_image_thumbnail = models.ImageField(upload_to='thumbs', editable=False, null=True, blank=True)
-    risk_score = models.IntegerField(null=True, blank=True)
+    risk_score = models.DecimalField(default=0.0, max_digits=5, decimal_places=3)
+    risk_type = models.CharField(choices=RISK_TYPES, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         score = calculateHouseHoldScore(self.id)
         self.score = score
+        risk = returnRiskType(score)
+        self.risk_type = risk
         super(HouseHoldData, self).save(*args, **kwargs)
 
     def make_thumbnail(self):

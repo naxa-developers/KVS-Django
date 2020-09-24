@@ -8,8 +8,8 @@ from core.models import HouseHoldData, OwnerFamilyData, OtherFamilyMember, Anima
 from .utils import flatten, returnNum
 
 
-def calculateHouseHoldScore(request, id):
-    calculateThemeScore(request, id)
+def calculateHouseHoldScore(id):
+    calculateThemeScore(id)
     this_house = HouseHoldData.objects.get(index=id)
     all_themes = Theme.objects.all()
     this_household_score = 0
@@ -22,11 +22,12 @@ def calculateHouseHoldScore(request, id):
     categories = Category.objects.all().order_by('parent_theme')
     questions = Question.objects.all().order_by('parent_category')
     answers = Answer.objects.all()
-    return render(request, 'index.html', {'house': this_house, 'categories': categories, 'themes': themes, 'questions': questions, 'answers': answers})
+    return this_household_score
+    # return render(request, 'index.html', {'house': this_house, 'categories': categories, 'themes': themes, 'questions': questions, 'answers': answers})
 
 
-def calculateThemeScore(request, id):
-    calculateCategoryScore(request, id)
+def calculateThemeScore(id):
+    calculateCategoryScore(id)
     all_themes = Theme.objects.all()
     for theme in all_themes:
         theme_categories = Category.objects.filter(parent_theme=theme)
@@ -38,7 +39,7 @@ def calculateThemeScore(request, id):
         theme.save()
 
 
-def calculateCategoryScore(request, id):
+def calculateCategoryScore(id):
     calculateQuestionScore(request, id)
     all_categories = Category.objects.all()
     for category in all_categories:
@@ -51,7 +52,7 @@ def calculateCategoryScore(request, id):
         category.save()
 
 
-def calculateQuestionScore(request, id):
+def calculateQuestionScore(id):
     this_house = HouseHoldData.objects.filter(index=id)
     all_questions = Question.objects.all()
     for question in all_questions:

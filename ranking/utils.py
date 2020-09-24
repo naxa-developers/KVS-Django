@@ -30,3 +30,14 @@ def returnNum(current_answer, comp_type):
                     if float(word1) not in numbers:
                         numbers.append((float(word1))) 
     return numbers
+
+def returnRiskType(risk_score):
+    if risk_score < 30:
+        risk_type = 'Least Vulnerable'
+    elif risk_score >=30 and risk_score <=70:
+        risk_type = 'Medium Vulnerable'
+    elif risk_score > 70:
+        risk_type = 'Highly Vulnerable'
+    else:
+        risk_type = 'Medium Vulnerable'
+    return risk_type
