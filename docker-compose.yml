@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    container_name: postgres
+    container_name: kvs_postgres
     image: mdillon/postgis:11-alpine
     restart: on-failure
     ports:
