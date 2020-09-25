@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  db:
+    container_name: postgres
+    image: mdillon/postgis:11-alpine
+    restart: on-failure
+    ports:
+     - "5429:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    restart: always
+    container_name: redis
+    command: redis-server --appendonly yes
+    volumes:
+      - ./_redis_data:/var/lib/redis
+      - ./redis/rc.local:/etc/rc.local
+    ports:
+     - 6379:6379
+
+  celery:
+    build: .
+    image: kvs_celery
+    restart: always
+    container_name: worker
+    command: "celery -A KVS-Django worker -l INFO"
+    env_file:
+      - .env
+    volumes:
+      - ./media:/code/media
+      - .:/code
+    depends_on:
+      - redis
+
+  server:
+    build: .
+    container_name: kvs_db
+    env_file: .env
+    image: kvs
+    restart: on-failure
+    command: ./docker-entrypoint.local.sh
+    ports:
+      - "8022:8001"
+    volumes:
+      - ./media:/code/media
+      - ./static:/code/static
+      - .:/code
+
+    depends_on:
+      - db
+      - redis

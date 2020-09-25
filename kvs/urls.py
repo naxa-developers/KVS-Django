@@ -29,6 +29,7 @@ if settings.DEBUG:
         path('api/v1/', include('api.urls')),
         path('dashboard/', include('dashboard.urls')),
         path('accounts/', include('django.contrib.auth.urls')),
+        path('ranking/', include('ranking.urls'))
         # path('', LoginView.as_view(), name='login'),
         # path('logout/', LogoutView.as_view(), name='logout'),
     ]

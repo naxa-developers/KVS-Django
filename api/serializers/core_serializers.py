@@ -1,5 +1,7 @@
 from core.models import Province, District, Municipality, HouseHoldData, AnimalDetailData, OwnerFamilyData, Gallery
 from rest_framework import serializers
+from datetime import date, datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
 
 class GallerySerializer(serializers.ModelSerializer):
@@ -83,7 +85,7 @@ class HouseHoldDataSerializer(serializers.ModelSerializer):
                   'house_damage_type_during_earthquake', 'house_damage_type_during_earthquake_other', 'migrated_place_during_earthquake',
                   'damages_occurred_during_fire', 'other_damages_occured_during_fire', 'house_damage_type_during_fire',
                   'house_damage_type_during_fire_other', 'fire_extinguisher_in_house', 'migrated_place_during_fire',
-                  'migrated_place_during_fire_other', 'remarks', 'family_size' , 'social_security_received', 'owned_land_image_thumbnail'
+                  'migrated_place_during_fire_other', 'remarks', 'family_size' , 'social_security_received', 'owned_land_image_thumbnail', 'risk_score', 'risk_type'
                   )
 
     def get_family_size(self,obj):
@@ -114,7 +116,7 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
                   'owner_citizenship_no', 'contact_no', 'ward', 'family_size', 'social_security_received',
                   'latitude', 'longitude', 'main_occupation', 'owner_education', 'mother_tongue', 'male_number',
                   'female_number', 'member_received_social_security_number',
-                  'member_not_received_social_security_number', 'total_security_received_members')
+                  'member_not_received_social_security_number', 'total_security_received_members', 'risk_score', 'risk_type')
 
     def get_family_size(self,obj):
         size = obj.house_hold_data.all().count()
@@ -152,8 +154,47 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
         member = OwnerFamilyData.objects.filter(social_security_received__icontains='Yes').count()
         return member
 
+class PersonFromHHSerializer(serializers.ModelSerializer):
+    social_security_received = serializers.SerializerMethodField()
+    name = serializers.CharField(source='owner_name')
+    age = serializers.CharField(source='owner_age')
+    gender = serializers.CharField(source='owner_sex')
+    citizenship_number = serializers.CharField(source='owner_citizenship_no')
 
+    class Meta:
+        model = HouseHoldData
+        fields = ('id', 'index', 'name', 'age', 'gender',
+                  'citizenship_number', 'contact_no', 'ward', 'social_security_received')
 
+    def get_social_security_received(self, obj):
+        query = obj.house_hold_data.filter(social_security_received__icontains='Yes')
+        if not query:
+            return False
+        else:
+            return True
+
+class PersonFromOFSerializer(serializers.ModelSerializer):
+    age = serializers.SerializerMethodField()
+    contact_no = serializers.SerializerMethodField()
+    ward = serializers.SerializerMethodField()
+    index = serializers.CharField(source='parent_index')
+
+    class Meta:
+        model = OwnerFamilyData
+        fields = ('id', 'index', 'name', 'age', 'gender',
+                  'citizenship_number', 'contact_no', 'ward', 'social_security_received')
+
+    def get_age(self, obj):
+        age = (relativedelta(date.today(), obj.date_of_birth).years if obj.date_of_birth != None else '---')
+        return age
+
+    def get_contact_no(self,obj):
+        contact = obj.survey.contact_no
+        return contact
+
+    def get_ward(self,obj):
+        ward_no = obj.survey.ward
+        return ward_no
 
 class AnimalDetailDataSerializer(serializers.ModelSerializer):
     class Meta:

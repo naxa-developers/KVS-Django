@@ -4,7 +4,6 @@ __pycache__/
 *$py.class
 local_settings.py
 # Docker
-docker-compose.yml
 docker-entrypoint.local.sh
 postgres-data/
 static/
@@ -110,3 +109,4 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+output.dot

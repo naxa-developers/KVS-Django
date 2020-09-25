@@ -18,7 +18,8 @@ admin.site.register(UserRole)
 
 class HouseHoldAdmin(ImportExportModelAdmin):
     resource_class = HouseholdResource
-
+    list_display = ('index', 'owner_name', 'surveyor_name')
+    search_fields = ('index', 'owner_name')
 
 admin.site.register(HouseHoldData, HouseHoldAdmin)
 
@@ -26,6 +27,8 @@ admin.site.register(HouseHoldData, HouseHoldAdmin)
 
 class OwnerFamilyAdmin(ImportExportModelAdmin):
     resource_class = OwnerFamilyResource
+    list_display = ('index', 'parent_index', 'name', 'survey')
+    search_fields = ('index', 'parent_index', 'name')
 
 
 admin.site.register(OwnerFamilyData, OwnerFamilyAdmin)
@@ -34,13 +37,13 @@ admin.site.register(OwnerFamilyData, OwnerFamilyAdmin)
 class AnimalDetailAdmin(ImportExportModelAdmin):
     resource_class = AnimalDetailResource
 
-
 admin.site.register(AnimalDetailData, AnimalDetailAdmin)
 
 
 class OtherFamilyAdmin(ImportExportModelAdmin):
     resource_class = OtherFamilyResource
-
+    list_display = ('index', 'parent_index', 'total_persons', 'survey')
+    search_fields = ('index', 'parent_index', 'survey')
 
 admin.site.register(OtherFamilyMember, OtherFamilyAdmin)
 

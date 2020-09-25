@@ -1,6 +1,10 @@
 from django.urls import path, include
+from django.conf.urls import url
 from api.viewssets import core_viewsets, user_viewsets, front_viewsets
 from rest_framework.routers import DefaultRouter
+# from rest_framework_swagger.views import get_swagger_view
+
+# schema_view = get_swagger_view(title='KVS API')
 
 router = DefaultRouter()
 router.register(r'house_hold', core_viewsets.HouseHoldViewSet)
@@ -28,6 +32,7 @@ router.register(r'system_features', front_viewsets.OverallSystemFeaturesViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    # url('swagger', schema_view),
     path('province_geo_json', core_viewsets.ProvinceGeojsonViewSet.as_view(), name='province-geojson'),
     path('district_geo_json', core_viewsets.DistrictGeojsonViewSet.as_view(), name='district-geojson'),
     path('municipality_geo_json', core_viewsets.MunicipalityGeojsonViewSet.as_view(), name='municipality-geojson'),
