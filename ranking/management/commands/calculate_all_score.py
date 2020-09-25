@@ -3,6 +3,7 @@ from celery import shared_task
 
 from ranking.views import calculateHouseHoldScore
 from core.models import HouseHoldData
+from ranking.tasks import calcScoreFromCelery
 
 class Command(BaseCommand):
     help = "Use this command to calculate the risk score of all the data of HouseHold model"
@@ -10,8 +11,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         all_household = HouseHoldData.objects.all()
         for household in all_household:
-            try:
-                calculateHouseHoldScore(household.id)
-                self.stdout.write("Successfully calculated score for household {}".format(household.id))
-            except Exception as e:
-                self.stdout.write("{} error occured for household {} with  message {}".format(type(e), household.id, e))
+            calcScoreFromCelery.delay(household.id)

@@ -8,6 +8,7 @@ from .models import Theme, Category, Question, Answer
 from core.models import HouseHoldData, OwnerFamilyData, OtherFamilyMember, AnimalDetailData
 from .utils import flatten, returnNum
 
+
 def calc(request, id):
     from .tasks import calcScoreFromCelery
     this_household_score = calculateHouseHoldScore(id)
@@ -17,6 +18,7 @@ def calc(request, id):
     questions = Question.objects.all().order_by('parent_category')
     answers = Answer.objects.all()
     return render(request, 'index.html', {'house': this_house, 'categories': categories, 'themes': themes, 'questions': questions, 'answers': answers})
+
 
 def calculateHouseHoldScore(id):
     calculateThemeScore(id)
@@ -71,7 +73,11 @@ def calculateQuestionScore(id):
                 blank_mapping = {
                     'involved_disaster_training_type': ['No'],
                     'knowledge_about_ldcrp': ['No'],
-                    'monthly_income': ['15000 to 25000']
+                    'monthly_income': ['15000 to 25000'],
+                    'milk_and_products': ['2 to 3'],
+                    'pulses': ['2 to 4'],
+                    'fruits': ['2 to 3'],
+                    'meat_and_fish': ['1']
                 }
                 calculateCriteriaScore(question, this_house, blank_mapping)
             else:
@@ -163,6 +169,7 @@ def calculateQuestionScore(id):
                             {
                                 'Nearby/In a walking distance': 'Nearby/In a walking distance',
                                 '15-30 minutes in vehicles': '30 minutes-1hour in vehicles',
+                                '30 minutes-1hour in vehicles': '30 minutes-1hour in vehicles',
                                 '': 'No',
                                 'nan': 'No'
                             },
@@ -177,6 +184,7 @@ def calculateQuestionScore(id):
                             {
                                 'Near to the house': "Near to the house",
                                 '15-30 minutes': "30 Minutes - 1hour",
+                                '30 minutes-1 hour': '30 Minutes - 1hour',
                                 '': "Near to the house",
                                 'nan': "Near to the house",
                             },
@@ -326,13 +334,13 @@ def calculateCriteriaScore(*args):
                         this_answer = Answer.objects.filter(
                             parent_question=this_question, answer_choice__icontains=ans)
                         selected_answer_list.append(this_answer[0].pk)
-                selected_answer_list = list(set(selected_answer_list))
-                lowest_weight = 0
-                selected_answer = this_answer
-                for item in selected_answer_list:
-                    this_item = Answer.objects.filter(id=int(item))
-                    if this_item[0].weight < lowest_weight:
-                        selected_answer = this_item
+                    selected_answer_list = list(set(selected_answer_list))
+                    lowest_weight = 0
+                    selected_answer = this_answer
+                    for item in selected_answer_list:
+                        this_item = Answer.objects.filter(id=int(item))
+                        if this_item[0].weight < lowest_weight:
+                            selected_answer = this_item
                 selected_answer = '' if len(
                     selected_answer) == 0 else selected_answer
                 returnScore(selected_answer, this_question)
@@ -360,7 +368,8 @@ def calculateCriteriaScore(*args):
                     for member in owner_families:
                         if "student" in member[1].lower() or "other" in member[1].lower():
                             dependent = dependent+1
-                    dependency_ratio = dependent/owner_families.count()
+                    dependency_ratio = dependent / \
+                        owner_families.count() if not owner_families.count() == 0 else 0.99
                     possible_answers = Answer.objects.filter(
                         parent_question=this_question)
                     for answer in possible_answers:
@@ -584,7 +593,7 @@ def calculateCriteriaScore(*args):
                     map_to_field1, flat=True)[0]
                 if household_answer.strip().isalnum():
                     values = [s for s in household_answer if not s.isalpha()]
-                    this_value = int(float(values[0]))
+                    this_value = int(float(values[0])) if values else 0
                 else:
                     this_value = int(float(household_answer))
                 if household_answer == '' or household_answer == 'nan' or household_answer == None:
@@ -616,7 +625,8 @@ def calculateCriteriaScore(*args):
                             upper_limit = limit_list[1]
                             if this_value >= lower_limit and this_value <= upper_limit:
                                 selected_answer = answer
-                    selected_answer = sample_answer.filter(answer_choice=selected_answer.answer_choice)
+                    selected_answer = sample_answer.filter(
+                        answer_choice=selected_answer.answer_choice)
                 selected_answer = '' if len(
                     selected_answer) == 0 else selected_answer
                 returnScore(selected_answer, this_question)
@@ -657,7 +667,8 @@ def calculateCriteriaScore(*args):
                             upper_limit = limit_list[1]
                             if size_of_household >= lower_limit and size_of_household <= upper_limit:
                                 selected_answer = answer
-                    selected_answer = sample_answer.filter(answer_choice=selected_answer.answer_choice)
+                    selected_answer = sample_answer.filter(
+                        answer_choice=selected_answer.answer_choice)
                 selected_answer = '' if len(
                     selected_answer) == 0 else selected_answer
                 returnScore(selected_answer, this_question)
