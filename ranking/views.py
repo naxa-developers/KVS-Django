@@ -418,7 +418,10 @@ def calculateCriteriaScore(*args):
                 animal_data = AnimalDetailData.objects.filter(
                     parent_index=args[1][0].index).values_list(map_to_field1, map_to_field2)
                 for data_ in animal_data:
-                    if int(float(data_[0])) == 0 or data_[0] == '' or data_[0] == None or data_[0] == 'nan':
+                    if data_[0] == '' or data_[0] == None or data_[0] == 'nan':
+                        selected_answer = Answer.objects.filter(
+                            parent_question=this_question, answer_choice='No')
+                    elif int(float(data_[0])) == 0:
                         selected_answer = Answer.objects.filter(
                             parent_question=this_question, answer_choice='No')
                     elif int(float(data_[0])) > 0:
@@ -554,7 +557,7 @@ def calculateCriteriaScore(*args):
                             parent_question=this_question, answer_choice__icontains=element)
                 else:
                     selected_answer = Answer.objects.filter(
-                        parent_question=this_question, answer_choice__icontains=this_owner_answer)
+                        parent_question=this_question, answer_choice__icontains=household_answer[0].strip())
                 selected_answer = '' if len(
                     selected_answer) == 0 else selected_answer
                 returnScore(selected_answer, this_question)
@@ -566,7 +569,6 @@ def calculateCriteriaScore(*args):
                 for answer in args[2][this_question.question]:
                     multi_household_answer = [ans for ans in household_answer[0].split(',')]
                     for this_household_answer in multi_household_answer:
-                        # print(this_household_answer, answer, "=============")
                         if this_household_answer.strip() in answer:
                             this_owner_answer.append(
                                 args[2][this_question.question][answer])

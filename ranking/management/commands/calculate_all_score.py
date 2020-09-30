@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from celery import shared_task
+import csv
 
 from ranking.views import calculateHouseHoldScore
 from core.models import HouseHoldData
@@ -11,4 +12,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         all_household = HouseHoldData.objects.all()
         for household in all_household:
-            calcScoreFromCelery.delay(household.id)
+            response = calcScoreFromCelery.delay(household.id)
