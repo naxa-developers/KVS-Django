@@ -6,13 +6,15 @@ from celery import shared_task
 
 from .models import Theme, Category, Question, Answer
 from core.models import HouseHoldData, OwnerFamilyData, OtherFamilyMember, AnimalDetailData
-from .utils import flatten, returnNum
+from .utils import flatten, returnNum, splitIntStr
 
 
 def calc(request, id):
     from .tasks import calcScoreFromCelery
     this_household_score = calculateHouseHoldScore(id)
-    this_house = HouseHoldData.objects.get(index=id)
+    these_houses = HouseHoldData.objects.filter(id=id)
+    for house in these_houses:
+        this_house = house
     themes = Theme.objects.all()
     categories = Category.objects.all().order_by('parent_theme')
     questions = Question.objects.all().order_by('parent_category')
@@ -22,19 +24,21 @@ def calc(request, id):
 
 def calculateHouseHoldScore(id):
     calculateThemeScore(id)
-    this_house = HouseHoldData.objects.get(index=id)
-    all_themes = Theme.objects.all()
-    this_household_score = 0
-    for theme in all_themes:
-        this_household_score = this_household_score + \
-            theme.calculated_value if theme.calculated_value != None else this_household_score
-    this_house.risk_score = this_household_score
-    this_house.save()
-    themes = Theme.objects.all()
-    categories = Category.objects.all().order_by('parent_theme')
-    questions = Question.objects.all().order_by('parent_category')
-    answers = Answer.objects.all()
-    return this_household_score
+    these_houses = HouseHoldData.objects.filter(id=id)
+    for house in these_houses:
+        this_house = house
+        all_themes = Theme.objects.all()
+        this_household_score = 0
+        for theme in all_themes:
+            this_household_score = this_household_score + \
+                theme.calculated_value if theme.calculated_value != None else this_household_score
+        this_house.risk_score = this_household_score
+        this_house.save()
+        themes = Theme.objects.all()
+        categories = Category.objects.all().order_by('parent_theme')
+        questions = Question.objects.all().order_by('parent_category')
+        answers = Answer.objects.all()
+        return this_household_score
 
 
 def calculateThemeScore(id):
@@ -109,6 +113,7 @@ def calculateQuestionScore(id):
                                 '3': 'Children Leadership',
                                 '4': 'Single Women Leadership',
                                 '5': 'Disabled Member Leadership',
+                                '': 'Others',
                                 '6': 'Others',
                                 'nan': 'Others',
                             },
@@ -163,8 +168,17 @@ def calculateQuestionScore(id):
                                 'Damage in foundation': 'Damage in Foundation',
                                 'Damage in roof': 'Damage in Roof',
                                 '': 'No',
-                                'nan': 'No'
+                                'nan': 'No',
+                                'Death': 'No',
+                                'Injured': 'No',
+                                'Furniture': 'No',
+                                'Land': 'No',
+                                'Livestock': 'No',
+                                'Crops': 'No',
+                                'Food Stock': 'No',
+                                'Machineries': 'No',
                             },
+
                             'Distance from Nearest School':
                             {
                                 'Nearby/In a walking distance': 'Nearby/In a walking distance',
@@ -200,6 +214,7 @@ def calculateQuestionScore(id):
                             {
                                 "Near  the house": "Less than 15 mins",
                                 "15-30minutes": "15-30mins",
+                                "15-30 minutes":"15-30mins",
                                 "30minutes-1 hour": "30min-1hr",
                                 "More than an hour": "More than an hour",
                                 '': "Less than 15 mins",
@@ -532,10 +547,14 @@ def calculateCriteriaScore(*args):
             if sample_answer[0].answer_types == 'code_mapping':
                 household_answer = args[1].values_list(
                     map_to_field1, flat=True)
-                this_owner_answer = args[2][str(
-                    this_question.question)][household_answer[0].strip()]
-                selected_answer = Answer.objects.filter(
-                    parent_question=this_question, answer_choice__icontains=this_owner_answer)
+                selected_answer = Answer.objects.none()
+                if household_answer.count() > 1:
+                    for element in household_answer:
+                        selected_answer |= Answer.objects.filter(
+                            parent_question=this_question, answer_choice__icontains=element)
+                else:
+                    selected_answer = Answer.objects.filter(
+                        parent_question=this_question, answer_choice__icontains=this_owner_answer)
                 selected_answer = '' if len(
                     selected_answer) == 0 else selected_answer
                 returnScore(selected_answer, this_question)
@@ -543,10 +562,14 @@ def calculateCriteriaScore(*args):
                 this_owner_answer = []
                 household_answer = args[1].values_list(
                     map_to_field1, flat=True)
+                selected_answer = Answer.objects.none()
                 for answer in args[2][this_question.question]:
-                    if household_answer[0].strip() in answer:
-                        this_owner_answer.append(
-                            args[2][this_question.question][answer])
+                    multi_household_answer = [ans for ans in household_answer[0].split(',')]
+                    for this_household_answer in multi_household_answer:
+                        # print(this_household_answer, answer, "=============")
+                        if this_household_answer.strip() in answer:
+                            this_owner_answer.append(
+                                args[2][this_question.question][answer])
                 if len(this_owner_answer) > 1:
                     selected_answer = Answer.objects.filter(
                         parent_question=this_question, answer_choice__icontains='Multiple')
@@ -591,11 +614,9 @@ def calculateCriteriaScore(*args):
             if map_to_model == "HouseHoldData":
                 household_answer = args[1].values_list(
                     map_to_field1, flat=True)[0]
-                if household_answer.strip().isalnum():
-                    values = [s for s in household_answer if not s.isalpha()]
-                    this_value = int(float(values[0])) if values else 0
-                else:
-                    this_value = int(float(household_answer))
+                splitted_answer = splitIntStr(household_answer)
+                this_value = splitted_answer[0]
+                data_type = splitted_answer[1]
                 if household_answer == '' or household_answer == 'nan' or household_answer == None:
                     selected_answer = Answer.objects.filter(
                         parent_question=this_question, answer_choice__in=args[2][map_to_field1])

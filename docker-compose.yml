@@ -26,7 +26,7 @@ services:
     image: kvs_celery
     restart: always
     container_name: worker
-    command: "celery -A KVS-Django worker -l INFO"
+    command: "celery -A kvs.celery worker -l INFO"
     env_file:
       - .env
     volumes:
