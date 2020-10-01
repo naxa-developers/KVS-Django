@@ -18,8 +18,8 @@ admin.site.register(UserRole)
 
 class HouseHoldAdmin(ImportExportModelAdmin):
     resource_class = HouseholdResource
-    list_display = ('index', 'owner_name', 'surveyor_name')
-    search_fields = ('index', 'owner_name')
+    list_display = ('id', 'owner_name', 'surveyor_name')
+    search_fields = ('id', 'owner_name')
 
 admin.site.register(HouseHoldData, HouseHoldAdmin)
 
