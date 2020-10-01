@@ -12,4 +12,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         all_household = HouseHoldData.objects.all()
         for household in all_household:
-            response = calcScoreFromCelery.delay(household.id)
+            calcScoreFromCelery.delay(household.id)

@@ -4,6 +4,10 @@ from django.core.management import call_command
 
 from ranking.views import calculateHouseHoldScore
 
+@shared_task
+def add(x, y):
+    return x + y
+
 @shared_task()
 def calcScoreFromCelery(id):
     try:
