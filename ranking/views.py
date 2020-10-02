@@ -358,7 +358,6 @@ def calculateCriteriaScore(*args):
                             selected_answer = this_item
                 selected_answer = '' if len(
                     selected_answer) == 0 else selected_answer
-                print(household_answer[0], selected_answer)
                 returnScore(selected_answer, this_question)
 
     elif this_question.scoring_method == "multifield_substring":
@@ -591,7 +590,6 @@ def calculateCriteriaScore(*args):
                     else:
                         selected_answer = Answer.objects.filter(
                             parent_question=this_question, answer_choice__icontains=this_owner_answer[0])
-                print(household_answer, this_owner_answer, selected_answer)
                 selected_answer = '' if len(
                     selected_answer) == 0 else selected_answer
                 returnScore(selected_answer, this_question)
