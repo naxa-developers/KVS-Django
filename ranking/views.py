@@ -544,6 +544,7 @@ def calculateCriteriaScore(*args):
                     selected_answer) == 0 else selected_answer
                 returnScore(selected_answer, this_question)
     elif this_question.scoring_method == "code_mapping":
+        print("here")
         map_to_field1 = this_question.map_to_field_1
         map_to_model = this_question.map_to_model
         if map_to_model == "HouseHoldData":
