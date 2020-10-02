@@ -214,7 +214,7 @@ def calculateQuestionScore(id):
                             {
                                 "Near  the house": "Less than 15 mins",
                                 "15-30minutes": "15-30mins",
-                                "15-30 minutes":"15-30mins",
+                                "15-30 minutes": "15-30mins",
                                 "30minutes-1 hour": "30min-1hr",
                                 "More than an hour": "More than an hour",
                                 '': "Less than 15 mins",
@@ -547,7 +547,7 @@ def calculateCriteriaScore(*args):
         if map_to_model == "HouseHoldData":
             sample_answer = Answer.objects.filter(
                 parent_question=this_question)
-            if sample_answer[0].answer_types == 'code_mapping':
+            if sample_answer[0].answer_types == 'substrings':
                 household_answer = args[1].values_list(
                     map_to_field1, flat=True)
                 selected_answer = Answer.objects.none()
@@ -561,23 +561,35 @@ def calculateCriteriaScore(*args):
                 selected_answer = '' if len(
                     selected_answer) == 0 else selected_answer
                 returnScore(selected_answer, this_question)
-            elif sample_answer[0].answer_types == 'substrings':
+            elif sample_answer[0].answer_types == 'code_mapping':
                 this_owner_answer = []
                 household_answer = args[1].values_list(
                     map_to_field1, flat=True)
-                selected_answer = Answer.objects.none()
-                for answer in args[2][this_question.question]:
-                    multi_household_answer = [ans for ans in household_answer[0].split(',')]
-                    for this_household_answer in multi_household_answer:
-                        if this_household_answer.strip() in answer:
-                            this_owner_answer.append(
-                                args[2][this_question.question][answer])
-                if len(this_owner_answer) > 1:
-                    selected_answer = Answer.objects.filter(
-                        parent_question=this_question, answer_choice__icontains='Multiple')
+                if this_question.question == "Disaster Information Medium?":
+                    if household_answer[0] == '' or household_answer[0] == 'nan' or household_answer[0] == None:
+                        selected_answer = Answer.objects.filter(
+                            parent_question=this_question, answer_choice__icontains='No')
+                    else:
+                        selected_answer = Answer.objects.filter(
+                            parent_question=this_question, answer_choice__icontains='Related Body/Radio/TV')
                 else:
-                    selected_answer = Answer.objects.filter(
-                        parent_question=this_question, answer_choice__icontains=this_owner_answer[0])
+                    selected_answer = Answer.objects.none()
+                    for answer in args[2][this_question.question]:
+                        multi_household_answer = [
+                            ans for ans in household_answer[0].split(',')]
+                        for this_household_answer in multi_household_answer:
+                            if this_household_answer.strip() in answer:
+                                this_owner_answer.append(
+                                    args[2][this_question.question][answer])
+                    if len(this_owner_answer) > 1:
+                        selected_answer = Answer.objects.filter(
+                            parent_question=this_question, answer_choice__icontains='Multiple')
+                        if selected_answer.count() == 0:
+                            selected_answer = Answer.objects.filter(
+                                parent_question=this_question, answer_choice__icontains=this_owner_answer[0])
+                    else:
+                        selected_answer = Answer.objects.filter(
+                            parent_question=this_question, answer_choice__icontains=this_owner_answer[0])
                 selected_answer = '' if len(
                     selected_answer) == 0 else selected_answer
                 returnScore(selected_answer, this_question)
@@ -619,6 +631,8 @@ def calculateCriteriaScore(*args):
                 splitted_answer = splitIntStr(household_answer)
                 this_value = splitted_answer[0]
                 data_type = splitted_answer[1]
+                if this_question.question == 'Road Width' and data_type == 'M':
+                    this_value = this_value * 3.28084
                 if household_answer == '' or household_answer == 'nan' or household_answer == None:
                     selected_answer = Answer.objects.filter(
                         parent_question=this_question, answer_choice__in=args[2][map_to_field1])
@@ -631,22 +645,20 @@ def calculateCriteriaScore(*args):
                             if int(current_answer) == this_value:
                                 selected_answer = answer
                         elif current_answer.startswith('more'):
-                            lower_limit_list = returnNum(
-                                current_answer, 'more_than')
-                            limit = lower_limit_list[0]
-                            if this_value > limit:
+                            limit_for_more = returnNum(
+                                current_answer, 'more_than')[0]
+                            if this_value > limit_for_more:
                                 selected_answer = answer
                         elif current_answer.startswith('less'):
-                            upper_limit_list = returnNum(
-                                current_answer, 'less_than')
-                            limit = upper_limit_list[0]
-                            if this_value < limit:
+                            limit_for_less = returnNum(
+                                current_answer, 'less_than')[0]
+                            if this_value < limit_for_less:
                                 selected_answer = answer
                         elif 'to' in current_answer:
-                            limit_list = returnNum(current_answer, 'to')
-                            lower_limit = limit_list[0]
-                            upper_limit = limit_list[1]
-                            if this_value >= lower_limit and this_value <= upper_limit:
+                            limit_range = returnNum(current_answer, 'to')
+                            lower_limit_to = limit_range[0]
+                            upper_limit_to = limit_range[1]
+                            if this_value >= lower_limit_to and this_value <= upper_limit_to:
                                 selected_answer = answer
                     selected_answer = sample_answer.filter(
                         answer_choice=selected_answer.answer_choice)
