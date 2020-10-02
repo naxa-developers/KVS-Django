@@ -46,6 +46,9 @@ def returnRiskType(risk_score):
     return risk_type
 
 
+'''
+This function returns a integer or a float and string from a string given
+'''
 def splitIntStr(string):
     if string.strip().isalnum():
         if string.strip().isalpha():
