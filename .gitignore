@@ -110,3 +110,4 @@ venv.bak/
 # mypy
 .mypy_cache/
 output.dot
+final_data.xlsx

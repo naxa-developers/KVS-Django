@@ -8,20 +8,20 @@ from django.contrib.gis.geos import GEOSGeometry
 
 
 class Command(BaseCommand):
-    help = 'load province data from province.xlsx file'
+    help = 'load HouseHold data from .xlsx file'
 
     def add_arguments(self, parser):
         parser.add_argument('--path', type=str)
 
     def handle(self, *args, **kwargs):
         path = kwargs['path']
-        df = pd.read_csv(path)
+        df = pd.read_excel(path, sheet_name=0)
         upper_range = len(df)
 
         print("Wait Data is being Loaded")
 
         for row in range(0, upper_range):
-            municipality = Municipality.objects.get(hlcit_code=df['hlcit_code_palika'][row])
+            municipality = Municipality.objects.get(name="Saptakoshi")
             district = municipality.district
             province = district.province
 
@@ -62,21 +62,21 @@ class Command(BaseCommand):
                     owner_caste_other=df['owner_caste_other'][row],
                     religion=df['religion'][row],
                     religion_other=df['religion_other'][row],
-                    mother_tongue=df['mother_tongue'][row],
+                    mother_tongue=df['Mother_tongue'][row],
                     mother_tongue_other=df['mother_tongue_other'][row],
                     contact_no=df['contact_no'][row],
-                    owner_education=df['owner_education'][row],
+                    owner_education=df['owner_Education'][row],
                     owner_citizenship_no=df['owner_citizenship_no'][row],
                     responder_name=df['responder_name'][row],
                     responder_sex=df['responder_age'][row],
                     responder_contact=df['responder_contact'][row],
                     other_family_living=df['other_families_living'][row],
-                    main_occupation=df['main_occupation'][row],
+                    main_occupation=df['Main_occupation'][row],
                     other_occupation=df['other_occupation'][row],
                     business=df['business'][row],
                     other_business=df['other_business'][row],
                     other_small_business=df['other_small_business'][row],
-                    crop_sufficiency=df['crop_sufficiency'][row],
+                    crop_sufficiency=df['Crop_sufficiency'][row],
                     food_type=df['food_type'][row],
                     main_staple=df['main_staple'][row],
                     pulses=df['pulses'][row],
@@ -95,7 +95,7 @@ class Command(BaseCommand):
                     animal_presence=df['animal_presence'][row],
                     insurance=df['insurance'][row],
                     other_insurance=df['other_insurance'][row],
-                    vehicle=df['vehicle'][row],
+                    vehicle=df['Vehicles'][row],
                     vehicles_other=df['vehicles_other'][row],
                     facilities_type=df['facilities_type'][row],
                     other_facilities=df['other_facilities'][row],
@@ -126,8 +126,8 @@ class Command(BaseCommand):
                     engineer_male_number=df['engineer_male_number'][row],
                     engineer_female_number=df['engineer_female_number'][row],
                     subengineer_sex=df['subengineer_sex'][row],
-                    subengineer_male=df['subengineer_male'][row],
-                    subengineer_female=df['subengineer_female'][row],
+                    subengineer_male=df['subengineer_male_number'][row],
+                    subengineer_female=df['subengineer_female_number'][row],
                     nurse_sex=df['nurse_sex'][row],
                     nurse_male_number=df['nurse_male_number'][row],
                     nurse_female_number=df['nurse_female_number'][row],
@@ -214,24 +214,24 @@ class Command(BaseCommand):
                     most_occuring_disasters_in_ward=df['most_occuring_disasters_in_ward'][row],
                     identified_safe_place_for_flood=df['identified_safe_place_for_flood'][row],
                     distance_to_safe_place_for_flood=df['distance_to_safe_place_for_flood'][row],
-                    damages_occurred_during_flood=df['damages_occurred_during_flood'][row],
-                    other_damages_occurred_during_flood=df['other_damages_occurred_during_flood'][row],
+                    damages_occurred_during_flood=df['damages_occured_during_flood'][row],
+                    other_damages_occurred_during_flood=df['other_damages_occured_during_flood'][row],
                     house_damage_type_during_flood=df['house_damage_type_during_flood'][row],
                     house_damage_type_during_flood_other=df['house_damage_type_during_flood_other'][row],
                     migrated_place_during_flood=df['migrated_place_during_flood'][row],
                     migrated_place_during_flood_other=df['migrated_place_during_flood_other'][row],
-                    damage_occurred_during_landslide=df['damage_occurred_during_landslide'][row],
-                    other_damage_occurred_during_landslide=df['other_damage_occurred_during_landslide'][row],
+                    damage_occurred_during_landslide=df['damage_occured_during_landslide'][row],
+                    other_damage_occurred_during_landslide=df['other_damage_occured_during_landslide'][row],
                     house_damage_type_during_landslide=df['house_damage_type_during_landslide'][row],
                     house_damage_type_during_landslide_other=df['house_damage_type_during_landslide_other'][row],
                     migrated_place_during_landslide=df['migrated_place_during_landslide'][row],
-                    damages_occurred_during_earthquake=df['damages_occurred_during_earthquake'][row],
-                    other_damages_occurred_during_earthquake=df['other_damages_occurred_during_earthquake'][row],
+                    damages_occurred_during_earthquake=df['damages_occured_during_earthquake'][row],
+                    other_damages_occurred_during_earthquake=df['other_damages_occured_during_earthquake'][row],
                     house_damage_type_during_earthquake=df['house_damage_type_during_earthquake'][row],
                     house_damage_type_during_earthquake_other=df['house_damage_type_during_earthquake_other'][row],
                     migrated_place_during_earthquake=df['migrated_place_during_earthquake'][row],
-                    damages_occurred_during_fire=df['damages_occurred_during_fire'][row],
-                    other_damages_occured_during_fire=df['other_damages_occurred_during_fire'][row],
+                    damages_occurred_during_fire=df['damages_occured_during_fire'][row],
+                    other_damages_occured_during_fire=df['other_damages_occured_during_fire'][row],
                     house_damage_type_during_fire=df['house_damage_type_during_fire'][row],
                     house_damage_type_during_fire_other=df['house_damage_type_during_fire_other'][row],
                     fire_extinguisher_in_house=df['fire_extinguisher_in_house'][row],
@@ -243,7 +243,7 @@ class Command(BaseCommand):
                 print(row, 'Data was successfully updated')
 
             except Exception as e:
-                print(e)
+                print("error in", e)
 
 
 
