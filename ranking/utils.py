@@ -90,6 +90,14 @@ def splitIntStr(string):
                 this_num = float(st)
             elif st.isalpha():
                 this_string = st
+    elif '-' in string.strip():
+        all_chars = [s for s in string]
+        striped_str = ''.join(e for e in all_chars if not str(e).isalpha())
+        num_list = [s for s in striped_str.split("-") if s != '']
+        num1 = float(num_list[0])
+        num2 = float(num_list[1])
+        this_num = num1 + num2
+        this_string = ''.join(str(e) for e in all_chars if str(e).isalpha())
     else:
         this_num = float(string)
         this_string = ''

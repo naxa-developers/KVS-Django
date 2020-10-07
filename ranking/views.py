@@ -81,7 +81,8 @@ def calculateQuestionScore(id):
                     'milk_and_products': ['2 to 3'],
                     'pulses': ['2 to 4'],
                     'fruits': ['2 to 3'],
-                    'meat_and_fish': ['1']
+                    'meat_and_fish': ['1'],
+                    'road_width': ['5 to 13 ft']
                 }
                 calculateCriteriaScore(question, this_house, blank_mapping)
             else:
@@ -348,6 +349,9 @@ def calculateCriteriaScore(*args):
                     for ans in answers:
                         this_answer = Answer.objects.filter(
                             parent_question=this_question, answer_choice__icontains=ans)
+                        if this_answer.count() > 1:
+                            selected_answer = Answer.objects.annotate(answer_field=Value(ans, output_field=CharField(
+                            ))).filter(parent_question=this_question, answer_field__icontains=F('answer_choice'))
                         selected_answer_list.append(this_answer[0].pk)
                     selected_answer_list = list(set(selected_answer_list))
                     lowest_weight = 0

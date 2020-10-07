@@ -10,7 +10,7 @@ class Command(BaseCommand):
     help = "Use this command to calculate the risk score of all the data of HouseHold model"
 
     def handle(self, *args, **options):
-        all_household = HouseHoldData.objects.all()
+        all_household = HouseHoldData.objects.all().order_by('id')
         for household in all_household:
             f = open("score_list.csv", 'a')
             outfileWriter = csv.writer(f, delimiter=',')
