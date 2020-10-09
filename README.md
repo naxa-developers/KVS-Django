@@ -18,5 +18,13 @@ docker-compose build
 ```
 docker-compose up
 ```
-### 5. Launch Browser
+
+#### 4. Load Initial Data from fixtures
+
+```
+python manage.py loaddata fixtures/province.json
+```
+ ##### Similarly load data for tables District, Municipality, Theme, Category, Question and Answer, from respective json files in fixtures.
+
+#### 6. Launch Browser
 Launch browser to http://localhost:8021/api/v1/ to launch the API Explorer
