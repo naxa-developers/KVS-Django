@@ -81,7 +81,8 @@ def calculateQuestionScore(id):
                     'milk_and_products': ['2 to 3'],
                     'pulses': ['2 to 4'],
                     'fruits': ['2 to 3'],
-                    'meat_and_fish': ['1']
+                    'meat_and_fish': ['1'],
+                    'road_width': ['5 to 13 ft',],
                 }
                 calculateCriteriaScore(question, this_house, blank_mapping)
             else:
