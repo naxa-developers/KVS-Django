@@ -38,6 +38,11 @@
                         <td>{{theme.calculated_value}}</td>
                     </tr>
                     {% endfor %}
+                    <tr>
+                        <td>Total</td>
+                        <td id="thwSum"></td>
+                        <td id="thsSum"></td>
+                    </tr>
                 </table>
             </div>
             <div class="col-md-6">
@@ -58,6 +63,11 @@
                             <td>{{cat.calculated_value}}</td>
                         </tr>
                         {% endfor %}
+                        <tr>
+                            <td>Total</td>
+                            <td id="catwSum"></td>
+                            <td id="catsSum"></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -99,7 +109,7 @@
                 <tbody>
                     {% for qn in questions %}
                     <tr>
-                        <th>{{ forloop.counter }}</th>
+                        <td>{{ forloop.counter }}</td>
                         <td>{{qn.question}}</td>
                         <td>{{qn.parent_category}}</td>
                         <td>{{qn.scoring_method}}</td>
@@ -107,28 +117,70 @@
                         <td>{{qn.calculated_value}}</td>
                     </tr>
                     {% endfor %}
+                    <tr>
+                        <td>Total</td>
+                        <td>Question</td>
+                        <td>Category</td>
+                        <td>Scoring Method</td>
+                        <td id="qnwSum"></td>
+                        <td id="qnsSum"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
+    <script>
+        var sum1 = 0;
+        var sum2 = 0;
+        var sum3 = 0;
+        var sum4 = 0;
+        var sum5 = 0;
+        var sum6 = 0;
+        $("#table-1 tr").not(':first').not(':last').each(function () {
+            sum1 += getfloat($(this).find("td:eq(1)").text());
+            sum2 += getfloat($(this).find("td:eq(2)").text());
+            function getfloat(t) {
+                if (isNumeric(t)) {
+                    return parseFloat(t, 10);
+                }
+                return 0;
+                function isNumeric(n) {
+                    return !isNaN(parseFloat(n)) && isFinite(n);
+                }
+            }
+        });
+        $("#table-2 tr").not(':first').not(':last').each(function () {
+            sum3 += getfloat($(this).find("td:eq(1)").text());
+            sum4 += getfloat($(this).find("td:eq(2)").text());
+            function getfloat(t) {
+                if (isNumeric(t)) {
+                    return parseFloat(t, 10);
+                }
+                return 0;
+                function isNumeric(n) {
+                    return !isNaN(parseFloat(n)) && isFinite(n);
+                }
+            }
+        });
+        $("#table-3 tr").not(':first').not(':last').each(function () {
+            sum5 += getfloat($(this).find("td:eq(4)").text());
+            sum6 += getfloat($(this).find("td:eq(5)").text());
+            function getfloat(t) {
+                if (isNumeric(t)) {
+                    return parseFloat(t, 10);
+                }
+                return 0;
+                function isNumeric(n) {
+                    return !isNaN(parseFloat(n)) && isFinite(n);
+                }
+            }
+        });
+        $("#thwSum").text(sum1);
+        $("#thsSum").text(sum2);
+        $("#catwSum").text(sum3);
+        $("#catsSum").text(sum4);
+        $("#qnwSum").text(sum5);
+        $("#qnsSum").text(sum6);
+    </script>
 </body>
-<script>
-    var sum1 = 0;
-    var sum2 = 0;
-    $("#table-1").not(':first').not(':last').each(function () {
-        sum1 += getnum($(this).find("td:eq(0)").text());
-        sum2 += getnum($(this).find("td:eq(2)").text());
-        function getnum(t) {
-            if (isNumeric(t)) {
-                return parseInt(t, 10);
-            }
-            return 0;
-            function isNumeric(n) {
-                return !isNaN(parseFloat(n)) && isFinite(n);
-            }
-        }
-    });
-    $("#thSum").text(sum1);
-    $("#thSum1").text(sum2);
-</script>  
 </html>
