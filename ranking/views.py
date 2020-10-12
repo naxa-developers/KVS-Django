@@ -82,7 +82,7 @@ def calculateQuestionScore(id):
                     'pulses': ['2 to 4'],
                     'fruits': ['2 to 3'],
                     'meat_and_fish': ['1'],
-                    'road_width': ['5 to 13 ft']
+                    'road_width': ['5 to 13 ft',],
                 }
                 calculateCriteriaScore(question, this_house, blank_mapping)
             else:
@@ -114,8 +114,9 @@ def calculateQuestionScore(id):
                                 '3': 'Children Leadership',
                                 '4': 'Single Women Leadership',
                                 '5': 'Disabled Member Leadership',
-                                '': 'Others',
                                 '6': 'Others',
+                                '___other': 'Others',
+                                '': 'Others',
                                 'nan': 'Others',
                             },
                             'Time taken to reach Open Space?':
@@ -124,6 +125,8 @@ def calculateQuestionScore(id):
                                 '15-30 minutes': '15-30 minutes',
                                 '30 minutes-1 hour': '30 minutes to 1 hour',
                                 'more than hour': 'more than hour',
+                                'more than an hour': 'more than hour',
+                                'more than 1 hour': 'more than hour',
                                 '': "Don't Know",
                                 'nan': "Don't Know",
                                 'Dont Know': "Don't Know"
@@ -159,7 +162,8 @@ def calculateQuestionScore(id):
                                 'Machineries': 'Machineries',
                                 '': 'No',
                                 'nan': 'No',
-                                'Multiple': 'Multiple'
+                                'Multiple': 'Multiple',
+                                'Completely destroyed': 'Multiple'
                             },
                             'Damage in House':
                             {
@@ -185,13 +189,15 @@ def calculateQuestionScore(id):
                                 'Nearby/In a walking distance': 'Nearby/In a walking distance',
                                 '15-30 minutes in vehicles': '30 minutes-1hour in vehicles',
                                 '30 minutes-1hour in vehicles': '30 minutes-1hour in vehicles',
-                                '': 'No',
-                                'nan': 'No'
+                                'more than an hour in vehicles ': '30 minutes-1hour in vehicles',
+                                '': '30 minutes-1hour in vehicles',
+                                'nan': '30 minutes-1hour in vehicles',
                             },
                             'Building Bye-Laws and Standard Code':
                             {
                                 'Yes': 'Comply',
                                 '': "Don't Know",
+                                'don’t know': "Don't Know",
                                 'nan': "Don't Know",
                                 'No': "Doesn't Comply"
                             },
@@ -214,6 +220,7 @@ def calculateQuestionScore(id):
                             'What time does it take to reach nearest public tap from house?':
                             {
                                 "Near  the house": "Less than 15 mins",
+                                "in the house": "Less than 15 mins",
                                 "15-30minutes": "15-30mins",
                                 "15-30 minutes": "15-30mins",
                                 "30minutes-1 hour": "30min-1hr",
@@ -240,6 +247,7 @@ def calculateQuestionScore(id):
                                 '15-30 minutes': '30 minutes to 1 hour',
                                 '30 minutes-1 hour': '30 minutes to 1 hour',
                                 'more than 1 hour': 'more than 1 hour',
+                                'More than an hour': 'more than 1 hour',
                             },
                             'Land for Agriculture':
                             {
@@ -250,7 +258,18 @@ def calculateQuestionScore(id):
                                 '1-5 kattha': '1 to 5 Kattha',
                                 'more than 10 kattha': 'More than 5 Kattha',
                                 '1-5 ropani': 'More than 5 Kattha',
-                                '5-10 kattha': 'More than 5 Kattha'
+                                '5-10 kattha': 'More than 5 Kattha',
+                                '5-10 ropani': 'More than 5 Kattha',
+                                'more than 10 ropani':'More than 5 Kattha',
+                            },
+                            'Time from Nearest Security Forces':
+                            {
+                                '': 'Less than an hour',
+                                'nan': 'Less than an hour',
+                                '15-30 minutes ': 'Less than an hour',
+                                'Nearby/In a walking distance': 'Less than an hour',
+                                '30minutes-1 hour': 'Less than an hour',
+                                'More than an hour': 'More than an hour'
                             }
                             }
             calculateCriteriaScore(question, this_house, code_mapping)
@@ -347,12 +366,13 @@ def calculateCriteriaScore(*args):
                     answers = list(filter(None, answers))
                     selected_answer_list = []
                     for ans in answers:
-                        this_answer = Answer.objects.filter(
-                            parent_question=this_question, answer_choice__icontains=ans)
-                        if this_answer.count() > 1:
-                            selected_answer = Answer.objects.annotate(answer_field=Value(ans, output_field=CharField(
-                            ))).filter(parent_question=this_question, answer_field__icontains=F('answer_choice'))
-                        selected_answer_list.append(this_answer[0].pk)
+                        this_answer = Answer.objects.annotate(answer_field=Value(ans, output_field=CharField(
+                        ))).filter(parent_question=this_question, answer_field__icontains=F('answer_choice'))
+                        if this_answer.count() < 1:
+                            this_answer = Answer.objects.filter(
+                                parent_question=this_question, answer_choice__icontains=ans)
+                        if this_answer.count() > 0:
+                            selected_answer_list.append(this_answer[0].pk)
                     selected_answer_list = list(set(selected_answer_list))
                     lowest_weight = 0
                     selected_answer = this_answer
