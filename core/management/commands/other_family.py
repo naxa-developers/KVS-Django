@@ -8,14 +8,14 @@ from django.contrib.gis.geos import GEOSGeometry
 
 
 class Command(BaseCommand):
-    help = 'load province data from province.xlsx file'
+    help = 'load OtherFamily data from province.xlsx file'
 
     def add_arguments(self, parser):
         parser.add_argument('--path', type=str)
 
     def handle(self, *args, **kwargs):
         path = kwargs['path']
-        df = pd.read_csv(path)
+        df = pd.read_excel(path, sheet_name=3)
         upper_range = len(df)
 
         print("Wait Data is being Loaded")
@@ -41,7 +41,7 @@ class Command(BaseCommand):
                     disabled=df['disabled'][row],
                     disablility_type=df['disability_type'][row],
                     disablility_type_other=df['disability_type_other'][row],
-                    survey=HouseHoldData.objects.get(index=df['parent_index'][row]),
+                    survey=HouseHoldData.objects.filter(index=df['parent_index'][row])[0],
 
                 )
 

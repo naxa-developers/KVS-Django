@@ -24,28 +24,20 @@
         <br>
         <div class="row">
             <div class="col-md-6">
-                <table id="table-3" class="display table table-hover c_table">
-                    <thead>
-                        <h4 style="color: red;">Questions</h4>
-                        <tr>
-                            <th>S.N.</th>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Scoring Menthod</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for qn in questions %}
-                        <tr>
-                            <th>{{ forloop.counter }}</th>
-                            <td>{{qn.question}}</td>
-                            <td>{{qn.parent_category}}</td>
-                            <td>{{qn.scoring_method}}</td>
-                            <td>{{qn.calculated_value}}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
+                <table id="table-1" class="display table table-hover c_table">
+                    <h4 style="color: red;">Themes</h4>
+                    <tr>
+                        <th>Name</th>
+                        <th>Weight</th>
+                        <th>Score</th>
+                    </tr>
+                    {% for theme in themes %}
+                    <tr>
+                        <td>{{theme.name}}</td>
+                        <td>{{theme.weight}}</td>
+                        <td>{{theme.calculated_value}}</td>
+                    </tr>
+                    {% endfor %}
                 </table>
             </div>
             <div class="col-md-6">
@@ -54,6 +46,7 @@
                         <h4 style="color: red;">Categories</h4>
                         <tr>
                             <th>Name</th>
+                            <th>Weight</th>
                             <th>Score</th>
                         </tr>
                     </thead>
@@ -61,6 +54,7 @@
                         {% for cat in categories %}
                         <tr>
                             <td>{{cat.name}}</td>
+                            <td>{{cat.weight}}</td>
                             <td>{{cat.calculated_value}}</td>
                         </tr>
                         {% endfor %}
@@ -90,27 +84,51 @@
         <hr>
         <hr>
         <div class="row">
-            <div class="col-md-6">
-                <table id="table-1" class="display table table-hover c_table">
-                    <thead>
-                        <h4 style="color: red;">Themes</h4>
-                        <tr>
-                            <th>Name</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for theme in themes %}
-                        <tr>
-                            <td>{{theme.name}}</td>
-                            <td>{{theme.calculated_value}}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            <table id="table-3" class="display table table-hover c_table">
+                <thead>
+                    <h4 style="color: red;">Questions</h4>
+                    <tr>
+                        <th>S.N.</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Scoring Method</th>
+                        <th>Weight</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for qn in questions %}
+                    <tr>
+                        <th>{{ forloop.counter }}</th>
+                        <td>{{qn.question}}</td>
+                        <td>{{qn.parent_category}}</td>
+                        <td>{{qn.scoring_method}}</td>
+                        <td>{{qn.weight}}</td>
+                        <td>{{qn.calculated_value}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
-
+<script>
+    var sum1 = 0;
+    var sum2 = 0;
+    $("#table-1").not(':first').not(':last').each(function () {
+        sum1 += getnum($(this).find("td:eq(0)").text());
+        sum2 += getnum($(this).find("td:eq(2)").text());
+        function getnum(t) {
+            if (isNumeric(t)) {
+                return parseInt(t, 10);
+            }
+            return 0;
+            function isNumeric(n) {
+                return !isNaN(parseFloat(n)) && isFinite(n);
+            }
+        }
+    });
+    $("#thSum").text(sum1);
+    $("#thSum1").text(sum2);
+</script>  
 </html>
