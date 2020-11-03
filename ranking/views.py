@@ -27,9 +27,11 @@ def calculateHouseHoldScore(id):
     these_houses = HouseHoldData.objects.filter(id=id)
     for house in these_houses:
         this_house = house
-        all_themes = Theme.objects.all()
+        all_themes = Theme.objects.all().order_by('name')
         this_household_score = 0
+        theme_scores = []
         for theme in all_themes:
+            theme_scores.append(theme.calculated_value)
             this_household_score = this_household_score + \
                 theme.calculated_value if theme.calculated_value != None else this_household_score
         this_house.risk_score = this_household_score
@@ -38,7 +40,7 @@ def calculateHouseHoldScore(id):
         categories = Category.objects.all().order_by('parent_theme')
         questions = Question.objects.all().order_by('parent_category')
         answers = Answer.objects.all()
-        return this_household_score
+        return [this_household_score, theme_scores]
 
 
 def calculateThemeScore(id):
@@ -71,7 +73,7 @@ def calculateQuestionScore(id):
     this_house = HouseHoldData.objects.filter(index=id)
     all_questions = Question.objects.all()
     for question in all_questions:
-        if question.scoring_method in ['substrings', 'keywords', 'multifield_substring', 'range_based']:
+        if question.scoring_method in ['substrings', 'keywords', 'multifield_substring', 'range_based', 'manual_calc']:
             sample_answer = Answer.objects.filter(parent_question=question)[0]
             if sample_answer.answer_types == 'with_blank_rows':
                 blank_mapping = {
@@ -82,7 +84,7 @@ def calculateQuestionScore(id):
                     'pulses': ['2 to 4'],
                     'fruits': ['2 to 3'],
                     'meat_and_fish': ['1'],
-                    'road_width': ['5 to 13 ft',],
+                    'road_width': ['5 to 13 ft', ],
                 }
                 calculateCriteriaScore(question, this_house, blank_mapping)
             else:
@@ -260,7 +262,7 @@ def calculateQuestionScore(id):
                                 '1-5 ropani': 'More than 5 Kattha',
                                 '5-10 kattha': 'More than 5 Kattha',
                                 '5-10 ropani': 'More than 5 Kattha',
-                                'more than 10 ropani':'More than 5 Kattha',
+                                'more than 10 ropani': 'More than 5 Kattha',
                             },
                             'Time from Nearest Security Forces':
                             {
@@ -731,3 +733,34 @@ def calculateCriteriaScore(*args):
                 selected_answer = '' if len(
                     selected_answer) == 0 else selected_answer
                 returnScore(selected_answer, this_question)
+    elif this_question.scoring_method == "manual_calc":
+        meat_and_fish = 0 if args[1].values_list('meat_and_fish', flat=True)[0] == 'nan' or args[1].values_list(
+            'meat_and_fish', flat=True)[0] == None else float(args[1].values_list('meat_and_fish', flat=True)[0])
+        fruits = 0 if args[1].values_list(
+            'fruits', flat=True)[0] == 'nan' or args[1].values_list('fruits', flat=True)[0] == None else float(args[1].values_list('fruits', flat=True)[0])
+        main_staple = 0 if args[1].values_list(
+            'main_staple', flat=True)[0] == 'nan' or args[1].values_list('main_staple', flat=True)[0] == None else float(args[1].values_list('main_staple', flat=True)[0])
+        pulses = 0 if args[1].values_list(
+            'pulses', flat=True)[0] == 'nan' or args[1].values_list('pulses', flat=True)[0] == None else float(args[1].values_list('pulses', flat=True)[0])
+        vegetables = 0 if args[1].values_list(
+            'vegetables', flat=True)[0] == 'nan' or args[1].values_list('vegetables', flat=True)[0] == None else float(args[1].values_list('vegetables', flat=True)[0])
+        milk_and_products = 0 if args[1].values_list(
+            'milk_and_products', flat=True)[0] == 'nan' or args[1].values_list('milk_and_products', flat=True)[0] == None else float(args[1].values_list('milk_and_products', flat=True)[0])
+        sugar_products = 0 if args[1].values_list(
+            'sugar_products', flat=True)[0] == 'nan' or args[1].values_list('sugar_products', flat=True)[0] == None else float(args[1].values_list('sugar_products', flat=True)[0])
+        oil_products = 0 if args[1].values_list(
+            'oil_products', flat=True)[0] == 'nan' or args[1].values_list('oil_products', flat=True)[0] == None else float(args[1].values_list('oil_products', flat=True)[0])
+        score = main_staple*2+pulses*3+fruits+meat_and_fish*4 + \
+            milk_and_products*4+sugar_products*0.5+oil_products*0.5
+        if int(score) < 50:
+            selected_answer = Answer.objects.filter(
+                parent_question=this_question, answer_choice='less than 50')
+        elif int(score) > 50 and int(score) < 70:
+            selected_answer = Answer.objects.filter(
+                parent_question=this_question, answer_choice='50 to 70')
+        elif int(score) > 70:
+            selected_answer = Answer.objects.filter(
+                parent_question=this_question, answer_choice='more than 70')
+        else:
+            selected_answer = ''
+        returnScore(selected_answer, this_question)
