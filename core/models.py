@@ -1,4 +1,3 @@
-
 from django.db import models
 from django.contrib.gis.db.models import PointField, MultiPolygonField
 from django.contrib.auth.models import Group, User
