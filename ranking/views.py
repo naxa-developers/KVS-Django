@@ -18,6 +18,19 @@ def calc(request, id):
     themes = Theme.objects.all()
     categories = Category.objects.all().order_by('parent_theme')
     questions = Question.objects.all().order_by('parent_category')
+    for th in themes:
+        theme_weight = 0
+        this_theme_cats = Category.objects.filter(parent_theme=th)
+        for category in this_theme_cats:
+            cat_weight = 0
+            this_cat_qns = Question.objects.filter(parent_category=category)
+            for qn in this_cat_qns:
+                cat_weight = cat_weight + qn.weight
+            category.weight = cat_weight
+            category.save()
+            theme_weight = theme_weight + category.weight
+        th.weight = theme_weight
+        th.save()
     answers = Answer.objects.all()
     return render(request, 'index.html', {'house': this_house, 'categories': categories, 'themes': themes, 'questions': questions, 'answers': answers})
 
