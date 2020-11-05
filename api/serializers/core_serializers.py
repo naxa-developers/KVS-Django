@@ -120,6 +120,8 @@ class HouseHoldAlternativeSerializer(serializers.ModelSerializer):
 
     def get_family_size(self,obj):
         size = obj.house_hold_data.all().count()
+        # size = OwnerFamilyData.objects.filter(parent_index=obj.index).count()
+        # size = int(size) + 1
         return size
 
     def get_social_security_received(self, obj):
@@ -185,7 +187,13 @@ class PersonFromOFSerializer(serializers.ModelSerializer):
                   'citizenship_number', 'contact_no', 'ward', 'social_security_received')
 
     def get_age(self, obj):
-        age = (relativedelta(date.today(), obj.date_of_birth).years if obj.date_of_birth != None else '---')
+        if obj.date_of_birth != None:
+            age = (relativedelta(date.today(), obj.date_of_birth).years)
+        else:
+            if obj.age_group !=None:
+                age = obj.age_group
+            else:
+                age = '---'
         return age
 
     def get_contact_no(self,obj):
