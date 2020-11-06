@@ -4,7 +4,7 @@ RUN mkdir /code
 WORKDIR /code
 
 RUN apt-get update &&\
-    apt-get install -y binutils libproj-dev gdal-bin gettext
+    apt-get install -y binutils libproj-dev gdal-bin gettext build-essential python-dev
 
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
