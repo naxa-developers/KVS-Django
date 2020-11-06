@@ -26,6 +26,13 @@ def member_edu_matching(list, query):
 
     return query.filter(q)
 
+def compare_age(query):
+    q = Q()
+    age_list = ['60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80']
+    for age in age_list:
+        q |= Q(age_group__icontains=age)
+    return query.filter(q)
+
 
 def export_municipality_csv(modeladmin, request, queryset):
     response = HttpResponse(content_type='text/csv')
