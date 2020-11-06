@@ -393,7 +393,7 @@ class FddViewSet(APIView):
                 filtered_hh = [str(x) for x in filtered_hh]
                 filtered_family = family_query.filter(falling_under_social_security_criteria__icontains=citizen,
                                                       social_security_received__icontains=social_security_received, parent_index__in=filtered_hh)
-                filtered_family = compare_age(family_query)
+                filtered_family = compare_age(filtered_family)
 
             elif ward and flood and social_security_received:
                 print('ward and social_security_received and flood')
@@ -414,7 +414,7 @@ class FddViewSet(APIView):
                 filtered_hh = [str(x) for x in filtered_hh]
                 filtered_family = family_query.filter(
                     falling_under_social_security_criteria__icontains=citizen, parent_index__in=filtered_hh)
-                filtered_family = compare_age(family_query)
+                filtered_family = compare_age(filtered_family)
 
             elif flood and social_security_received and citizen:
                 print('flood and social_security_received and citizen')
@@ -423,7 +423,7 @@ class FddViewSet(APIView):
                 filtered_hh = [str(x) for x in filtered_hh]
                 filtered_family = family_query.filter(falling_under_social_security_criteria__icontains=citizen,
                                                       social_security_received__icontains=social_security_received, parent_index__in=filtered_hh)
-                filtered_family = compare_age(family_query)
+                filtered_family = compare_age(filtered_family)
 
             elif ward and flood and social_security_received:
                 print('ward and flood and social_security_received')
@@ -442,7 +442,7 @@ class FddViewSet(APIView):
                 filtered_hh = [str(x) for x in filtered_hh]
                 filtered_family = family_query.filter(
                     falling_under_social_security_criteria__icontains=citizen, parent_index__in=filtered_hh)
-                filtered_family = compare_age(family_query)
+                filtered_family = compare_age(filtered_family)
 
             elif flood and social_security_received and citizen:
                 print('flood and social_security_received and citizen')
@@ -451,7 +451,7 @@ class FddViewSet(APIView):
                 filtered_hh = [str(x) for x in filtered_hh]
                 filtered_family = family_query.filter(falling_under_social_security_criteria__icontains=citizen,
                                                       social_security_received__icontains=social_security_received, parent_index__in=filtered_hh)
-                filtered_family = compare_age(family_query)
+                filtered_family = compare_age(filtered_family)
 
             elif ward and flood and social_security_received:
                 print('ward and flood and social_security_received')
@@ -472,7 +472,7 @@ class FddViewSet(APIView):
                 filtered_hh = [str(x) for x in filtered_hh]
                 filtered_family = family_query.filter(
                     falling_under_social_security_criteria__icontains=citizen, parent_index__in=filtered_hh)
-                filtered_family = compare_age(family_query)
+                filtered_family = compare_age(filtered_family)
 
             elif flood and social_security_received and citizen:
                 print('flood and social_security_received and citizen')
@@ -481,7 +481,7 @@ class FddViewSet(APIView):
                 filtered_hh = [str(x) for x in filtered_hh]
                 filtered_family = family_query.filter(falling_under_social_security_criteria__icontains=citizen,
                                                       social_security_received__icontains=social_security_received, parent_index__in=filtered_hh)
-                filtered_family = compare_age(family_query)
+                filtered_family = compare_age(filtered_family)
 
             elif ward and flood:
                 print('ward and flood')
@@ -510,7 +510,7 @@ class FddViewSet(APIView):
                 filtered_hh = [str(x) for x in filtered_hh]
                 filtered_family = family_query.filter(
                     falling_under_social_security_criteria__icontains=citizen, parent_index__in=filtered_hh)
-                filtered_family = compare_age(family_query)
+                filtered_family = compare_age(filtered_family)
 
             elif flood and social_security_received:
                 print('flood and social_security_received')
@@ -527,7 +527,7 @@ class FddViewSet(APIView):
                 filtered_hh = [str(x) for x in filtered_hh]
                 filtered_family = family_query.filter(
                     falling_under_social_security_criteria__icontains=citizen, parent_index__in=filtered_hh)
-                filtered_family = compare_age(family_query)
+                filtered_family = compare_age(filtered_family)
 
             elif social_security_received and citizen:
                 print('social_security_received and citizen')
@@ -535,8 +535,8 @@ class FddViewSet(APIView):
                 filtered_hh = query.values_list('id', flat=True)
                 filtered_hh = [str(x) for x in filtered_hh]
                 filtered_family = family_query.filter(
-                    falling_under_social_security_criteria__icontains=citizen, social_security_received__icontains=social_security_received, parent_index__in=filtered_hh)
-                filtered_family = compare_age(family_query)
+                    social_security_received__icontains=social_security_received)
+                filtered_family = compare_age(filtered_family)
 
             elif ward:
                 print('ward')
@@ -570,7 +570,7 @@ class FddViewSet(APIView):
                 filtered_hh = [str(x) for x in filtered_hh]
                 filtered_family = family_query.filter(
                     falling_under_social_security_criteria__icontains=citizen)
-                filtered_family = compare_age(family_query)
+                filtered_family = compare_age(filtered_family)
 
             else:
                 queryset = query
