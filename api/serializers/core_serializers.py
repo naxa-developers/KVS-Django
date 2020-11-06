@@ -171,9 +171,9 @@ class PersonFromHHSerializer(serializers.ModelSerializer):
     def get_social_security_received(self, obj):
         query = obj.house_hold_data.filter(social_security_received__icontains='Yes')
         if not query:
-            return False
+            return 'No'
         else:
-            return True
+            return 'Yes'
 
 class PersonFromOFSerializer(serializers.ModelSerializer):
     age = serializers.SerializerMethodField()
