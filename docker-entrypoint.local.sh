@@ -3,4 +3,5 @@ pip install -r requirements.txt
 # python manage.py compilemessages -l ne -l en
 python manage.py migrate --no-input
 #pytest
-python manage.py runserver 0.0.0.0:8001
+# python manage.py runserver 0.0.0.0:8001
+uwsgi --ini kvs.ini
